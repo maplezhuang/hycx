@@ -12,7 +12,6 @@ var currentMinute = date.getMinutes();
 Page({
   data: {
     globalMapData: app.globalData.map,
-
     mapHeight: 0,
     currentData: 0,
     scale: 18,
@@ -32,24 +31,30 @@ Page({
     multiIndex: [0, 0, 0],
   },
   onLoad: function (options) {
-    console.log('onLoad',app.globalData);
+    //console.log('onLoad',app.globalData);
     var that = this;
     let sID = options.sID;
     let sLat = options.slat;
     let sLng = options.slng;
-    let sName = options.sname;
-    let sAddress = options.saddress;
+    let sAddress = options.sbluraddress;
+    // let sAddress = options.saddress;
     if (sID == '1') {
       app.globalData.map.startLatitude = sLat;
       app.globalData.map.startLongitude = sLng;
-      app.globalData.map.startBluraddress = sName;
       app.globalData.map.startAddress = sAddress;
+      // app.globalData.map.startAddress = sAddress;
+      that.setData({
+        globalMapData: app.globalData.map
+      });
     }
     if (sID == '2') {
       app.globalData.map.endLatitude = sLat;
       app.globalData.map.endLongitude = sLng;
-      app.globalData.map.endBluraddress = sName;
       app.globalData.map.endAddress = sAddress;
+      // app.globalData.map.endAddress = sAddress;
+      that.setData({
+        globalMapData: app.globalData.map
+      });
     }
 
     var that = this
@@ -90,16 +95,17 @@ Page({
               longitude: e.longitude
             },
             success: function (res) {
+              //console.log(res);
               app.globalData.map.startAddress = res.result.address;
               that.setData({
                 globalMapData: app.globalData.map
               });
             },
             fail: function (e) {
-              console.log(e);
+              //console.log(e);
             },
             complete: function (e) {
-              console.log(e);
+              //console.log(e);
             }
           });
         }
@@ -118,7 +124,7 @@ Page({
     }
   },
   onReady: function() {
-    console.log('onReady',app.globalData);
+    //console.log('onReady',app.globalData);
     this.mapCtx = wx.createMapContext("xMap");
   },
   goToPage: function(e) {

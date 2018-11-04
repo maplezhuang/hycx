@@ -49,10 +49,10 @@ Page({
     var ssid = this.data.sID
     var sslat = e.currentTarget.dataset.latitude
     var sslng = e.currentTarget.dataset.longitude
-    var ssname = e.currentTarget.dataset.title
+    var ssbluraddress = e.currentTarget.dataset.title
     var ssaddress = e.currentTarget.dataset.address
     wx.navigateTo({
-      url: '/pages/index/index?sID=' + ssid + '&slat=' + sslat + '&slng=' + sslng + '&sname=' + ssname + '&saddress=' + ssaddress
+      url: '/pages/index/index?sID=' + ssid + '&slat=' + sslat + '&slng=' + sslng + '&sbluraddress=' + ssbluraddress + '&saddress=' + ssaddress
     })
   }
 })

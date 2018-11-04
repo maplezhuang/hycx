@@ -44,7 +44,7 @@ App({
       endLatitude: null,
       endLongitude: null,
       endBluraddress: null,
-      endAddress: ''
+      endAddress: '目的地'
     },
 
     userInfo: null,
