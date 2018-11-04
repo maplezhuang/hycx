@@ -1,8 +1,11 @@
 <view class="container">
   <view class='tabs-item'>
     <view class='topTabSwiper'>
-      <view class="tabs-item-li {{curIndex=='0'? 'active' : ''}}" data-id="0" bindtap="tabMenu">共享车</view>
-      <view class="tabs-item-li {{curIndex=='1'? 'active' : ''}}" data-id="1" bindtap="tabMenu">网约车</view>
+      <view class='tabs-item-li'>
+        <navigator url="/pages/shareCar/shareCar" hover-class="none">共享车</navigator>
+      </view>
+      <view class="tabs-item-li {{curIndex=='0'? 'active' : ''}}" data-id="0" bindtap="tabMenu">网约车</view>
+      <view class="tabs-item-li {{curIndex=='1'? 'active' : ''}}" data-id="1" bindtap="tabMenu">接送站</view>
       <view class='tabs-item-li'>
         <navigator url="/pages/order/order" hover-class="none">订单</navigator>
       </view>
