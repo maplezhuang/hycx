@@ -1,0 +1,36 @@
+<view class="container">
+  <scroll-view scroll-y class='search'>
+    <view class="search_top">
+      <icon class="search_icon" size='20' type='search'></icon>
+      <input class="search_input" placeholder="请输入地点" value="{{SearchValue}}" bindinput='searchValueInput' />
+    </view>
+    <view class='search_list'>
+      <block wx:if="{{SearchAddress.length > 0}}">
+        <block wx:for="{{SearchAddress}}" wx:for-item="itemSA" wx:key="sMid">
+          <view class='search_li Z_icon' data-id="sMid" data-title="{{itemSA.title}}" data-latitude="{{itemSA.latitude}}" data-longitude="{{itemSA.longitude}}" data-address="{{itemSA.address}}" bindtap='toValue'>
+            <view class='addName'>{{itemSA.title}}</view>
+            <view class='addInfo'>{{itemSA.address}}</view>
+          </view>
+        </block>
+      </block>
+      <block wx:else>
+        <view class='search_li R_icon' data-latitude="" data-longitude="" bindtap='toValue'>
+          <view class='addName'>广州东站</view>
+          <view class='addInfo'>广州市天河区东站路1号</view>
+        </view>
+        <view class='search_li Z_icon' data-latitude="" data-longitude="" bindtap='toValue'>
+          <view class='addName'>广州南站</view>
+          <view class='addInfo'>广州市番禺区南站北路</view>
+        </view>
+        <view class='search_li Z_icon' data-latitude="" data-longitude="" bindtap='toValue'>
+          <view class='addName'>天河客运站</view>
+          <view class='addInfo'>广州市天河区燕岭路633号</view>
+        </view>
+        <view class='search_li Z_icon' data-latitude="" data-longitude="" bindtap='toValue'>
+          <view class='addName'>广州白云国际机场</view>
+          <view class='addInfo'>广州市白云区花东镇机场大道东388号</view>
+        </view>
+      </block>
+    </view>
+  </scroll-view>
+</view>

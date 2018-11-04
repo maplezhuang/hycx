@@ -1,0 +1,59 @@
+<view class="container">
+  <view class='tabs-item'>
+    <view class='topTabSwiper'>
+      <view class="tabs-item-li {{curIndex=='0'? 'active' : ''}}" data-id="0" bindtap="tabMenu">快车</view>
+      <view class="tabs-item-li {{curIndex=='1'? 'active' : ''}}" data-id="1" bindtap="tabMenu">预约专车</view>
+      <view class='tabs-item-li'>
+        <navigator url="/pages/order/order" hover-class="none">订单</navigator>
+      </view>
+    </view>
+  </view>
+  <map class="xMap" id='xMap' latitude="{{latitude}}" longitude="{{longitude}}" scale="{{scale}}" bindregionchange="bindregionchange"     style="height:{{mapHeight}}px" show-location>
+    <cover-view class="markerStart">
+      <cover-image src='../../pages/image/markerStart.png' />
+    </cover-view>
+    <cover-view class="markerStart">
+      <cover-image src='../../pages/image/markerStart.png' />
+    </cover-view>
+    <cover-view class="csdw" bindtap="moveToLocation">
+      <cover-image src='../../pages/image/location.png' />
+    </cover-view>
+    <cover-view class="goToBack" bindtap="goToBack" wx:if="{{isGotoBackBtn==true}}">
+      <cover-image src='../../pages/image/goToBack.png' />
+    </cover-view>
+  </map>
+
+  <view class="xContent" id='xContent'>
+    <view class='user-info' wx:if="{{isGoBtn==false}}">
+      <navigator url="/pages/order/order" hover-class="none">
+        <!-- <view class='names'>薛之谦</view>
+        <view class='phone'>10000</view> -->
+        <view class='names'>{{userInfo.userNames}}</view>
+        <view class='phone'>{{userInfo.userPhone}}</view>
+      </navigator>
+    </view>
+    <view class='ShuttleType' wx:if="{{curIndex==1}}">
+      <view class='category' wx:if="{{isGoBtn==false}}">
+        <view class="options wyc {{cType=='0'? 'active' : ''}}" bindtap="cTypeTap" data-id="0" data-name="网约车">网约车</view>
+        <view class="options jshcz {{cType=='1'? 'active' : ''}}" bindtap="cTypeTap" data-id="1" data-name="接送火车站">接送火车站</view>
+      </view>
+      <view class='chooseTime' wx:if="{{isGoBtn==false}}">
+        <picker class='time-picker' mode="multiSelector" bindchange="bindStartMultiPickerChange" bindtap='pickerTap' bindcolumnchange="bindMultiPickerColumnChange" markers="{{markers}}" value="{{multiIndex}}" range="{{multiArray}}">{{startDate}}</picker>
+      </view>
+    </view>
+
+    <view class='inputText nowAdd' wx:if="{{isGoBtn==false}}">
+      <view class='icon'></view>
+      <view class='xx' bindtap="goToSearch" data-id="1">{{bluraddress}}</view>
+    </view>
+    <view class='inputText goAdd' wx:if="{{isGoBtn==false}}">
+      <view class='icon '></view>
+      <view class='xx' bindtap='goToSearch' data-id="2">{{Ebluraddress}}</view>
+    </view>
+    <cover-view class='goBtn' wx:if="{{isGoBtn==true}}">
+      <button >{{carXx}}</button>
+    </cover-view>
+    
+  </view>
+
+</view>
