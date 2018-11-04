@@ -1,11 +1,12 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/order/order",
     "pages/user/user",
+    "pages/order/order",
     "pages/search/search",
     "pages/logs/logs",
-    "pages/shareCar/shareCar"
+    "pages/shareCar/shareCar",
+    "pages/user/userInfo"
   ],
   "window": {
     "backgroundTextStyle": "black",

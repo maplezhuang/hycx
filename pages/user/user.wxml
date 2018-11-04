@@ -7,5 +7,5 @@
     <view class='inpTxt phone'><view>联系电话：</view><input name="userPhone" placeholder="请输入联系电话" type='number' pattern="[0-11]*" maxlenght="11"/></view>
     <button class='goBtn' form-type="submit">确定</button>
   </view>
-</form>
+</form> 
 </view>

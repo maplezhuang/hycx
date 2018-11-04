@@ -1,0 +1,14 @@
+<text>{{userInfo.userNames}}</text>
+<text>{{userInfo.userPhone}}</text>
+
+<view class="contaier">
+<form bindsubmit="submitdate">
+  <view class='xxInfo'>
+    <image src='http://gqftjpg.oss-cn-shenzhen.aliyuncs.com/shouye.jpg' class='logo' />
+    <view class='inpTxt ddm'><view>店代码：</view><input name="userDdm" value='{{userInfo.userDdm}}' disabled/></view>
+    <view class='inpTxt names'><view>姓名：</view><input name="userNames" value='{{userInfo.userNames}}' disabled/></view>
+    <view class='inpTxt phone'><view>联系电话：</view><input name="userPhone" placeholder="请输入需要更改的联系电话" type='number' pattern="[0-11]*" maxlenght="11"/></view>
+    <button class='goBtn' form-type="submit">确定</button>
+  </view>
+</form> 
+</view>
