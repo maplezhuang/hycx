@@ -1,5 +1,26 @@
 /**index.wxss**/
+/* 共享车 */
+.share-car{
+  padding: 100rpx 20rpx 20rpx 20rpx;
+}
+.share-car .share-box{
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 0 5rpx #ccc;
+  margin-bottom: 20rpx;
+}
+.share-car .share-box .item{
+  padding-left: 30rpx;
+  position: relative;
+}
+.share-car .share-box .item .s-icon{
+  position: absolute;
+  left: 10rpx;
+  top: 10rpx;
+}
+.share-car .goBtn{width: 100%; height: 80rpx; background-color: #48acf7; font-size:28rpx; line-height: 80rpx; text-align: center; color:#fff; border-radius: 0; padding: 0;}
 
+/* 网约车 */
 .xMap{ width: 100%; height: 70vh; position: relative; top: 41px}
 .xMap .csdw{width: 32px; height: 32px; position: absolute; left: 20rpx; bottom: 20rpx;}
 .xMap .csdw image{width: 100%; height: 100%;}
@@ -9,8 +30,8 @@
 .xMap .markerEnd image{width: 100%; height: 100%;}
 .xMap .goToBack{width: 70rpx; height: 70rpx; position: absolute; left: 20rpx; top: 40rpx;}
 
-.tabs-item{ width: 100%; height: 40px; background-color: #fff; position: fixed; top: 0; left: 0; z-index:999; box-shadow: 0 5px 10px #e0e0e0;}
-.tabs-item .tabs-item-li{ width: 25%; display: table; text-align: center; font-size:14px; line-height: 40px; color:#000; float: left;}
+.tabs-item{ width: 100%; height: 80rpx; background-color: #fff; position: fixed; top: 0; left: 0; z-index:999; box-shadow: 0 5px 10px #e0e0e0;}
+.tabs-item .tabs-item-li{ width: 25%; display: table; text-align: center; font-size:14px; line-height: 80rpx; color:#000; float: left;}
 .tabs-item .active{ color:#fca26e}
 
 .xContent{ width: 100%; height: auto; background-color: #fff; position: fixed; bottom: 0;  left: 0; z-index: 999; padding-bottom: 10rpx;}

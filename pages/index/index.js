@@ -11,6 +11,23 @@ var currentMinute = date.getMinutes();
 Page({
   data: {
     globalMapData: app.globalData.map,
+    // 共享车
+    shareCar: {
+      startIndex: null,
+      startAddress: '取车点',
+      endAddress: '还车点',
+      phone: ''
+    },
+    shareShopData: [{
+      id: 0,
+      name: '广汽丰田海珠店'
+    }, {
+        id: 1,
+        name: '广汽丰田海珠店'
+      }, {
+        id: 2,
+        name: '广汽丰田海珠店'
+      }],
     mapHeight: 0,
     currentData: 0,
     scale: 20,
@@ -29,6 +46,14 @@ Page({
     ],
     multiIndex: [0, 0, 0],
   },
+  //------------- 共享汽车 -----------------
+  // 取车点
+  shareStartShop(item) {
+    console.log(item);
+  },
+
+
+  // -------------默认页面时间 -------------
   onLoad: function(options) {
     //console.log('onLoad',app.globalData);
     var that = this;
@@ -62,7 +87,7 @@ Page({
           query.select('#xContent').boundingClientRect()
           query.exec(function(e) {
             that.setData({
-              mapHeight: wx.getSystemInfoSync().windowHeight - e[0].height - 43
+              mapHeight: (wx.getSystemInfoSync().windowHeight - e[0].height - 43) || 0
             });
           })
         }, 100)
@@ -119,7 +144,7 @@ Page({
             query.select('#xContent').boundingClientRect()
             query.exec(function(e) {
               that.setData({
-                mapHeight: wx.getSystemInfoSync().windowHeight - e[0].height - 43
+                mapHeight: (wx.getSystemInfoSync().windowHeight - e[0].height - 43) || 0
               });
             })
           }
@@ -218,7 +243,7 @@ Page({
       query.select('#xContent').boundingClientRect()
       query.exec(function(e) {
         that.setData({
-          mapHeight: wx.getSystemInfoSync().windowHeight - e[0].height - 43
+          mapHeight: (wx.getSystemInfoSync().windowHeight - e[0].height - 43) || 0
         });
       })
     }, 100)
@@ -240,7 +265,7 @@ Page({
       query.select('#xContent').boundingClientRect()
       query.exec(function(e) {
         that.setData({
-          mapHeight: wx.getSystemInfoSync().windowHeight - e[0].height - 43
+          mapHeight: (wx.getSystemInfoSync().windowHeight - e[0].height - 43) || 0
         });
       })
     }, 100)

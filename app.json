@@ -4,8 +4,7 @@
     "pages/order/order",
     "pages/user/user",
     "pages/search/search",
-    "pages/logs/logs",
-    "pages/shareCar/shareCar"
+    "pages/logs/logs"
   ],
   "window": {
     "backgroundTextStyle": "black",
