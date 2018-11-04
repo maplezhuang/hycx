@@ -38,10 +38,10 @@
       <view class='qslc'>起始里程： 10</view>
       <view class='jslc'>结束里程： 110</view>
       <view class='yjfy'>预计费用： 330</view>
-      <view class='zj'>租金： 140.58</view>
-      <view class='zfy'>
-        <view><b class="je">140.58</b>元</view>
-      </view>
+      <!-- <view class='zj'>租金： 140.58</view> -->
+      <!-- <view class='zfy'> -->
+        <!-- <view><b class="je">140.58</b>元</view> -->
+      <!-- </view> -->
     </view>
   </view>
 </view>

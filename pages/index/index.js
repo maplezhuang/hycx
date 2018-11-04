@@ -71,7 +71,7 @@ Page({
           })
         }
       })
-      // 如果全局有经纬度 
+      // 如果全局有经纬度
     if (app.globalData.map.startLatitude && app.globalData.map.startLongitude) {
       that.setData({
         globalMapData: app.globalData.map
@@ -83,7 +83,7 @@ Page({
         success: (e) => {
           app.globalData.map.startLatitude = e.latitude;
           app.globalData.map.startLongitude = e.longitude;
-          
+
           qqmapsdk.reverseGeocoder({
             location: {
               latitude: e.latitude,
