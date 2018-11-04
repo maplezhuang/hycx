@@ -2,7 +2,7 @@ Page({
   data: {
 
   },
-  //事件处理函数111
+  //事件处理函数
   submitdate: function (event) {
     var userInfo = event.detail.value;
     wx.setStorage({

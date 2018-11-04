@@ -11,6 +11,7 @@ var currentMinute = date.getMinutes();
 
 Page({
   data: {
+    globalData: app.globalData,
     mapHeight: 0,
     currentData: 0,
     scale: 20,
@@ -50,6 +51,7 @@ Page({
     }
 
     var that = this
+    console.log('json数据临时调用')
     //json数据临时调用
     wx.getStorage({
         key: 'userInfo',
@@ -67,19 +69,23 @@ Page({
             userInfo: e.data
           })
         }
-      }),
+      })
+    console.log('获取位置信息');
       //获取位置信息
       wx.getLocation({
         type: 'gcj02',
         success: (e) => {
           var that = this;
+          app.globalData.Elatitude = e.latitude
+          app.globalData.Elongitude = e.longitude
           qqmapsdk.reverseGeocoder({
             location: {
               latitude: e.latitude,
               longitude: e.longitude
             },
             success: function (e) {
-              app.globalData.location = location
+              console.log(e.result);
+              app.globalData.bluraddress = e.result.address
               that.setData({
                 address: e.result.address,
                 bluraddress: e.result.formatted_addresses.recommend,
@@ -87,7 +93,8 @@ Page({
             }
           });
         },
-      }),
+      })
+    console.log('getSystemInfo');
       wx.getSystemInfo({
         success: (e) => {
           var query = wx.createSelectorQuery();
@@ -125,6 +132,7 @@ Page({
             longitude: e.longitude,
           },
           success: function(e) {
+            app.globalData.address = e.result.address
             that.setData({
               address: e.result.address,
               bluraddress: e.result.formatted_addresses.recommend
