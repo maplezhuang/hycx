@@ -68,21 +68,22 @@ Page({
             userInfo: e.data
           })
         }
-      }),
+      })
       //获取位置信息
       wx.getLocation({
-      type: 'gcj02',
-        success: function (e) {
-          var latitude = e.latitude;
-          var longitude = e.longitude;
+        type: 'gcj02',
+        success: (e) => {
+          var that = this;
+          app.globalData.Elatitude = e.latitude
+          app.globalData.Elongitude = e.longitude
           qqmapsdk.reverseGeocoder({
             location: {
-              latitude: latitude,
-              longitude: longitude
+              latitude: e.latitude,
+              longitude: e.longitude
             },
             success: function (e) {
-              app.globalData.latitude = latitude;
-              app.globalData.longitude = longitude
+              app.globalData.latitude = e.latitude;
+              app.globalData.longitude = e.longitude
             },
             fail: function (e) {
               console.log(e);
@@ -91,7 +92,6 @@ Page({
               console.log(e);
             }
           });
-
         }
       }),
       wx.getSystemInfo({
@@ -133,7 +133,6 @@ Page({
           success: function(e) {
             app.globalData.address = e.result.address
             app.globalData.bluraddress = e.result.formatted_addresses.recommend
-
           }
         });
       }

@@ -1,7 +1,7 @@
 <view class="container">
   <view class='tabs-item'>
     <view class='topTabSwiper'>
-      <view class="tabs-item-li {{curIndex=='0'? 'active' : ''}}" data-id="0" bindtap="tabMenu">快车</view>
+      <view class="tabs-item-li {{curIndex=='0'? 'active' : ''}}" data-id="0" bindtap="tabMenu">{{globalData.Ebluraddress}}快车</view>
       <view class="tabs-item-li {{curIndex=='1'? 'active' : ''}}" data-id="1" bindtap="tabMenu">预约专车</view>
       <view class='tabs-item-li'>
         <navigator url="/pages/order/order" hover-class="none">订单</navigator>
