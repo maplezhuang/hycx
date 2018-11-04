@@ -1,15 +1,15 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/order/order",
     "pages/user/user",
     "pages/search/search",
-    "pages/order/order",
     "pages/logs/logs"
   ],
   "window": {
     "backgroundTextStyle": "black",
     "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "D",
+    "navigationBarTitleText": "广丰出行",
     "navigationBarTextStyle": "black"
   }
 }
