@@ -93,14 +93,14 @@ Page({
                 //console.log(res);
                 app.globalData.map.startAddress = res.result.address;
                 that.setData({
-                  // markers: [{
-                  //   iconPath: "../pages/image/markerStart.png",
-                  //   id: 0,
-                  //   latitude: e.latitude,
-                  //   longitude: e.longitude,
-                  //   width: 30,
-                  //   height: 44
-                  // }],
+                  markers: [{
+                    iconPath: "/pages/image/markerStart.png",
+                    id: 0,
+                    latitude: e.latitude,
+                    longitude: e.longitude,
+                    width: 30,
+                    height: 44
+                  }],
                   globalMapData: app.globalData.map,
                 });
               },
