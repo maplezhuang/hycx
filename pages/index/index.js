@@ -118,14 +118,14 @@ Page({
                 //console.log(res);
                 app.globalData.map.startAddress = res.result.address;
                 that.setData({
-                  // markers: [{
-                  //   iconPath: "../pages/image/markerStart.png",
-                  //   id: 0,
-                  //   latitude: e.latitude,
-                  //   longitude: e.longitude,
-                  //   width: 30,
-                  //   height: 44
-                  // }],
+                  markers: [{
+                    iconPath: "/pages/image/markerStart.png",
+                    id: 0,
+                    latitude: e.latitude,
+                    longitude: e.longitude,
+                    width: 30,
+                    height: 44
+                  }],
                   globalMapData: app.globalData.map,
                 });
               },
@@ -162,7 +162,12 @@ Page({
   },
   goToSearch: function(e) {
     wx.navigateTo({
-      url: '/pages/search/search?searchID=' + e.currentTarget.dataset.id,
+      url: '/pages/search/search?searchID=' + e.currentTarget.dataset.id
+    })
+  },
+  goToUI: function (e) {
+    wx.navigateTo({
+      url: '/pages/user/userInfo?uname=' + e.currentTarget.dataset.un + '&uphone=' + e.currentTarget.dataset.up
     })
   },
   // 设置地图中心点
@@ -279,7 +284,7 @@ Page({
     var monthDay = ['今天', '明天', '后天'];
     var hours = [];
     var minute = [];
-    currentHours = date.getHours();
+    currentHours = date.getHours() +1;
     currentMinute = date.getMinutes();
     // 月-日
     for (var i = 3; i <= 2; i++) {
@@ -395,7 +400,7 @@ Page({
   },
   loadHoursMinute: function(hours, minute) {
     for (var i = 0; i < 24; i++) {
-      hours.push(i);
+      hours.push(i) ;
     }
     for (var i = 0; i < 60; i += 10) {
       minute.push(i);
@@ -433,7 +438,8 @@ Page({
   bindStartMultiPickerChange: function(e) {
     var that = this;
     var monthDay = that.data.multiArray[0][e.detail.value[0]];
-    var hours = that.data.multiArray[1][e.detail.value[1]];
+    
+    var hours = that.data.multiArray[1][e.detail.value[1]] ;
     var minute = that.data.multiArray[2][e.detail.value[2]];
     if (monthDay === "今天") {
       var month = date.getMonth() + 1;

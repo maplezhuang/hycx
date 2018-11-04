@@ -52,13 +52,9 @@
     </cover-view>
   </map>
   <view class="xContent" id='xContent'>
-    <view class='user-info' wx:if="{{isGoBtn==false}}">
-      <navigator url="/pages/order/order" hover-class="none">
-        <!-- <view class='names'>薛之谦</view>
-        <view class='phone'>10000</view> -->
-        <view class='names'>{{userInfo.userNames}}</view>
-        <view class='phone'>{{userInfo.userPhone}}</view>
-      </navigator>
+    <view class='user-info' wx:if="{{isGoBtn==false}}" bindtap="goToUI" data-un="{{userInfo.userNames}}" data-up="{{userInfo.userPhone}}">
+      <view class='names'>{{userInfo.userNames}}</view>
+      <view class='phone'>{{userInfo.userPhone}}</view>
     </view>
     <view class='ShuttleType' wx:if="{{curIndex==1}}">
       <view class='category' wx:if="{{isGoBtn==false}}">
