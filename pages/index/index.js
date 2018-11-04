@@ -11,10 +11,11 @@ var currentMinute = date.getMinutes();
 
 Page({
   data: {
-    globalData:app.globalData,
+    globalMapData: app.globalData.map,
+
     mapHeight: 0,
     currentData: 0,
-    scale: 20,
+    scale: 18,
     userInfo: {},
     cType: 0,
     isGoBtn: false,
@@ -30,24 +31,25 @@ Page({
     ],
     multiIndex: [0, 0, 0],
   },
-  onLoad: function(options) {
+  onLoad: function (options) {
+    console.log('onLoad',app.globalData);
+    var that = this;
     let sID = options.sID;
     let sLat = options.slat;
     let sLng = options.slng;
     let sName = options.sname;
     let sAddress = options.saddress;
-
     if (sID == '1') {
-      app.globalData.latitude = sLat
-      app.globalData.longitude = sLng
-      app.globalData.bluraddress = sName
-      app.globalData.address = sAddress
+      app.globalData.map.startLatitude = sLat;
+      app.globalData.map.startLongitude = sLng;
+      app.globalData.map.startBluraddress = sName;
+      app.globalData.map.startAddress = sAddress;
     }
     if (sID == '2') {
-      app.globalData.Elatitude = sLat
-      app.globalData.Elongitude = sLng
-      app.globalData.Ebluraddress = sName
-      app.globalData.Eaddress = sAddress
+      app.globalData.map.endLatitude = sLat;
+      app.globalData.map.endLongitude = sLng;
+      app.globalData.map.endBluraddress = sName;
+      app.globalData.map.endAddress = sAddress;
     }
 
     var that = this
@@ -69,21 +71,29 @@ Page({
           })
         }
       })
-      //获取位置信息
+      // 如果全局有经纬度 
+    if (app.globalData.map.startLatitude && app.globalData.map.startLongitude) {
+      that.setData({
+        globalMapData: app.globalData.map
+      });
+    } else {
+    //获取位置信息
       wx.getLocation({
         type: 'gcj02',
         success: (e) => {
-          var that = this;
-          app.globalData.Elatitude = e.latitude
-          app.globalData.Elongitude = e.longitude
+          app.globalData.map.startLatitude = e.latitude;
+          app.globalData.map.startLongitude = e.longitude;
+          
           qqmapsdk.reverseGeocoder({
             location: {
               latitude: e.latitude,
               longitude: e.longitude
             },
-            success: function (e) {
-              app.globalData.latitude = e.latitude;
-              app.globalData.longitude = e.longitude
+            success: function (res) {
+              app.globalData.map.startAddress = res.result.address;
+              that.setData({
+                globalMapData: app.globalData.map
+              });
             },
             fail: function (e) {
               console.log(e);
@@ -105,8 +115,10 @@ Page({
           })
         }
       })
+    }
   },
   onReady: function() {
+    console.log('onReady',app.globalData);
     this.mapCtx = wx.createMapContext("xMap");
   },
   goToPage: function(e) {
@@ -119,6 +131,7 @@ Page({
       url: '/pages/search/search?searchID=' + e.currentTarget.dataset.id,
     })
   },
+  // 设置地图中心点
   bindregionchange: function(e) {
     var that = this
     this.mapCtx.getCenterLocation({

@@ -34,6 +34,19 @@ App({
     })
   },
   globalData: {
+    // 预约车
+    map: {
+      // 我的位置
+      startLatitude: null,
+      startLongitude: null,
+      startBluraddress: null,
+      startAddress: '我的位置',
+      endLatitude: null,
+      endLongitude: null,
+      endBluraddress: null,
+      endAddress: ''
+    },
+
     userInfo: null,
     latitude: '',
     longitude: '',

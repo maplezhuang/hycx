@@ -1,14 +1,14 @@
 <view class="container">
   <view class='tabs-item'>
     <view class='topTabSwiper'>
-      <view class="tabs-item-li {{curIndex=='0'? 'active' : ''}}" data-id="0" bindtap="tabMenu">{{globalData.Ebluraddress}}快车</view>
+      <view class="tabs-item-li {{curIndex=='0'? 'active' : ''}}" data-id="0" bindtap="tabMenu">快车</view>
       <view class="tabs-item-li {{curIndex=='1'? 'active' : ''}}" data-id="1" bindtap="tabMenu">预约专车</view>
       <view class='tabs-item-li'>
         <navigator url="/pages/order/order" hover-class="none">订单</navigator>
       </view>
     </view>
   </view>
-  <map class="xMap" id='xMap' latitude="{{latitude}}" longitude="{{longitude}}" scale="{{scale}}" bindregionchange="bindregionchange"     style="height:{{mapHeight}}px" show-location>
+  <map class="xMap" id='xMap' latitude="{{globalMapData.startLatitude}}" longitude="{{globalMapData.startLongitude}}" scale="{{scale}}" bindregionchange="bindregionchange"     style="height:{{mapHeight}}px" show-location>
     <cover-view class="markerStart">
       <cover-image src='../../pages/image/markerStart.png' />
     </cover-view>
@@ -44,11 +44,11 @@
 
     <view class='inputText nowAdd' wx:if="{{isGoBtn==false}}">
       <view class='icon'></view>
-      <view class='xx' bindtap="goToSearch" data-id="1">{{globalData.bluraddress}}</view>
+      <view class='xx' bindtap="goToSearch" data-id="1">{{globalMapData.startAddress}}</view>
     </view>
     <view class='inputText goAdd' wx:if="{{isGoBtn==false}}">
       <view class='icon '></view>
-      <view class='xx' bindtap='goToSearch' data-id="2">{{globalData.Ebluraddress}}</view>
+      <view class='xx' bindtap='goToSearch' data-id="2">{{globalMapData.endAddress}}</view>
     </view>
     <cover-view class='goBtn' wx:if="{{isGoBtn==true}}">
       <button >{{carXx}}</button>
