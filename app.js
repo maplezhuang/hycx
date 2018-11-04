@@ -31,28 +31,7 @@ App({
           })
         }
       }
-    }),
-    //获取位置信息
-    wx.getLocation({
-      type: 'gcj02',
-      success: (e) => {
-        var that = this;
-        qqmapsdk.reverseGeocoder({
-          location: {
-            latitude: e.latitude,
-            longitude: e.longitude
-          },
-          success: function (e) {
-            app.globalData.location = location
-            that.setData({
-              address: e.result.address,
-              bluraddress: e.result.formatted_addresses.recommend,
-            })
-          }
-        });
-      },
-    }),
-
+    })
   },
   globalData: {
     userInfo: null,
