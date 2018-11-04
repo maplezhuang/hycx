@@ -44,11 +44,11 @@
 
     <view class='inputText nowAdd' wx:if="{{isGoBtn==false}}">
       <view class='icon'></view>
-      <view class='xx' bindtap="goToSearch" data-id="1">{{bluraddress}}</view>
+      <view class='xx' bindtap="goToSearch" data-id="1">{{globalData.bluraddress}}</view>
     </view>
     <view class='inputText goAdd' wx:if="{{isGoBtn==false}}">
       <view class='icon '></view>
-      <view class='xx' bindtap='goToSearch' data-id="2">{{Ebluraddress}}</view>
+      <view class='xx' bindtap='goToSearch' data-id="2">{{globalData.Ebluraddress}}</view>
     </view>
     <cover-view class='goBtn' wx:if="{{isGoBtn==true}}">
       <button >{{carXx}}</button>

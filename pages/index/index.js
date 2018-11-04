@@ -11,6 +11,7 @@ var currentMinute = date.getMinutes();
 
 Page({
   data: {
+    globalData:app.globalData,
     mapHeight: 0,
     currentData: 0,
     scale: 20,
@@ -70,23 +71,28 @@ Page({
       }),
       //获取位置信息
       wx.getLocation({
-        type: 'gcj02',
-        success: (e) => {
-          var that = this;
+      type: 'gcj02',
+        success: function (e) {
+          var latitude = e.latitude;
+          var longitude = e.longitude;
           qqmapsdk.reverseGeocoder({
             location: {
-              latitude: e.latitude,
-              longitude: e.longitude
+              latitude: latitude,
+              longitude: longitude
             },
             success: function (e) {
-              app.globalData.location = location
-              that.setData({
-                address: e.result.address,
-                bluraddress: e.result.formatted_addresses.recommend,
-              })
+              app.globalData.latitude = latitude;
+              app.globalData.longitude = longitude
+            },
+            fail: function (e) {
+              console.log(e);
+            },
+            complete: function (e) {
+              console.log(e);
             }
           });
-        },
+
+        }
       }),
       wx.getSystemInfo({
         success: (e) => {
@@ -117,18 +123,17 @@ Page({
     var that = this
     this.mapCtx.getCenterLocation({
       success: function(e) {
-        app.globalData.strLatitude = e.latitude
-        app.globalData.strLongitude = e.longitude
+        app.globalData.latitude = e.latitude
+        app.globalData.longitude = e.longitude
         qqmapsdk.reverseGeocoder({
           location: {
             latitude: e.latitude,
             longitude: e.longitude,
           },
           success: function(e) {
-            that.setData({
-              address: e.result.address,
-              bluraddress: e.result.formatted_addresses.recommend
-            })
+            app.globalData.address = e.result.address
+            app.globalData.bluraddress = e.result.formatted_addresses.recommend
+
           }
         });
       }
