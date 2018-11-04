@@ -8,7 +8,7 @@
       </view>
     </view>
   </view>
-  <map class="xMap" id='xMap' latitude="{{latitude}}" longitude="{{longitude}}" scale="{{scale}}" bindregionchange="bindregionchange"     style="height:{{mapHeight}}px" show-location>
+  <map class="xMap" id='xMap' latitude="{{lat}}" longitude="{{lng}}" scale="{{scale}}" bindregionchange="bindregionchange"     style="height:{{mapHeight}}px" show-location>
     <cover-view class="markerStart">
       <cover-image src='../../pages/image/markerStart.png' />
     </cover-view>
@@ -44,7 +44,7 @@
 
     <view class='inputText nowAdd' wx:if="{{isGoBtn==false}}">
       <view class='icon'></view>
-      <view class='xx' bindtap="goToSearch" data-id="1">{{globalData.bluraddress}}</view>
+      <view class='xx' bindtap="goToSearch" data-id="1">{{globalData.address}}</view>
     </view>
     <view class='inputText goAdd' wx:if="{{isGoBtn==false}}">
       <view class='icon '></view>

@@ -11,7 +11,10 @@ var currentMinute = date.getMinutes();
 
 Page({
   data: {
-    globalData:app.globalData,
+    globalData: app.globalData,
+    lat: '',
+    lng: '',
+    strAdd:'',
     mapHeight: 0,
     currentData: 0,
     scale: 20,
@@ -73,23 +76,20 @@ Page({
       wx.getLocation({
         type: 'gcj02',
         success: (e) => {
-          var that = this;
-          app.globalData.Elatitude = e.latitude
-          app.globalData.Elongitude = e.longitude
+          app.globalData.latitude = e.latitude
+          app.globalData.longitude = e.longitude
+          this.setData({
+            lat: e.latitude,
+            lng: e.longitude
+          })
           qqmapsdk.reverseGeocoder({
             location: {
               latitude: e.latitude,
               longitude: e.longitude
             },
             success: function (e) {
-              app.globalData.latitude = e.latitude;
-              app.globalData.longitude = e.longitude
-            },
-            fail: function (e) {
-              console.log(e);
-            },
-            complete: function (e) {
-              console.log(e);
+              app.globalData.address = e.result.address
+              console.log(app.globalData.address)
             }
           });
         }
