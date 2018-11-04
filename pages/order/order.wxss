@@ -2,7 +2,7 @@
 .order .title{font-size:30rpx; line-height: 80rpx; color:#4b4c60; padding: 0 40rpx;}
 .order .order_li{padding: 20rpx; background-color: #fff; margin-bottom: 5px; font-size:30rpx; line-height: 44rpx; color:#4b4c60; position: relative}
 .order .order_li .tit{font-size:32rpx; line-height: 44rpx; font-weight: bold;}
-.order .order_li .state{font-size:28rpx; line-height: 44rpx; position: absolute; right: 10px; top: 5px; color:#22c49f}
+.order .order_li .state{font-size:28rpx; line-height: 44rpx; position: absolute; right: 10px; top: 5px; color:#48acf7}
 .order .order_li .state.off{color:#c2c2c2}
 .order .order_li .order_txt{ position: relative; padding-left: 15px;}
 .order .order_li .order_txt::after{ content: ''; width: 20rpx; height: 20rpx; border-radius: 50%; display: block; position: absolute; left: 0; top: 50%; transform: translateY(-50%); -webkit-transform: translateY(-50%);}
