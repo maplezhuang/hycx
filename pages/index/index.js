@@ -3,7 +3,6 @@ var qqmapsdk;
 qqmapsdk = new QQMapWX({
   key: 'Q6IBZ-QHNR2-XOGUX-C7C7F-R3JV7-OUB67' //申请自己的开发者密钥
 });
-
 const app = getApp()
 var date = new Date();
 var currentHours = date.getHours();
@@ -14,7 +13,7 @@ Page({
     globalMapData: app.globalData.map,
     mapHeight: 0,
     currentData: 0,
-    scale: 18,
+    scale: 20,
     userInfo: {},
     cType: 0,
     isGoBtn: false,
@@ -30,7 +29,7 @@ Page({
     ],
     multiIndex: [0, 0, 0],
   },
-  onLoad: function (options) {
+  onLoad: function(options) {
     //console.log('onLoad',app.globalData);
     var that = this;
     let sID = options.sID;
@@ -51,67 +50,14 @@ Page({
       app.globalData.map.endLatitude = sLat;
       app.globalData.map.endLongitude = sLng;
       app.globalData.map.endAddress = sAddress;
-      // app.globalData.map.endAddress = sAddress;
-      that.setData({
-        globalMapData: app.globalData.map
-      });
     }
 
     var that = this
     //json数据临时调用
     wx.getStorage({
-        key: 'userInfo',
-        success: function(e) {
-          setTimeout(function() {
-            var query = wx.createSelectorQuery();
-            query.select('#xContent').boundingClientRect()
-            query.exec(function(e) {
-              that.setData({
-                mapHeight: wx.getSystemInfoSync().windowHeight - e[0].height - 43
-              });
-            })
-          }, 100)
-          that.setData({
-            userInfo: e.data
-          })
-        }
-      })
-      // 如果全局有经纬度
-    if (app.globalData.map.startLatitude && app.globalData.map.startLongitude) {
-      that.setData({
-        globalMapData: app.globalData.map
-      });
-    } else {
-    //获取位置信息
-      wx.getLocation({
-        type: 'gcj02',
-        success: (e) => {
-          app.globalData.map.startLatitude = e.latitude;
-          app.globalData.map.startLongitude = e.longitude;
-
-          qqmapsdk.reverseGeocoder({
-            location: {
-              latitude: e.latitude,
-              longitude: e.longitude
-            },
-            success: function (res) {
-              //console.log(res);
-              app.globalData.map.startAddress = res.result.address;
-              that.setData({
-                globalMapData: app.globalData.map
-              });
-            },
-            fail: function (e) {
-              //console.log(e);
-            },
-            complete: function (e) {
-              //console.log(e);
-            }
-          });
-        }
-      }),
-      wx.getSystemInfo({
-        success: (e) => {
+      key: 'userInfo',
+      success: function(e) {
+        setTimeout(function() {
           var query = wx.createSelectorQuery();
           query.select('#xContent').boundingClientRect()
           query.exec(function(e) {
@@ -119,8 +65,65 @@ Page({
               mapHeight: wx.getSystemInfoSync().windowHeight - e[0].height - 43
             });
           })
-        }
-      })
+        }, 100)
+        that.setData({
+          userInfo: e.data
+        })
+      }
+    })
+    // 如果全局有经纬度
+    if (app.globalData.map.startLatitude && app.globalData.map.startLongitude) {
+      that.setData({
+        globalMapData: app.globalData.map
+      });
+    } else {
+      //获取位置信息
+      wx.getLocation({
+          type: 'gcj02',
+          success: (e) => {
+            app.globalData.map.startLatitude = e.latitude;
+            app.globalData.map.startLongitude = e.longitude;
+
+            qqmapsdk.reverseGeocoder({
+              location: {
+                latitude: e.latitude,
+                longitude: e.longitude
+              },
+              success: function(res) {
+                //console.log(res);
+                app.globalData.map.startAddress = res.result.address;
+                that.setData({
+                  // markers: [{
+                  //   iconPath: "../pages/image/markerStart.png",
+                  //   id: 0,
+                  //   latitude: e.latitude,
+                  //   longitude: e.longitude,
+                  //   width: 30,
+                  //   height: 44
+                  // }],
+                  globalMapData: app.globalData.map,
+                });
+              },
+              fail: function(e) {
+                //console.log(e);
+              },
+              complete: function(e) {
+                //console.log(e);
+              }
+            });
+          }
+        }),
+        wx.getSystemInfo({
+          success: (e) => {
+            var query = wx.createSelectorQuery();
+            query.select('#xContent').boundingClientRect()
+            query.exec(function(e) {
+              that.setData({
+                mapHeight: wx.getSystemInfoSync().windowHeight - e[0].height - 43
+              });
+            })
+          }
+        })
     }
   },
   onReady: function() {
@@ -150,15 +153,63 @@ Page({
             longitude: e.longitude,
           },
           success: function(e) {
-            app.globalData.address = e.result.address
-            app.globalData.bluraddress = e.result.formatted_addresses.recommend
+            app.globalData.map.startAddress = e.result.formatted_addresses.recommend
+            app.globalData.map.startLatitude = e.result.location.lat
+            app.globalData.map.startLongitude = e.result.location.lng
+            that.setData({
+              globalMapData: app.globalData.map
+            });
           }
-        });
+        })
       }
     })
   },
   moveToLocation: function() {
     this.mapCtx.moveToLocation()
+  },
+  driving: function() {
+    var _this = this;
+    var urls = 'https://apis.map.qq.com/ws/direction/v1/driving/?from=39.989221,116.306076&to=39.828050,116.436195&key=' + qqmapsdk.key
+
+    console.log(urls)
+    //网络请求设置
+    var opt = {
+      url: urls,
+      method: 'GET',
+      dataType: 'json',
+      //请求成功回调
+      success: function(res) {
+        var ret = res.data
+        if (ret.status != 0) return; //服务异常处理
+        var coors = ret.result.routes[0].polyline,
+          pl = [];
+        //坐标解压（返回的点串坐标，通过前向差分进行压缩）
+        var kr = 1000000;
+        for (var i = 2; i < coors.length; i++) {
+          coors[i] = Number(coors[i - 2]) + Number(coors[i]) / kr;
+        }
+        //将解压后的坐标放入点串数组pl中
+        for (var i = 0; i < coors.length; i += 2) {
+          pl.push({
+            latitude: coors[i],
+            longitude: coors[i + 1]
+          })
+        }
+        //设置polyline属性，将路线显示出来
+        _this.setData({
+          polyline: [{
+            points: pl,
+            color: '#FF0000DD',
+            width: 2
+          }]
+        })
+      }
+    };
+    wx.request(opt);
+  },
+  gogo: function(e) {
+    // console.log(e);
+    // this.driving();
   },
   tabMenu: function(e) {
     var that = this

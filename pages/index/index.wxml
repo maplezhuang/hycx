@@ -8,12 +8,12 @@
       </view>
     </view>
   </view>
-  <map class="xMap" id='xMap' latitude="{{globalMapData.startLatitude}}" longitude="{{globalMapData.startLongitude}}" scale="{{scale}}" bindregionchange="bindregionchange"     style="height:{{mapHeight}}px" show-location>
+  <map class="xMap" id='xMap' latitude="{{globalMapData.startLatitude}}" longitude="{{globalMapData.startLongitude}}" scale="{{scale}}" bindregionchange="bindregionchange" polyline="{{polyline}}" style="height:{{mapHeight}}px" show-location>
     <cover-view class="markerStart">
       <cover-image src='../../pages/image/markerStart.png' />
     </cover-view>
-    <cover-view class="markerStart">
-      <cover-image src='../../pages/image/markerStart.png' />
+    <cover-view class="markerEnd">
+      <cover-image src='../../pages/image/markerEnd.png' />
     </cover-view>
     <cover-view class="csdw" bindtap="moveToLocation">
       <cover-image src='../../pages/image/location.png' />
@@ -51,9 +51,7 @@
       <view class='xx' bindtap='goToSearch' data-id="2">{{globalMapData.endAddress}}</view>
     </view>
     <cover-view class='goBtn' wx:if="{{isGoBtn==true}}">
-      <button >{{carXx}}</button>
+      <button bindlongtap='gogo'>{{carXx}}</button>
     </cover-view>
-    
   </view>
-
 </view>
