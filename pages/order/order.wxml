@@ -3,9 +3,9 @@
   <scroll-view scroll-y style="height: 90vh;">
     <view class='complete'>
       <block wx:for="{{dataList}}" wx:key="item">
-        <view class='order_li'>
+        <view class='order_li' bindtap='orderInfo' data-name="{{item.orderId}}">
           <view class='tit'>{{item.orderN}}</view>
-          <view class="state {{item.state == '已完成'? 'off' : ''}}" bindtap='orderInfo' data-name="{{item.orderId}}"> {{item.state}} > </view>
+          <view class="state {{item.state == '已完成'? 'off' : ''}}"> {{item.state}} > </view>
           <view class='order_txt timer'>{{item.endTime}}</view>
           <view class='order_txt order_start'>{{item.sAdd}}</view>
           <view class='order_txt order_end'>{{item.eAdd}}</view>
@@ -15,10 +15,10 @@
   </scroll-view>
 
   <!-- 详细信息 -->
-  <view class="orderInfo {{isClose?'block':'hide'}}" data-name="{{oID}}">
-    <view class='main'>
-      <block wx:if="{{dataList.orderId === oID}}" wx:key="iInfo"></block>
-      <view class='close' bindtap='clickClose'></view>
+  <view class="orderInfo {{isClose?'block':'hide'}}" data-name="{{oID}}" catchtap='clickClose'>
+    <view class='main' catchtap="catchBind">
+      <!-- <block wx:if="{{dataList.orderId === oID}}" wx:key="iInfo"></block> -->
+      <view class='close' catchtap='clickClose'></view>
       <view class='ddState'>订单已完成</view>
       <view class='ddNum'>订单号码：100000000000</view>
       <view class='left'>
@@ -29,19 +29,20 @@
         <view class='lx'>时租</view>
         <view class='cph'><view>粤A00000</view></view>
       </view>
-      <view class='yyqcsj'>预约取车时间： 2018-11-03 16:00</view>
-      <view class='qcd'>取车点： 深圳</view>
-      <view class='hcd'>还车点： 广州</view>
-      <view class='yyhcsj'>预约还车时间： 2018-11-03 18:00</view>
-      <view class='sjqcsj'>实际取车时间： 2018-11-03 16:04</view>
-      <view class='sjhcsj'>实际还车时间： 2018-11-03 17:50</view>
-      <view class='qslc'>起始里程： 10</view>
-      <view class='jslc'>结束里程： 110</view>
+      <view class='yyqcsj'><i class="tip"></i>预约取车时间： 2018-11-03 16:00</view>
+      <view class='qcd'><i class="tip tip1"></i>取车点： 深圳</view>
+      <view class='hcd'><i class="tip tip2"></i>还车点： 广州</view>
+      <view class='yyhcsj'><i class="tip"></i>预约还车时间： 2018-11-03 18:00</view>
+      <view class='sjqcsj'><i class="tip tip1"></i>实际取车时间： 2018-11-03 16:04</view>
+      <view class='sjhcsj'><i class="tip tip2"></i>实际还车时间： 2018-11-03 17:50</view>
+      <!-- <view class='qslc'>起始里程： 10</view> -->
+      <!-- <view class='jslc'>结束里程： 110</view> -->
       <!-- <view class='yjfy'>预计费用： 330</view> -->
       <!-- <view class='zj'>租金： 140.58</view> -->
-      <!-- <view class='zfy'> -->
+      <view class='zfy'>
         <!-- <view><b class="je">140.58</b>元</view> -->
-      <!-- </view> -->
+        <view catchtap='cancelOrder'><b class="je">取消预约</b></view>
+      </view>
     </view>
   </view>
 </view>

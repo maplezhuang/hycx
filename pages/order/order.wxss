@@ -14,14 +14,28 @@
 .order .orderInfo.block{ display: block;}
 .order .orderInfo.hide{ display: none;}
 .order .orderInfo .main{ width: 80vw; height: auto; position: absolute; left: 50%; top:50%; transform: translate(-50%,-50%); -webkit-transform: translate(-50%,-50%); padding: 0 30rpx; border-radius: 10px; background-color: #fff; box-shadow: 0 0 5px rgba(177, 177, 177, 0.7);}
-.order .orderInfo .main .close{ width: 80rpx; height: 80rpx; border-radius: 50%; position: absolute; right: 12rpx; top: 12rpx; background: url('http://maplezhuang.web3v.com/hycx/image/close.png') no-repeat center center / 100%}
+.order .orderInfo .main .close{ width: 50rpx; height: 50rpx; border-radius: 50%; position: absolute; right: 20rpx; top: 12rpx; background: url('http://maplezhuang.web3v.com/hycx/image/close.png') no-repeat center center / 100%}
 .order .orderInfo .ddState{font-size:32rpx; line-height: 60rpx; text-align: center; margin-top:10rpx;}
 .order .orderInfo .ddNum,.order .orderInfo .left,.order .orderInfo .right,.order .orderInfo .yyqcsj,.order .orderInfo .yyhcsj,.order .orderInfo .qcd,.order .orderInfo .hcd,.order .orderInfo .sjqcsj,.order .orderInfo .sjhcsj,.order .orderInfo .qslc,.order .orderInfo .jslc,.order .orderInfo .yjfy,.order .orderInfo .zj{width: 100%; float: left; font-size:28rpx; line-height: 44rpx;}
 .order .orderInfo .left,.order .orderInfo .right{ width: 44%; margin: 5rpx 3% 10rpx; float: left; text-align: center;}
 .order .orderInfo .right .cph view{display: table; margin: 0 auto; padding:0 8rpx; height: 38rpx; line-height: 38rpx; border-radius: 10rpx; border: 1px solid #00aeff; color:#00aeff}
 .order .orderInfo .zfy{width: 100%; float:left; margin-top: 10rpx; border-top: 1px solid #cfcfcf; text-align: cetner; font-size:30rpx; line-height: 80rpx;}
 .order .orderInfo .zfy view{display: table; margin: 0 auto;}
-.order .orderInfo .zfy .je{font-size:44rpx; color:#ff0202;}
+.order .orderInfo .zfy .je{font-size:34rpx; color:#48acf7;}
+.order .orderInfo .tip{
+  width: 20rpx;
+  height: 20rpx;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 20rpx;
+  background-color: #cfcfcf;
+}
+.order .orderInfo .tip1{
+  background-color: #aaa;
+}
+.order .orderInfo .tip2{
+  background-color: #f09e23;
+}
 
 
 
