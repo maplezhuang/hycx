@@ -20,7 +20,7 @@
 }
 
 .share-car .share-box .time-item .timeSty {
-  width:148rpx;
+  width: 148rpx;
   display: table;
   float: left;
   margin: 0 24rpx;
@@ -32,13 +32,11 @@
   font-size: 34rpx;
   line-height: 50rpx;
   font-weight: bold;
-  text-align:center;
-
-  
+  text-align: center;
 }
 
 .share-car .share-box .time-item .xw {
-  width: 100%; 
+  width: 100%;
   float: left;
   font-size: 28rpx;
   line-height: 28rpx;
@@ -47,11 +45,12 @@
 
 .share-car .share-box .time-item .dayNum {
   float: left;
-  font-size:28rpx;
+  font-size: 28rpx;
   margin: 0 116rpx;
-  position: relative
+  position: relative;
 }
-.share-car .share-box .time-item .dayNum::before{
+
+.share-car .share-box .time-item .dayNum::before {
   content: '';
   width: 100rpx;
   height: 2rpx;
@@ -62,26 +61,32 @@
   top: 50rpx;
   margin-left: -50rpx;
 }
-.share-car .share-box .time-item .constNum{
+
+.share-car .share-box .time-item .constNum {
   position: relative;
 }
-.share-car .share-box .time-item .constNum::before,.share-car .share-box .time-item .constNum::after{
+
+.share-car .share-box .time-item .constNum::before,
+.share-car .share-box .time-item .constNum::after {
   content: '';
   width: 10rpx;
   height: 10rpx;
   border: 1rpx solid #e1e1e1;
   border-radius: 50%;
   display: block;
-  position: absolute; 
+  position: absolute;
   top: 44rpx;
 }
-.share-car .share-box .time-item .constNum::before{
+
+.share-car .share-box .time-item .constNum::before {
   left: -40rpx;
 }
-.share-car .share-box .time-item .constNum::after{
+
+.share-car .share-box .time-item .constNum::after {
   right: -40rpx;
   background-color: #e9e6e9;
 }
+
 .share-car .share-box .item {
   padding: 20rpx 20rpx 20rpx 80rpx;
   position: relative;
@@ -139,7 +144,7 @@
   width: 100%;
   height: 70vh;
   position: relative;
-  top: 35px;
+  top: 41px;
 }
 
 .xMap .csdw {
@@ -236,9 +241,10 @@
   line-height: 54rpx;
   color: #98999e;
   border-bottom: 1px solid #f5f5f5;
+  float: left;
 }
 
-.xContent .user-info .names {
+.xContent .user-info .names,.xContent .user-info .phone {
   float: left;
   margin-right: 15rpx;
 }
@@ -254,6 +260,11 @@
 
 .xContent .jshcz {
   width: 196rpx;
+}
+
+.xContent .ShuttleType {
+  width: 100%;
+  float: left;
 }
 
 .xContent .options {
@@ -289,6 +300,8 @@
 }
 
 .xContent .inputText {
+  width:100%;
+  float: left;
   height: 80rpx;
   padding: 0 40rpx;
   position: relative;

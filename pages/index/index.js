@@ -117,15 +117,15 @@ Page({
     wx.getStorage({
       key: 'userInfo',
       success: function(e) {
-        var that = this;
+        //var that = this;
         var query = wx.createSelectorQuery();
         query.select('#xContent').boundingClientRect()
         query.exec(function (e) {
           setTimeout(() => {
             that.setData({
-              mapHeight: (wx.getSystemInfoSync().windowHeight - e[0].height - 36) || 0
+              mapHeight: (wx.getSystemInfoSync().windowHeight - e[0].height - 42) || 0
             });
-          }, 100)
+          }, 200)
         })
         that.setData({
           userInfo: e.data
@@ -134,13 +134,12 @@ Page({
     })
     // 如果全局有经纬度
     if (app.globalData.map.startLatitude && app.globalData.map.startLongitude) {
-      var that = this;
       var query = wx.createSelectorQuery();
       query.select('#xContent').boundingClientRect()
       query.exec(function (e) {
         setTimeout(() => {
           that.setData({
-            mapHeight: (wx.getSystemInfoSync().windowHeight - e[0].height - 36) || 0
+            mapHeight: (wx.getSystemInfoSync().windowHeight - e[0].height - 42) || 0
           });
         }, 100)
       })
@@ -186,15 +185,14 @@ Page({
         wx.getSystemInfo({
           success: (e) => {
             if (this.data.curIndex == '1' || this.data.curIndex == '0') {
-              var that = this;
               var query = wx.createSelectorQuery();
               query.select('#xContent').boundingClientRect()
               query.exec(function (e) {
                 setTimeout(() => {
                   that.setData({
-                    mapHeight: (wx.getSystemInfoSync().windowHeight - e[0].height - 36) || 0
+                    mapHeight: (wx.getSystemInfoSync().windowHeight - e[0].height - 42) || 0
                   });
-                }, 100)
+                }, 200)
               })
             }
           }
@@ -219,18 +217,6 @@ Page({
   goToUI: function(e) {
     wx.navigateTo({
       url: '/pages/user/userInfo?uname=' + e.currentTarget.dataset.un + '&uphone=' + e.currentTarget.dataset.up
-    })
-  },
-  setHeight: function(){
-    var that = this;
-    var query = wx.createSelectorQuery();
-    query.select('#xContent').boundingClientRect()
-    query.exec(function (e) {
-      setTimeout(() => {
-        that.setData({
-          mapHeight: (wx.getSystemInfoSync().windowHeight - e[0].height - 36) || 0
-        });
-      }, 100)
     })
   },
   // 设置地图中心点
@@ -265,6 +251,17 @@ Page({
   },
   tabMenu: function(e) {
     var that = this
+    if (e.target.dataset.id == '1'){
+      setTimeout(function () {
+        var query = wx.createSelectorQuery();
+        query.select('#xContent').boundingClientRect()
+        query.exec(function (e) {
+          that.setData({
+            mapHeight: (wx.getSystemInfoSync().windowHeight - e[0].height - 42) || 0
+          });
+        })
+      }, 100)
+    }    
     this.setData({
       curIndex: e.target.dataset.id,
       isGoBtn: false,
@@ -275,15 +272,15 @@ Page({
   cTypeTap: function(e) {
     if (e.target.dataset.id == '1' || e.target.dataset.id == '0') {
       var that = this;
-      var query = wx.createSelectorQuery();
-      query.select('#xContent').boundingClientRect()
-      query.exec(function (e) {
-        setTimeout(() => {
+      setTimeout(function () {
+        var query = wx.createSelectorQuery();
+        query.select('#xContent').boundingClientRect()
+        query.exec(function (e) {
           that.setData({
-            mapHeight: (wx.getSystemInfoSync().windowHeight - e[0].height - 36) || 0
+            mapHeight: (wx.getSystemInfoSync().windowHeight - e[0].height - 42) || 0
           });
-        }, 100)
-      })
+        })
+      }, 100)
     }
     this.setData({
       cType: e.target.dataset.id,
@@ -291,22 +288,33 @@ Page({
   },
   goToBack: function() {
     var that = this
-    var query = wx.createSelectorQuery();
-    query.select('#xContent').boundingClientRect()
-    query.exec(function (e) {
-      setTimeout(() => {
+    setTimeout(function () {
+      var query = wx.createSelectorQuery();
+      query.select('#xContent').boundingClientRect()
+      query.exec(function (e) {
         that.setData({
-          mapHeight: (wx.getSystemInfoSync().windowHeight - e[0].height - 36) || 0
+          mapHeight: (wx.getSystemInfoSync().windowHeight - e[0].height - 42) || 0
         });
-      }, 100)
-    })
+      })
+    }, 100)
     this.setData({
       isGoBtn: false,
       isGotoBackBtn: false
     });
   },
-
-
+  // setHeight: function () {
+  //   var that = this;
+  //   var query = wx.createSelectorQuery();
+  //   query.select('#xContent').boundingClientRect()
+  //   query.exec(function (e) {
+  //     console.log(e[0].height)
+  //     setTimeout(() => {
+  //       that.setData({
+  //         mapHeight: (wx.getSystemInfoSync().windowHeight - e[0].height - 42) || 0
+  //       });
+  //     }, 100)
+  //   })
+  // },
   //--------时间----------
   pickerTap: function() {
     date = new Date();
