@@ -52,10 +52,18 @@ Page({
   //------------- 共享汽车 -----------------
   // 取车点
   shareStartShop(item) {
-    const self = this;
-    self.shareCar.startAddress = self.shareShopData[item.detail.value].name
+    var that = this;
+    that.data.shareCar.startAddress = that.data.shareShopData[parseInt(item.detail.value)].name
     this.setData({
-      shareCar: self.shareCar
+      shareCar: that.data.shareCar
+    })
+  },
+  // 还车点
+  shareEndShop(item) {
+    var that = this;
+    that.data.shareCar.endAddress = that.data.shareShopData[parseInt(item.detail.value)].name
+    this.setData({
+      shareCar: that.data.shareCar
     })
   },
 
