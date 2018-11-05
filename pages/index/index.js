@@ -199,6 +199,9 @@ Page({
         })
     }
   },
+  setHeight: function(){
+    
+  },
   onReady: function() {
     //console.log('onReady',app.globalData);
     this.mapCtx = wx.createMapContext("xMap");
