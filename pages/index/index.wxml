@@ -16,16 +16,16 @@
       <view class='share-box'>
         <view class="time-item">
           <view class='strTime timeSty' bindtap="changeTime">
-            <picker mode="multiSelector" bindchange="bindMultiPickerChange" bindcolumnchange="bindMultiPickerColumnChange" value="{{multiIndex}}" range="{{multiArray}}">
-              <view class='bold'>9-11</view>
-              <view class='xw'>{{multiArray[1][multiIndex[1]]}} {{multiArray[2][multiIndex[2]]}}</view>
+          <picker class='time-picker' mode="multiSelector" bindchange="bindStartMultiPickerChange" bindtap='pickerTap' bindcolumnchange="bindMultiPickerColumnChange" value="{{multiIndex}}" range="{{multiArray}}">
+              <view class='bold'>{{startMonthDay}}</view>
+              <view class='xw'>{{startHM}}</view>
             </picker>
           </view>
           <view class='dayNum'>
             <view class='constNum'>1天</view>
           </view>
           <view class='endTime timeSty' bindtap="changeTime">
-            <picker mode="multiSelector" bindchange="bindMultiPickerChange" bindcolumnchange="bindMultiPickerColumnChange" value="{{multiIndex}}" range="{{multiArray}}">
+            <picker class='time-picker' mode="multiSelector" bindchange="bindStartMultiPickerChange" bindtap='pickerTap' bindcolumnchange="bindMultiPickerColumnChange" value="{{multiIndex}}" range="{{multiArray}}">
               <view class='bold'>9-12</view>
               <view class='xw'>{{multiArray[1][multiIndex[1]]}} {{multiArray[2][multiIndex[2]]}}</view>
             </picker>

@@ -1,10 +1,11 @@
+const app = getApp()
+
 var QQMapWX = require('../../libs/qqmap-wx-jssdk.js');
 var qqmapsdk;
 qqmapsdk = new QQMapWX({
   key: 'Q6IBZ-QHNR2-XOGUX-C7C7F-R3JV7-OUB67' //申请自己的开发者密钥
 });
 
-const app = getApp()
 var date = new Date();
 var currentHours = date.getHours();
 var currentMinute = date.getMinutes();
@@ -42,8 +43,11 @@ Page({
     isGotoBackBtn: false,
     carXx: '呼叫司机',
     carXx2: '预约车辆',
-
     startDate: "请选择日期",
+    startMonthDay: '',
+    startHM: '',
+    endMonthDay: '',
+    endHM: '',
     multiArray: [
       ['今天', '明天', '后天'],
       [0, 1, 2, 3, 4, 5, 6],
@@ -257,7 +261,7 @@ Page({
       isGotoBackBtn: false
     });
   },
-  gogo: function (e) {
+  gogo: function(e) {
 
   },
 
@@ -276,7 +280,7 @@ Page({
             latitude: e.latitude,
             longitude: e.longitude,
           },
-          success: function (e) {
+          success: function(e) {
             app.globalData.map.startAddress = e.result.formatted_addresses.recommend
             app.globalData.map.startLatitude = e.result.location.lat
             app.globalData.map.startLongitude = e.result.location.lng
@@ -307,7 +311,7 @@ Page({
     }
   },
   //左下点击回到当前定位
-  moveToLocation: function () {
+  moveToLocation: function() {
     this.mapCtx.moveToLocation()
   },
 
@@ -318,6 +322,10 @@ Page({
     var monthDay = ['今天', '明天', '后天'];
     var hours = [];
     var minute = [];
+
+    var daye  = date.getDate();
+    var monthe = date.getMonth() + 1;
+    console.log(daye, monthe);
 
     currentHours = date.getHours();
     currentMinute = date.getMinutes();
@@ -358,7 +366,6 @@ Page({
     };
     // 把选择的对应值赋值给 multiIndex
     data.multiIndex[e.detail.column] = e.detail.value;
-
     // 然后再判断当前改变的是哪一列,如果是第1列改变
     if (e.detail.column === 0) {
       // 如果第一列滚动到第一行
@@ -367,13 +374,10 @@ Page({
       } else {
         that.loadHoursMinute(hours, minute);
       }
-
       data.multiIndex[1] = 0;
       data.multiIndex[2] = 0;
-
       // 如果是第2列改变
     } else if (e.detail.column === 1) {
-
       // 如果第一列为今天
       if (data.multiIndex[0] === 0) {
         if (e.detail.value === 0) {
@@ -386,12 +390,10 @@ Page({
         that.loadHoursMinute(hours, minute);
       }
       data.multiIndex[2] = 0;
-
       // 如果是第3列改变
     } else {
       // 如果第一列为'今天'
       if (data.multiIndex[0] === 0) {
-
         // 如果第一列为 '今天'并且第二列为当前时间
         if (data.multiIndex[1] === 0) {
           that.loadData(hours, minute);
@@ -449,7 +451,7 @@ Page({
     }
   },
 
-  
+
   loadHoursMinute: function(hours, minute) {
     // 时
     for (var i = 0; i < 24; i++) {
@@ -503,25 +505,46 @@ Page({
     var hours = that.data.multiArray[1][e.detail.value[1]];
     var minute = that.data.multiArray[2][e.detail.value[2]];
 
+    var month = date.getMonth() + 1;
+    var day = date.getDate();
+
+    if (month < 10) {
+      month = '0' + month
+    }
+    if (day < 10) {
+      day = '0' + day
+    }
+
     if (monthDay === "今天") {
-      var month = date.getMonth() + 1;
-      var day = date.getDate();
-      monthDay = month + "月" + day + "日";
+      monthDay = month + "-" + day + " ";
     } else if (monthDay === "明天") {
       var date1 = new Date(date);
       date1.setDate(date.getDate() + 1);
-      monthDay = (date1.getMonth() + 1) + "月" + date1.getDate() + "日";
+      monthDay = (date1.getMonth() + 1) + "-" + date1.getDate() + " ";
 
     } else if (monthDay === "后天") {
       var date1 = new Date(date);
       date1.setDate(date.getDate() + 2);
-      monthDay = (date1.getMonth() + 1) + "月" + date1.getDate() + "日";
+      monthDay = (date1.getMonth() + 1) + "-" + date1.getDate() + " ";
     }
 
+    if (hours < 10) {
+      hours = '0' + hours
+      
+      var startDate = monthDay + " " + hours + ":" + minute;
+      var startMonthDay = monthDay;
+      var startHM = hours + ":" + minute;
+
+      var endMonthDay = emonthDay;
+      var endHM = hours + ":" + eminute;
+    }
     
-    var startDate = monthDay + " " + hours + ":" + minute;
     that.setData({
-      startDate: startDate
+      startDate : startDate,
+      startMonthDay: startMonthDay,
+      startHM: startHM,
+      endMonthDay: endMonthDay,
+      endHM: endHM
     })
   },
 })
