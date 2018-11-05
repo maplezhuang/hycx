@@ -10,7 +10,7 @@
   background-color: #fff;
   border-radius: 15rpx;
   box-shadow: 0 0 5rpx #ccc;
-  margin-bottom: 20rpx;
+  margin-bottom: 30rpx;
 }
 
 .share-car .share-box .time-item {
@@ -128,10 +128,10 @@
 
 .share-car .goBtn {
   width: 100%;
-  height: 80rpx;
-  background-color: #48acf7;
-  font-size: 28rpx;
-  line-height: 80rpx;
+  height: 100rpx;
+  background-color: #4b4c60;
+  font-size: 16px;
+  line-height: 100rpx;
   text-align: center;
   color: #fff;
   border-radius: 0;
@@ -152,7 +152,7 @@
   height: 32px;
   position: absolute;
   left: 20rpx;
-  bottom: 20rpx;
+  bottom: 55rpx;
 }
 
 .xMap .csdw image {
@@ -355,8 +355,8 @@
 
 .xContent .goBtn button {
   background-color: #4b4c60;
-  font-size: 16px;
-  line-height: 50px;
+  font-size: 32rpx;
+  line-height: 100rpx;
   text-align: center;
   color: #fff;
   border-radius: 0;

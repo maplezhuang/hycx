@@ -32,7 +32,7 @@ Page({
       name: '广汽丰田海珠店',
       label: '广汽丰田海珠店',
     }],
-    curIndex: 1,
+    curIndex: 2,
     mapHeight: 0,
     currentData: 0,
     scale: 20,
@@ -50,29 +50,6 @@ Page({
       [0, 10, 20]
     ],
     multiIndex: [0, 0, 0],
-  },
-  //------------- 共享汽车 -----------------
-  // 取车点
-  shareStartShop(item) {
-    var that = this;
-    that.data.shareCar.startAddress = that.data.shareShopData[parseInt(item.detail.value)].name
-    this.setData({
-      shareCar: that.data.shareCar
-    })
-  },
-  // 还车点
-  shareEndShop(item) {
-    var that = this;
-    that.data.shareCar.endAddress = that.data.shareShopData[parseInt(item.detail.value)].name
-    this.setData({
-      shareCar: that.data.shareCar
-    })
-  },
-  //-----------选取时间----------
-  bindTimeChange: function(e) {
-    // console.log(data);
-    // console.log(currentHours);
-    // console.log(currentMinute);
   },
   // -------------默认页面时间 -------------
   onLoad: function(options) {
@@ -106,27 +83,10 @@ Page({
       });
     }
 
-    // if(sID == '1' || sID == '2'){
-    //   this.setData({
-    //     globalMapData: app.globalData.map,
-    //     curIndex: app.globalData.index.curIndex
-    //   });
-    // }
-
     //json数据临时调用
     wx.getStorage({
       key: 'userInfo',
       success: function(e) {
-        //var that = this;
-        var query = wx.createSelectorQuery();
-        query.select('#xContent').boundingClientRect()
-        query.exec(function (e) {
-          setTimeout(() => {
-            that.setData({
-              mapHeight: (wx.getSystemInfoSync().windowHeight - e[0].height - 42) || 0
-            });
-          }, 200)
-        })
         that.setData({
           userInfo: e.data
         })
@@ -136,7 +96,7 @@ Page({
     if (app.globalData.map.startLatitude && app.globalData.map.startLongitude) {
       var query = wx.createSelectorQuery();
       query.select('#xContent').boundingClientRect()
-      query.exec(function (e) {
+      query.exec(function(e) {
         setTimeout(() => {
           that.setData({
             mapHeight: (wx.getSystemInfoSync().windowHeight - e[0].height - 42) || 0
@@ -187,7 +147,7 @@ Page({
             if (this.data.curIndex == '1' || this.data.curIndex == '0') {
               var query = wx.createSelectorQuery();
               query.select('#xContent').boundingClientRect()
-              query.exec(function (e) {
+              query.exec(function(e) {
                 setTimeout(() => {
                   that.setData({
                     mapHeight: (wx.getSystemInfoSync().windowHeight - e[0].height - 42) || 0
@@ -200,68 +160,61 @@ Page({
     }
   },
   onReady: function() {
-    //console.log('onReady',app.globalData);
     this.mapCtx = wx.createMapContext("xMap");
   },
+
+  //------------- 共享汽车 -----------------
+  // 取车点
+  shareStartShop(item) {
+    var that = this;
+    that.data.shareCar.startAddress = that.data.shareShopData[parseInt(item.detail.value)].name
+    this.setData({
+      shareCar: that.data.shareCar
+    })
+  },
+  // 还车点
+  shareEndShop(item) {
+    var that = this;
+    that.data.shareCar.endAddress = that.data.shareShopData[parseInt(item.detail.value)].name
+    this.setData({
+      shareCar: that.data.shareCar
+    })
+  },
+
+  //-----------点击跳转类----------
   goToPage: function(e) {
+    //跳转订单页面
     wx.navigateTo({
       url: '../order/order'
     })
   },
   goToSearch: function(e) {
+    //跳转地址搜索页面
     //console.log(e.currentTarget.dataset.curindex)
     wx.navigateTo({
       url: '/pages/search/search?searchID=' + e.currentTarget.dataset.id + '&curIndex=' + e.currentTarget.dataset.curindex
     })
   },
   goToUI: function(e) {
+    //跳转用户详情页面
     wx.navigateTo({
       url: '/pages/user/userInfo?uname=' + e.currentTarget.dataset.un + '&uphone=' + e.currentTarget.dataset.up
     })
   },
-  // 设置地图中心点
-  bindregionchange: function(e) {
-    var that = this
-    this.mapCtx.getCenterLocation({
-      success: function(e) {
-        app.globalData.latitude = e.latitude
-        app.globalData.longitude = e.longitude
-        qqmapsdk.reverseGeocoder({
-          location: {
-            latitude: e.latitude,
-            longitude: e.longitude,
-          },
-          success: function(e) {
-            app.globalData.map.startAddress = e.result.formatted_addresses.recommend
-            app.globalData.map.startLatitude = e.result.location.lat
-            app.globalData.map.startLongitude = e.result.location.lng
-            that.setData({
-              globalMapData: app.globalData.map
-            });
-          }
-        })
-      }
-    })
-  },
-  moveToLocation: function() {
-    this.mapCtx.moveToLocation()
-  },
-  gogo: function(e) {
-
-  },
   tabMenu: function(e) {
+    //顶部菜单点击
     var that = this
-    if (e.target.dataset.id == '1'){
-      setTimeout(function () {
+    if (e.target.dataset.id == '1') {
+      setTimeout(function() {
         var query = wx.createSelectorQuery();
         query.select('#xContent').boundingClientRect()
-        query.exec(function (e) {
+        query.exec(function(e) {
           that.setData({
             mapHeight: (wx.getSystemInfoSync().windowHeight - e[0].height - 42) || 0
           });
         })
       }, 100)
-    }    
+    }
     this.setData({
       curIndex: e.target.dataset.id,
       isGoBtn: false,
@@ -270,12 +223,13 @@ Page({
     })
   },
   cTypeTap: function(e) {
+    //实时与预约点击
     if (e.target.dataset.id == '1' || e.target.dataset.id == '0') {
       var that = this;
-      setTimeout(function () {
+      setTimeout(function() {
         var query = wx.createSelectorQuery();
         query.select('#xContent').boundingClientRect()
-        query.exec(function (e) {
+        query.exec(function(e) {
           that.setData({
             mapHeight: (wx.getSystemInfoSync().windowHeight - e[0].height - 42) || 0
           });
@@ -287,11 +241,12 @@ Page({
     });
   },
   goToBack: function() {
+    //地图左侧点击返回
     var that = this
-    setTimeout(function () {
+    setTimeout(function() {
       var query = wx.createSelectorQuery();
       query.select('#xContent').boundingClientRect()
-      query.exec(function (e) {
+      query.exec(function(e) {
         that.setData({
           mapHeight: (wx.getSystemInfoSync().windowHeight - e[0].height - 42) || 0
         });
@@ -302,20 +257,62 @@ Page({
       isGotoBackBtn: false
     });
   },
-  // setHeight: function () {
-  //   var that = this;
-  //   var query = wx.createSelectorQuery();
-  //   query.select('#xContent').boundingClientRect()
-  //   query.exec(function (e) {
-  //     console.log(e[0].height)
-  //     setTimeout(() => {
-  //       that.setData({
-  //         mapHeight: (wx.getSystemInfoSync().windowHeight - e[0].height - 42) || 0
-  //       });
-  //     }, 100)
-  //   })
-  // },
-  //--------时间----------
+  gogo: function (e) {
+
+  },
+
+
+  //-----------map设置----------
+  //设置地图中心点
+  getLngLat: function() {
+    var that = this;
+    this.mapCtx = wx.createMapContext("xMap");
+    this.mapCtx.getCenterLocation({
+      success: function(e) {
+        app.globalData.latitude = e.latitude
+        app.globalData.longitude = e.longitude
+        qqmapsdk.reverseGeocoder({
+          location: {
+            latitude: e.latitude,
+            longitude: e.longitude,
+          },
+          success: function (e) {
+            app.globalData.map.startAddress = e.result.formatted_addresses.recommend
+            app.globalData.map.startLatitude = e.result.location.lat
+            app.globalData.map.startLongitude = e.result.location.lng
+            that.setData({
+              globalMapData: app.globalData.map
+            });
+          }
+        })
+        that.setData({
+          longitude: e.longitude,
+          latitude: e.latitude,
+          markers: [{
+            id: 0,
+            iconPath: "../../image/markerStart.png",
+            longitude: e.longitude,
+            latitude: e.latitude,
+            width: 30,
+            height: 30
+          }]
+        })
+      }
+    })
+  },
+  // 地图发生变化的时候，获取中间点，也就是用户选择的位置
+  regionchange(e) {
+    if (e.type == 'end') {
+      this.getLngLat()
+    }
+  },
+  //左下点击回到当前定位
+  moveToLocation: function () {
+    this.mapCtx.moveToLocation()
+  },
+
+
+  //--------时间选择器----------
   pickerTap: function() {
     date = new Date();
     var monthDay = ['今天', '明天', '后天'];
@@ -409,6 +406,8 @@ Page({
     data.multiArray[2] = minute;
     this.setData(data);
   },
+
+
   loadData: function(hours, minute) {
     var minuteIndex;
     if (currentMinute > 0 && currentMinute <= 10) {
@@ -449,6 +448,8 @@ Page({
       }
     }
   },
+
+  
   loadHoursMinute: function(hours, minute) {
     // 时
     for (var i = 0; i < 24; i++) {
@@ -517,6 +518,7 @@ Page({
       monthDay = (date1.getMonth() + 1) + "月" + date1.getDate() + "日";
     }
 
+    
     var startDate = monthDay + " " + hours + ":" + minute;
     that.setData({
       startDate: startDate
