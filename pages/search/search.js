@@ -21,6 +21,7 @@ Page({
       cID: cIDn,
     })
     console.log(cIDn)
+    this.nearby_search();
   },
   searchValueInput: function(e) {
     var sValue = e.detail.value;
@@ -68,27 +69,27 @@ Page({
       keyword: '车站',  //搜索关键词
       location: '23.16,113.23',  //设置周边搜索中心点
       success: function (res) { //搜索成功后的回调
+        //console.log(res.data)
         var mks = []
         for (var i = 0; i < res.data.length; i++) {
           mks.push({ // 获取返回结果，放到mks数组中
             title: res.data[i].title,
             id: res.data[i].id,
+            address: res.data[i].address,
             latitude: res.data[i].location.lat,
             longitude: res.data[i].location.lng,
-            iconPath: "/resources/my_marker.png", //图标路径
-            width: 20,
-            height: 20
           })
         }
+        //console.log(mks);
         _this.setData({ //设置markers属性，将搜索结果显示在地图中
-          markers: mks
+          SearchAddress: mks
         })
       },
       fail: function (res) {
-        console.log(res);
+        //console.log(res);
       },
       complete: function (res) {
-        console.log(res);
+        //console.log(res);
       }
     });
   }

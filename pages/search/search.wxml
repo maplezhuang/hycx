@@ -12,9 +12,15 @@
             <view class='addInfo'>{{itemSA.address}}</view>
           </view>
         </block>
-      </block> 
+      </block>
       <block wx:else>
-        <view class='search_li R_icon' data-latitude="" data-longitude="" bindtap='toValue'>
+        <block wx:for="{{SearchAddress}}" wx:for-item="poiAdd" wx:key="sPoi">
+          <view class='search_li Z_icon' data-id="sMid" data-title="{{poiAdd.title}}" data-latitude="{{poiAdd.latitude}}" data-longitude="{{poiAdd.longitude}}" data-address="{{poiAdd.address}}" bindtap='toValue'>
+            <view class='addName'>{{poiAdd.title}}</view>
+            <view class='addInfo'>{{poiAdd.address}}</view>
+          </view>
+        </block>
+        <!-- <view class='search_li R_icon' data-latitude="" data-longitude="" bindtap='toValue'>
           <view class='addName'>广州东站</view>
           <view class='addInfo'>广州市天河区东站路1号</view>
         </view>
@@ -29,7 +35,7 @@
         <view class='search_li Z_icon' data-latitude="" data-longitude="" bindtap='toValue'>
           <view class='addName'>广州白云国际机场</view>
           <view class='addInfo'>广州市白云区花东镇机场大道东388号</view>
-        </view>
+        </view> -->
       </block>
     </view>
   </scroll-view>
