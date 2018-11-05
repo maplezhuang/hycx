@@ -1,5 +1,3 @@
-//var timerMoment = require('../../libs/moment.min.js'); 
-
 var QQMapWX = require('../../libs/qqmap-wx-jssdk.js'); 
 var qqmapsdk;
 qqmapsdk = new QQMapWX({
@@ -7,7 +5,6 @@ qqmapsdk = new QQMapWX({
 });
 
 const app = getApp()
-
 var date = new Date();
 var currentHours = date.getHours();
 var currentMinute = date.getMinutes();
@@ -35,6 +32,7 @@ Page({
         name: '广汽丰田海珠店',
       label: '广汽丰田海珠店',
       }],
+    curIndex: '2',
     mapHeight: 0,
     currentData: 0,
     scale: 20,
@@ -44,7 +42,7 @@ Page({
     isGotoBackBtn: false,
     carXx: '呼叫司机',
     carXx2: '预约车辆',
-    curIndex: 2,
+    
     startDate: "请选择日期",
     multiArray: [
       ['今天', '明天', '后天'],
@@ -78,19 +76,21 @@ Page({
   },
   // -------------默认页面时间 -------------
   onLoad: function(options) {
-    //console.log('onLoad',app.globalData);
+      
     var that = this;
     let sID = options.sID;
     let sLat = options.slat;
     let sLng = options.slng;
     let sAddress = options.sbluraddress;
-    // let sAddress = options.saddress;
+    let CID = options.cID;
+    console.log(CID)
+
     if (sID == '1') {
       app.globalData.map.startLatitude = sLat;
       app.globalData.map.startLongitude = sLng;
       app.globalData.map.startAddress = sAddress;
-      // app.globalData.map.startAddress = sAddress;
-      that.setData({
+      this.data.curIndex = cID;
+      this.setData({
         globalMapData: app.globalData.map
       });
     }
@@ -98,6 +98,10 @@ Page({
       app.globalData.map.endLatitude = sLat;
       app.globalData.map.endLongitude = sLng;
       app.globalData.map.endAddress = sAddress;
+      this.data.curIndex = cID;
+      this.setData({
+        globalMapData: app.globalData.map
+      });
     }
 
     var that = this
@@ -110,7 +114,7 @@ Page({
           query.select('#xContent').boundingClientRect()
           query.exec(function(e) {
             that.setData({
-              mapHeight: (wx.getSystemInfoSync().windowHeight - e[0].height - 43) || 0
+              mapHeight: (wx.getSystemInfoSync().windowHeight - e.height - 43) || 0
             });
           })
         }, 100)
@@ -186,8 +190,9 @@ Page({
     })
   },
   goToSearch: function(e) {
+    //console.log(e.currentTarget.dataset.curindex)
     wx.navigateTo({
-      url: '/pages/search/search?searchID=' + e.currentTarget.dataset.id
+      url: '/pages/search/search?searchID=' + e.currentTarget.dataset.id + '&curIndex=' + e.currentTarget.dataset.curindex
     })
   },
   goToUI: function (e) {
@@ -227,25 +232,24 @@ Page({
   },
   tabMenu: function(e) {
     var that = this
-    
-    //console.log(e.target.dataset.id)
-    
     if (e.target.dataset.id == '0' || e.target.dataset.id == '1'){
       setTimeout(function() {
         var query = wx.createSelectorQuery();
         query.select('#xContent').boundingClientRect()
         query.exec(function(e) {
-          that.setData({
+          that.setData({ 
             mapHeight: (wx.getSystemInfoSync().windowHeight - e[0].height - 43) || 0
           });
         })
       }, 100)
     }
     this.setData({
-      curIndex: e.target.dataset.id,
+      curIndex : e.target.dataset.id,
       isGoBtn: false,
-      isGotoBackBtn: false
-    });
+      isGotoBackBtn: false,
+      globalData: app.globalData
+    })
+    
   },
   cTypeTap: function(e) {
     this.setData({
@@ -270,7 +274,7 @@ Page({
   },
 
 
-  //--------今天去除已经过去的时间----------
+  //--------时间----------
   pickerTap: function () {
     date = new Date();
     var monthDay = ['今天', '明天', '后天'];
@@ -382,6 +386,7 @@ Page({
     if (minuteIndex == 60) {
       // 时
       for (var i = currentHours + 1; i < 24; i++) {
+        //--------今天去除已经过去的时间----------
         if (i > 8 && i < 21) {
           hours.push(i);
         }
