@@ -31,9 +31,9 @@
           <div class="s-icon">
             <i class='circle1'></i>
           </div>
-          <picker mode="selector" range="{{shareShopData}}" range-key='name' value="{{shareCar.startIndex}}" bindchange="shareStartShop">
+          <picker mode="selector" range="{{shareShopData}}" range-key='name' value="{{shareCar.endIndex}}" bindchange="shareEndShop">
             <view class="picker">
-              {{shareShopData[endIndex].name || '还车点'}}
+              {{shareCar.endAddress || '还车点'}}
             </view>
           </picker>
         </view>
