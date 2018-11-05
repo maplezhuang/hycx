@@ -83,7 +83,7 @@ Page({
     let sLng = options.slng;
     let sAddress = options.sbluraddress;
     let CID = options.cID;
-    console.log(CID)
+    //console.log(CID)
 
     if (sID == '1') {
       app.globalData.map.startLatitude = sLat;
@@ -95,7 +95,7 @@ Page({
       app.globalData.map.endLongitude = sLng;
       app.globalData.map.endAddress = sAddress;
     }
-    console.log(sID, app.globalData.index.curIndex)
+    //console.log(sID, app.globalData.index.curIndex)
     if(sID == '1' || sID == '2'){
       this.setData({
         globalMapData: app.globalData.map,
@@ -103,7 +103,6 @@ Page({
       });
     }
 
-    var that = this
     //json数据临时调用
     wx.getStorage({
       key: 'userInfo',
@@ -166,12 +165,14 @@ Page({
         }),
         wx.getSystemInfo({
           success: (e) => {
-            if (this.data.curIndex == '1' && this.data.curIndex == '0' ){
+            //console.log(app.globalData.index.curIndex)
+            if (app.globalData.index.curIndex == '1' || app.globalData.index.curIndex == '0' ){
               var query = wx.createSelectorQuery();
               query.select('#xContent').boundingClientRect()
               query.exec(function(e) {
+                var wh = (wx.getSystemInfoSync().windowHeight - e[0].height - 43) || 0
                 that.setData({
-                  mapHeight: (wx.getSystemInfoSync().windowHeight - e[0].height - 43) || 0
+                  mapHeight: wh
                 });
               })
             }
