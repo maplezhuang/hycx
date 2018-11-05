@@ -1,5 +1,61 @@
 //app.js
 App({
+  clientUrl: 'http://120.76.101.253:8080/gzlx/f/wxApp',  // 链接地址
+  globalData: {
+    // 预约车
+    map: {
+      // 我的位置
+      startLatitude: null,
+      startLongitude: null,
+      startBluraddress: null,
+      startAddress: '我的位置',
+      endLatitude: null,
+      endLongitude: null,
+      endBluraddress: null,
+      endAddress: '目的地'
+    },
+    // 首页数据
+    index: {
+      curIndex: 1
+    }
+  },
+  // ajax封装
+  request: function (params) {
+    const that = this;
+    var host = that.clientUrl;
+    // console.log("发起请求：" + host + params.url, params);
+    wx.request({
+      url: host + params.url,
+      data: params.data || null,
+      method: params.method || 'POST',
+      dataType: "json",
+      header: that.headerPost,
+      success: function (res) {
+        if (res.data.result != 1) {
+          console.log('---请求失败（success）---:', res.data.msg);
+          wx.showToast({
+            icon: 'none',
+            title: res.data.msg,
+          })
+        }
+        if (typeof params.success == "function") {
+          params.success(res);
+        }
+      },
+      fail: function () {
+        console.warn('---请求失败（fail）---:' + host + params.url);
+        if (typeof params.fail == "function") {
+          params.fail();
+        }
+      },
+      complete: function (res) {
+        console.log("请求完成：" + host + params.url, params, res);
+        if (typeof params.complete == "function") {
+          params.complete();
+        }
+      }
+    });
+  },
   onLaunch: function () {
     var that = this;
     // 展示本地存储能力
@@ -8,9 +64,29 @@ App({
     wx.setStorageSync('logs', logs)
 
     // 登录
+    wx.showLoading({
+      title: '登录中',
+      mask: true
+    })
     wx.login({
       success: res => {
         // 发送 res.code 到后台换取 openId, sessionKey, unionId
+        console.log("--登录中--", res);
+        if (res.code) {
+
+          const params = {
+            code: res.code
+          };
+          // 自动登录
+          that.request({
+            url: "/code2OpenId",
+            data: params,
+            success: function (res) {
+              console.log('code2OpenId')
+              wx.hideLoading()
+            }
+          })
+        }
       }
     })
     // 获取用户信息
@@ -33,23 +109,5 @@ App({
         }
       }
     })
-  },
-  globalData: {
-    // 预约车
-    map: {
-      // 我的位置
-      startLatitude: null,
-      startLongitude: null,
-      startBluraddress: null,
-      startAddress: '我的位置',
-      endLatitude: null,
-      endLongitude: null,
-      endBluraddress: null,
-      endAddress: '目的地'
-    },
-    // 首页数据
-    index: {
-      curIndex: 1
-    }
   }
 })
