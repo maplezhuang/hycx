@@ -28,8 +28,8 @@ App({
       url: host + params.url,
       data: params.data || null,
       method: params.method || 'GET',
-      dataType: "json",
-      header: that.headerPost,
+      // dataType: "json",
+      // header: that.headerPost,
       success: function (res) {
         if (res.data.result != 1) {
           console.log('---请求失败（success）---:', res.data.msg);
