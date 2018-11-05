@@ -1,7 +1,7 @@
 // 本地模拟json数据
 var json = [{
   "orderId": "1",
-  "orderN": "快车",
+  "orderN": "网约车",
   "state": '预约中', //0未完成，1已取消，2完成
   "cName": "薛之谦",
   "cNum": "粤A10000",
