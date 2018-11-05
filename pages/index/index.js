@@ -10,6 +10,7 @@ var date = new Date();
 var currentHours = date.getHours();
 var currentMinute = date.getMinutes();
 
+
 Page({
   data: {
     globalMapData: app.globalData.map,
@@ -68,8 +69,12 @@ Page({
       shareCar: that.data.shareCar
     })
   },
-
-
+  //-----------选取时间----------
+  bindTimeChange: function (e) {
+    console.log(data);
+    console.log(currentHours);
+    console.log(currentMinute);
+  },
   // -------------默认页面时间 -------------
   onLoad: function(options) {
     //console.log('onLoad',app.globalData);
@@ -157,13 +162,15 @@ Page({
         }),
         wx.getSystemInfo({
           success: (e) => {
-            var query = wx.createSelectorQuery();
-            query.select('#xContent').boundingClientRect()
-            query.exec(function(e) {
-              that.setData({
-                mapHeight: (wx.getSystemInfoSync().windowHeight - e[0].height - 43) || 0
-              });
-            })
+            if (this.data.curIndex == '1' && this.data.curIndex == '0' ){
+              var query = wx.createSelectorQuery();
+              query.select('#xContent').boundingClientRect()
+              query.exec(function(e) {
+                that.setData({
+                  mapHeight: (wx.getSystemInfoSync().windowHeight - e[0].height - 43) || 0
+                });
+              })
+            }
           }
         })
     }
@@ -214,61 +221,25 @@ Page({
   moveToLocation: function() {
     this.mapCtx.moveToLocation()
   },
-  driving: function() {
-    var _this = this;
-    var urls = 'https://apis.map.qq.com/ws/direction/v1/driving/?from=39.989221,116.306076&to=39.828050,116.436195&key=' + qqmapsdk.key
-
-    console.log(urls)
-    //网络请求设置
-    var opt = {
-      url: urls,
-      method: 'GET',
-      dataType: 'json',
-      //请求成功回调
-      success: function(res) {
-        var ret = res.data
-        if (ret.status != 0) return; //服务异常处理
-        var coors = ret.result.routes[0].polyline,
-          pl = [];
-        //坐标解压（返回的点串坐标，通过前向差分进行压缩）
-        var kr = 1000000;
-        for (var i = 2; i < coors.length; i++) {
-          coors[i] = Number(coors[i - 2]) + Number(coors[i]) / kr;
-        }
-        //将解压后的坐标放入点串数组pl中
-        for (var i = 0; i < coors.length; i += 2) {
-          pl.push({
-            latitude: coors[i],
-            longitude: coors[i + 1]
-          })
-        }
-        //设置polyline属性，将路线显示出来
-        _this.setData({
-          polyline: [{
-            points: pl,
-            color: '#FF0000DD',
-            width: 2
-          }]
-        })
-      }
-    };
-    wx.request(opt);
-  },
   gogo: function(e) {
-    // console.log(e);
-    // this.driving();
+
   },
   tabMenu: function(e) {
     var that = this
-    setTimeout(function() {
-      var query = wx.createSelectorQuery();
-      query.select('#xContent').boundingClientRect()
-      query.exec(function(e) {
-        that.setData({
-          mapHeight: (wx.getSystemInfoSync().windowHeight - e[0].height - 43) || 0
-        });
-      })
-    }, 100)
+    
+    console.log(e.target.dataset.id)
+    
+    if (e.target.dataset.id == '0' || e.target.dataset.id == '1'){
+      setTimeout(function() {
+        var query = wx.createSelectorQuery();
+        query.select('#xContent').boundingClientRect()
+        query.exec(function(e) {
+          that.setData({
+            mapHeight: (wx.getSystemInfoSync().windowHeight - e[0].height - 43) || 0
+          });
+        })
+      }, 100)
+    }
     this.setData({
       curIndex: e.target.dataset.id,
       isGoBtn: false,
