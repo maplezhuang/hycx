@@ -1,4 +1,6 @@
-var QQMapWX = require('../../libs/qqmap-wx-jssdk.js'); //导入需要使用的包，创建一个libs文件夹
+var timerMoment = require('../../libs/moment.min.js'); 
+
+var QQMapWX = require('../../libs/qqmap-wx-jssdk.js'); 
 var qqmapsdk;
 qqmapsdk = new QQMapWX({
   key: 'Q6IBZ-QHNR2-XOGUX-C7C7F-R3JV7-OUB67' //申请自己的开发者密钥
