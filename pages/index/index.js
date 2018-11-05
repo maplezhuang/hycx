@@ -76,7 +76,6 @@ Page({
   },
   // -------------默认页面时间 -------------
   onLoad: function(options) {
-
     var that = this;
     let sID = options.sID;
     let sLat = options.slat;
@@ -198,9 +197,6 @@ Page({
           }
         })
     }
-  },
-  setHeight: function(){
-    
   },
   onReady: function() {
     //console.log('onReady',app.globalData);
