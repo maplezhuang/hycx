@@ -5,18 +5,42 @@
 }
 .share-car .share-box{
   background-color: #fff;
-  border-radius: 5px;
+  border-radius: 10rpx;
   box-shadow: 0 0 5rpx #ccc;
   margin-bottom: 20rpx;
 }
+.share-car .share-box .time-item{
+
+}
 .share-car .share-box .item{
-  padding-left: 30rpx;
+  padding: 20rpx 20rpx 20rpx 80rpx;
   position: relative;
+  border-top: 1px solid #c2c2c2;
+  font-size: 14px;
 }
 .share-car .share-box .item .s-icon{
   position: absolute;
-  left: 10rpx;
-  top: 10rpx;
+  left: 20rpx;
+  top: 20rpx;
+}
+.share-car .share-box .item .s-icon .circle{
+  width: 20rpx;
+  height: 20rpx;
+  border-radius: 50%;
+  display: inline-block;
+  background-color: #ccc;
+}
+.share-car .share-box .item .s-icon .circle1{
+  width: 20rpx;
+  height: 20rpx;
+  border-radius: 50%;
+  display: inline-block;
+  background-color: rgb(252, 164, 49);
+}
+.share-car .share-box .item .s-icon .img{
+  padding-top: 10rpx;
+  width: 30rpx;
+  height: 30rpx;
 }
 .share-car .goBtn{width: 100%; height: 80rpx; background-color: #48acf7; font-size:28rpx; line-height: 80rpx; text-align: center; color:#fff; border-radius: 0; padding: 0;}
 

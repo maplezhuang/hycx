@@ -10,73 +10,95 @@
     </view>
   </view>
 
-<!-- 共享车 -->
+  <!-- 共享车 -->
   <block wx:if="{{curIndex == 2}}">
-  <view class="share-car">
-    <view class='share-box'>
-      <view class='item'>
-        <picker mode="selector" range="{{shareShopData}}" range-key='name' value="{{shareCar.startIndex}}" bindchange="shareStartShop">
-          <view class="picker">
-            {{shareShopData[startIndex].name || '取车点'}}
-          </view>
-        </picker>
+    <view class="share-car">
+      <view class='share-box'>
+        <view class="time-item">
+
+        </view>
+        <view class='item'>
+          <div class="s-icon">
+            <i class='circle'></i>
+          </div>
+          <picker mode="selector" range="{{shareShopData}}" range-key='name' value="{{shareCar.startIndex}}" bindchange="shareStartShop">
+            <view class="picker">
+              {{shareCar.startAddress || '取车点'}}
+            </view>
+          </picker>
+        </view>
+        <view class='item'>
+          <div class="s-icon">
+            <i class='circle1'></i>
+          </div>
+          <picker mode="selector" range="{{shareShopData}}" range-key='name' value="{{shareCar.startIndex}}" bindchange="shareStartShop">
+            <view class="picker">
+              {{shareShopData[endIndex].name || '还车点'}}
+            </view>
+          </picker>
+        </view>
+        <view class='item'>
+          <div class="s-icon">
+            <image src="../../pages/image/phone.png" class="img"></image>
+          </div>
+          <input placeholder="请填写您的手机号" value="{{shareCar.phone}}"></input>
+        </view>
       </view>
-      <view class='item'>
-        <picker mode="selector" range="{{shareShopData}}" range-key='name' value="{{shareCar.startIndex}}" bindchange="shareStartShop">
-          <view class="picker">
-            {{shareShopData[endIndex].name || '还车点'}}
-          </view>
-        </picker>
-      </view>
-      <view class='item'>
-        <input placeholder="请填写您的手机号" value="{{shareCar.phone}}"></input>
-      </view>
+      <button class='goBtn' form-type="submit">确定租车</button>
     </view>
-    <button class='goBtn' form-type="submit">确定租车</button>
-  </view>
   </block>
   <!-- 约车,接送 -->
   <block wx:else>
-  <map class="xMap" id='xMap' latitude="{{globalMapData.startLatitude}}" longitude="{{globalMapData.startLongitude}}" scale="{{scale}}" bindregionchange="bindregionchange" polyline="{{polyline}}" style="height:{{mapHeight}}px" show-location>
-    <cover-view class="markerStart">
-      <cover-image src='../../pages/image/markerStart.png' />
-    </cover-view>
-    <cover-view class="markerEnd">
-      <cover-image src='../../pages/image/markerEnd.png' />
-    </cover-view>
-    <cover-view class="csdw" bindtap="moveToLocation">
-      <cover-image src='../../pages/image/location.png' />
-    </cover-view>
-    <cover-view class="goToBack" bindtap="goToBack" wx:if="{{isGotoBackBtn==true}}">
-      <cover-image src='../../pages/image/goToBack.png' />
-    </cover-view>
-  </map>
-  <view class="xContent" id='xContent'>
-    <view class='user-info' wx:if="{{isGoBtn==false}}" bindtap="goToUI" data-un="{{userInfo.userNames}}" data-up="{{userInfo.userPhone}}">
-      <view class='names'>{{userInfo.userNames}}</view>
-      <view class='phone'>{{userInfo.userPhone}}</view>
-    </view>
-    <view class='ShuttleType' wx:if="{{curIndex==1}}">
-      <view class='category' wx:if="{{isGoBtn==false}}">
-        <view class="options wyc {{cType=='0'? 'active' : ''}}" bindtap="cTypeTap" data-id="0" data-name="网约车">网约车</view>
-        <view class="options jshcz {{cType=='1'? 'active' : ''}}" bindtap="cTypeTap" data-id="1" data-name="接送火车站">接送火车站</view>
+    <map class="xMap" id='xMap' latitude="{{globalMapData.startLatitude}}"
+         longitude="{{globalMapData.startLongitude}}" scale="{{scale}}" bindregionchange="bindregionchange"
+         polyline="{{polyline}}" style="height:{{mapHeight}}px" show-location>
+      <cover-view class="markerStart">
+        <cover-image src='../../pages/image/markerStart.png'/>
+      </cover-view>
+      <cover-view class="markerEnd">
+        <cover-image src='../../pages/image/markerEnd.png'/>
+      </cover-view>
+      <cover-view class="csdw" bindtap="moveToLocation">
+        <cover-image src='../../pages/image/location.png'/>
+      </cover-view>
+      <cover-view class="goToBack" bindtap="goToBack" wx:if="{{isGotoBackBtn==true}}">
+        <cover-image src='../../pages/image/goToBack.png'/>
+      </cover-view>
+    </map>
+    <view class="xContent" id='xContent'>
+      <view class='user-info' wx:if="{{isGoBtn==false}}" bindtap="goToUI" data-un="{{userInfo.userNames}}"
+            data-up="{{userInfo.userPhone}}">
+        <view class='names'>{{userInfo.userNames}}</view>
+        <view class='phone'>{{userInfo.userPhone}}</view>
       </view>
-      <view class='chooseTime' wx:if="{{isGoBtn==false}}">
-        <picker class='time-picker' mode="multiSelector" bindchange="bindStartMultiPickerChange" bindtap='pickerTap' bindcolumnchange="bindMultiPickerColumnChange" markers="{{markers}}" value="{{multiIndex}}" range="{{multiArray}}">{{startDate}}</picker>
+      <view class='ShuttleType' wx:if="{{curIndex==1}}">
+        <view class='category' wx:if="{{isGoBtn==false}}">
+          <view class="options wyc {{cType=='0'? 'active' : ''}}" bindtap="cTypeTap" data-id="0"
+                data-name="网约车">网约车
+          </view>
+          <view class="options jshcz {{cType=='1'? 'active' : ''}}" bindtap="cTypeTap" data-id="1"
+                data-name="接送火车站">接送火车站
+          </view>
+        </view>
+        <view class='chooseTime' wx:if="{{isGoBtn==false}}">
+          <picker class='time-picker' mode="multiSelector" bindchange="bindStartMultiPickerChange"
+                  bindtap='pickerTap' bindcolumnchange="bindMultiPickerColumnChange" markers="{{markers}}"
+                  value="{{multiIndex}}" range="{{multiArray}}">{{startDate}}
+          </picker>
+        </view>
       </view>
-    </view>
 
-    <view class='inputText nowAdd' wx:if="{{isGoBtn==false}}">
-      <view class='icon'></view>
-      <view class='xx' bindtap="goToSearch" data-id="1">{{globalMapData.startAddress}}</view>
+      <view class='inputText nowAdd' wx:if="{{isGoBtn==false}}">
+        <view class='icon'></view>
+        <view class='xx' bindtap="goToSearch" data-id="1">{{globalMapData.startAddress}}</view>
+      </view>
+      <view class='inputText goAdd' wx:if="{{isGoBtn==false}}">
+        <view class='icon '></view>
+        <view class='xx' bindtap='goToSearch' data-id="2">{{globalMapData.endAddress}}</view>
+      </view>
+      <cover-view class='goBtn' wx:if="{{isGoBtn==true}}">
+        <button bindlongtap='gogo'>{{carXx}}</button>
+      </cover-view>
     </view>
-    <view class='inputText goAdd' wx:if="{{isGoBtn==false}}">
-      <view class='icon '></view>
-      <view class='xx' bindtap='goToSearch' data-id="2">{{globalMapData.endAddress}}</view>
-    </view>
-    <cover-view class='goBtn' wx:if="{{isGoBtn==true}}">
-      <button bindlongtap='gogo'>{{carXx}}</button>
-    </cover-view>
-  </view>
   </block>
 </view>

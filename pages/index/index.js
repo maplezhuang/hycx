@@ -20,13 +20,16 @@ Page({
     },
     shareShopData: [{
       id: 0,
-      name: '广汽丰田海珠店'
+      name: '广汽丰田海珠店',
+      label: '广汽丰田海珠店',
     }, {
         id: 1,
-        name: '广汽丰田海珠店'
+        name: '广汽丰田海珠店',
+      label: '广汽丰田海珠店',
       }, {
         id: 2,
-        name: '广汽丰田海珠店'
+        name: '广汽丰田海珠店',
+      label: '广汽丰田海珠店',
       }],
     mapHeight: 0,
     currentData: 0,
@@ -37,7 +40,7 @@ Page({
     isGotoBackBtn: false,
     carXx: '呼叫司机',
     carXx2: '预约车辆',
-    curIndex: 0,
+    curIndex: 2,
     startDate: "请选择日期",
     multiArray: [
       ['今天', '明天', '后天'],
@@ -49,7 +52,11 @@ Page({
   //------------- 共享汽车 -----------------
   // 取车点
   shareStartShop(item) {
-    console.log(item);
+    const self = this;
+    self.shareCar.startAddress = self.shareShopData[item.detail.value].name
+    this.setData({
+      shareCar: self.shareCar
+    })
   },
 
 
