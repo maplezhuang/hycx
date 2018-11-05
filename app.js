@@ -49,7 +49,7 @@ App({
     },
     // 首页数据
     index: {
-      curIndex: 0
+      curIndex: 1
     }
   }
 })

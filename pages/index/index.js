@@ -32,7 +32,7 @@ Page({
         name: '广汽丰田海珠店',
       label: '广汽丰田海珠店',
       }],
-    curIndex: '0',
+    curIndex: 1,
     mapHeight: 0,
     currentData: 0,
     scale: 20,
@@ -166,13 +166,17 @@ Page({
         }),
         wx.getSystemInfo({
           success: (e) => {
-            if (this.data.curIndex == '1' && this.data.curIndex == '0' ){
+            console.log(this.data.curIndex);
+            if (this.data.curIndex == '1' || this.data.curIndex == '0') {
               var query = wx.createSelectorQuery();
               query.select('#xContent').boundingClientRect()
-              query.exec(function(e) {
-                that.setData({
-                  mapHeight: (wx.getSystemInfoSync().windowHeight - e[0].height - 43) || 0
-                });
+              query.exec(function (e) {
+                console.log((wx.getSystemInfoSync().windowHeight - e[0].height - 43) || 0);
+                setTimeout(() => {
+                  that.setData({
+                    mapHeight: (wx.getSystemInfoSync().windowHeight - e[0].height - 43) || 0
+                  });
+                },200)
               })
             }
           }
