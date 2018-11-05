@@ -15,7 +15,17 @@
     <view class="share-car">
       <view class='share-box'>
         <view class="time-item">
-
+          <view class='strTime timeSty' bindtap="tabMenu">
+            <view class='bold'>9-11</view>
+            <view class='xw'>周二 13:45</view>
+          </view>
+          <view class='dayNum'>
+            <view class='constNum'>1天</view>
+          </view>
+          <view class='endTime timeSty' bindtap="tabMenu">
+            <view class='bold'>9-12</view>
+            <view class='xw'>周三 13:45</view>
+          </view>          
         </view>
         <view class='item'>
           <div class="s-icon">

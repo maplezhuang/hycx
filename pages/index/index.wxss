@@ -1,80 +1,348 @@
 /**index.wxss**/
+
 /* 共享车 */
-.share-car{
-  padding: 100rpx 20rpx 20rpx 20rpx;
+
+.share-car {
+  padding: 110rpx 20rpx 20rpx 20rpx;
 }
-.share-car .share-box{
+
+.share-car .share-box {
   background-color: #fff;
-  border-radius: 10rpx;
+  border-radius: 15rpx;
   box-shadow: 0 0 5rpx #ccc;
   margin-bottom: 20rpx;
 }
-.share-car .share-box .time-item{
 
+.share-car .share-box .time-item {
+  padding: 20rpx;
+  border-bottom: 1px solid #dbdbdb;
+  height: 80rpx;
 }
-.share-car .share-box .item{
+
+.share-car .share-box .time-item .timeSty {
+  display: table;
+  float: left;
+  margin: 0 24rpx;
+  height: 40rpx;
+  text-align: cetner;
+}
+
+.share-car .share-box .time-item .bold {
+  font-size: 34rpx;
+  line-height: 50rpx;
+  font-weight: bold;
+  text-align:center;
+
+  
+}
+
+.share-car .share-box .time-item .xw {
+  font-size: 28rpx;
+  line-height: 28rpx;
+  text-align: cetner;
+}
+
+.share-car .share-box .time-item .dayNum {
+  float: left;
+  font-size:28rpx;
+  margin: 0 116rpx;
+  position: relative
+}
+.share-car .share-box .time-item .dayNum::before{
+  content: '';
+  width: 100rpx;
+  height: 2rpx;
+  background-color: #e1e1e1;
+  display: block;
+  position: absolute;
+  left: 50%;
+  top: 50rpx;
+  margin-left: -50rpx;
+}
+.share-car .share-box .time-item .constNum{
+  position: relative;
+}
+.share-car .share-box .time-item .constNum::before,.share-car .share-box .time-item .constNum::after{
+  content: '';
+  width: 10rpx;
+  height: 10rpx;
+  border: 1rpx solid #e1e1e1;
+  border-radius: 50%;
+  display: block;
+  position: absolute; 
+  top: 44rpx;
+}
+.share-car .share-box .time-item .constNum::before{
+  left: -40rpx;
+}
+.share-car .share-box .time-item .constNum::after{
+  right: -40rpx;
+  background-color: #e9e6e9;
+}
+.share-car .share-box .item {
   padding: 20rpx 20rpx 20rpx 80rpx;
   position: relative;
-  border-top: 1px solid #c2c2c2;
+  border-bottom: 1px solid #dbdbdb;
   font-size: 14px;
 }
-.share-car .share-box .item .s-icon{
+
+.share-car .share-box .item:last-child {
+  border-bottom: 0;
+}
+
+.share-car .share-box .item .s-icon {
   position: absolute;
   left: 20rpx;
   top: 20rpx;
 }
-.share-car .share-box .item .s-icon .circle{
+
+.share-car .share-box .item .s-icon .circle {
   width: 20rpx;
   height: 20rpx;
   border-radius: 50%;
   display: inline-block;
   background-color: #ccc;
 }
-.share-car .share-box .item .s-icon .circle1{
+
+.share-car .share-box .item .s-icon .circle1 {
   width: 20rpx;
   height: 20rpx;
   border-radius: 50%;
   display: inline-block;
   background-color: rgb(252, 164, 49);
 }
-.share-car .share-box .item .s-icon .img{
+
+.share-car .share-box .item .s-icon .img {
   padding-top: 10rpx;
   width: 30rpx;
   height: 30rpx;
 }
-.share-car .goBtn{width: 100%; height: 80rpx; background-color: #48acf7; font-size:28rpx; line-height: 80rpx; text-align: center; color:#fff; border-radius: 0; padding: 0;}
+
+.share-car .goBtn {
+  width: 100%;
+  height: 80rpx;
+  background-color: #48acf7;
+  font-size: 28rpx;
+  line-height: 80rpx;
+  text-align: center;
+  color: #fff;
+  border-radius: 0;
+  padding: 0;
+}
 
 /* 网约车 */
-.xMap{ width: 100%; height: 70vh; position: relative; top: 41px}
-.xMap .csdw{width: 32px; height: 32px; position: absolute; left: 20rpx; bottom: 20rpx;}
-.xMap .csdw image{width: 100%; height: 100%;}
-.xMap .markerStart{width: 30px; height: 44px; position: absolute; left: 50%; bottom: 50%; margin-top: -22px; margin-left: -15px;}
-.xMap .markerStart image{width: 100%; height: 100%;}
-.xMap .markerEnd{width: 30px; height: 44px; position: absolute; left: 50%; bottom: 50%; margin-top: -22px; margin-left: -15px; display: none;}
-.xMap .markerEnd image{width: 100%; height: 100%;}
-.xMap .goToBack{width: 70rpx; height: 70rpx; position: absolute; left: 20rpx; top: 40rpx;}
 
-.tabs-item{ width: 100%; height: 80rpx; background-color: #fff; position: fixed; top: 0; left: 0; z-index:999; box-shadow: 0 5px 10px #e0e0e0;}
-.tabs-item .tabs-item-li{ width: 25%; display: table; text-align: center; font-size:14px; line-height: 80rpx; color:#000; float: left;}
-.tabs-item .active{ color:#fca26e}
+.xMap {
+  width: 100%;
+  height: 70vh;
+  position: relative;
+  top: 41px;
+}
 
-.xContent{ width: 100%; height: auto; background-color: #fff; position: fixed; bottom: 0;  left: 0; z-index: 999; padding-bottom: 10rpx;}
-.xContent .user-info{padding: 0 40rpx; font-size: 22rpx; line-height: 54rpx; color:#98999e; border-bottom: 1px solid #f5f5f5;}
-.xContent .user-info .names{float: left; margin-right: 15rpx;}
+.xMap .csdw {
+  width: 32px;
+  height: 32px;
+  position: absolute;
+  left: 20rpx;
+  bottom: 20rpx;
+}
 
-.xContent .category{ display: table; margin: 20rpx auto 0;}
-.xContent .wyc{width: 130rpx;}
-.xContent .jshcz{width: 196rpx;}
-.xContent .options{ float: left; margin: 0 14rpx; font-size:30rpx; line-height: 60rpx; text-align: center; border-radius: 40rpx; border: 2rpx solid #fff;}
-.xContent .options.active{border: 2rpx solid #d8d8d8; }
-.xContent .chooseTime{display: table; margin: 5px auto 0; font-size:12px; line-height: 30px; text-align: center;}
-.xContent .chooseTime picker{float: left; margin: 0 20rpx;}
-.xContent .time-picker{font-size:30rpx; line-height: 60rpx;}
-.xContent .inputText{height: 80rpx; padding: 0 40rpx; position: relative;}
-.xContent .inputText .icon{content:''; width: 6px; height: 6px; border-radius: 50%; background-color: #000; display: block; position: absolute; left: 20px; top: 50%; transform: translateY(-50%);}
-.xContent .inputText .xx{width: 640rpx; height: 80rpx; float: left; overflow: hidden; font-size:14px; line-height: 80rpx; color:#4b4c60; margin-left: 35rpx; position: relative; border-bottom: 1px solid #f5f5f5;}
-.xContent .inputText:last-child .xx{ border-bottom: 0rpx;}
-.xContent .nowAdd .icon{background-color: #22c49f;}
-.xContent .goAdd .icon{background-color: #ff8c44;}
-.xContent .goBtn{width: 100%; height: 50px; position: fixed; left: 0; bottom: 0;}
-.xContent .goBtn button{background-color: #4b4c60; font-size:16px; line-height: 50px; text-align: center; color:#fff; border-radius: 0; padding: 0;}
+.xMap .csdw image {
+  width: 100%;
+  height: 100%;
+}
+
+.xMap .markerStart {
+  width: 30px;
+  height: 44px;
+  position: absolute;
+  left: 50%;
+  bottom: 50%;
+  margin-top: -22px;
+  margin-left: -15px;
+}
+
+.xMap .markerStart image {
+  width: 100%;
+  height: 100%;
+}
+
+.xMap .markerEnd {
+  width: 30px;
+  height: 44px;
+  position: absolute;
+  left: 50%;
+  bottom: 50%;
+  margin-top: -22px;
+  margin-left: -15px;
+  display: none;
+}
+
+.xMap .markerEnd image {
+  width: 100%;
+  height: 100%;
+}
+
+.xMap .goToBack {
+  width: 70rpx;
+  height: 70rpx;
+  position: absolute;
+  left: 20rpx;
+  top: 40rpx;
+}
+
+.tabs-item {
+  width: 100%;
+  height: 80rpx;
+  background-color: #fff;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 999;
+  box-shadow: 0 5px 10px #e0e0e0;
+}
+
+.tabs-item .tabs-item-li {
+  width: 25%;
+  display: table;
+  text-align: center;
+  font-size: 14px;
+  line-height: 80rpx;
+  color: #000;
+  float: left;
+}
+
+.tabs-item .active {
+  color: #fca26e;
+}
+
+.xContent {
+  width: 100%;
+  height: auto;
+  background-color: #fff;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 999;
+  padding-bottom: 10rpx;
+}
+
+.xContent .user-info {
+  padding: 0 40rpx;
+  font-size: 22rpx;
+  line-height: 54rpx;
+  color: #98999e;
+  border-bottom: 1px solid #f5f5f5;
+}
+
+.xContent .user-info .names {
+  float: left;
+  margin-right: 15rpx;
+}
+
+.xContent .category {
+  display: table;
+  margin: 20rpx auto 0;
+}
+
+.xContent .wyc {
+  width: 130rpx;
+}
+
+.xContent .jshcz {
+  width: 196rpx;
+}
+
+.xContent .options {
+  float: left;
+  margin: 0 14rpx;
+  font-size: 30rpx;
+  line-height: 60rpx;
+  text-align: center;
+  border-radius: 40rpx;
+  border: 2rpx solid #fff;
+}
+
+.xContent .options.active {
+  border: 2rpx solid #d8d8d8;
+}
+
+.xContent .chooseTime {
+  display: table;
+  margin: 5px auto 0;
+  font-size: 12px;
+  line-height: 30px;
+  text-align: center;
+}
+
+.xContent .chooseTime picker {
+  float: left;
+  margin: 0 20rpx;
+}
+
+.xContent .time-picker {
+  font-size: 30rpx;
+  line-height: 60rpx;
+}
+
+.xContent .inputText {
+  height: 80rpx;
+  padding: 0 40rpx;
+  position: relative;
+}
+
+.xContent .inputText .icon {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #000;
+  display: block;
+  position: absolute;
+  left: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.xContent .inputText .xx {
+  width: 640rpx;
+  height: 80rpx;
+  float: left;
+  overflow: hidden;
+  font-size: 14px;
+  line-height: 80rpx;
+  color: #4b4c60;
+  margin-left: 35rpx;
+  position: relative;
+  border-bottom: 1px solid #f5f5f5;
+}
+
+.xContent .inputText:last-child .xx {
+  border-bottom: 0rpx;
+}
+
+.xContent .nowAdd .icon {
+  background-color: #22c49f;
+}
+
+.xContent .goAdd .icon {
+  background-color: #ff8c44;
+}
+
+.xContent .goBtn {
+  width: 100%;
+  height: 50px;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+}
+
+.xContent .goBtn button {
+  background-color: #4b4c60;
+  font-size: 16px;
+  line-height: 50px;
+  text-align: center;
+  color: #fff;
+  border-radius: 0;
+  padding: 0;
+}
