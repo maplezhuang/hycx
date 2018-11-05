@@ -76,7 +76,6 @@ Page({
   },
   // -------------默认页面时间 -------------
   onLoad: function(options) {
-
     var that = this;
     let sID = options.sID;
     let sLat = options.slat;
@@ -118,15 +117,16 @@ Page({
     wx.getStorage({
       key: 'userInfo',
       success: function(e) {
-        setTimeout(function() {
-          var query = wx.createSelectorQuery();
-          query.select('#xContent').boundingClientRect()
-          query.exec(function(e) {
+        //var that = this;
+        var query = wx.createSelectorQuery();
+        query.select('#xContent').boundingClientRect()
+        query.exec(function (e) {
+          setTimeout(() => {
             that.setData({
-              mapHeight: (wx.getSystemInfoSync().windowHeight - e.height - 36) || 0
+              mapHeight: (wx.getSystemInfoSync().windowHeight - e[0].height - 42) || 0
             });
-          })
-        }, 100)
+          }, 200)
+        })
         that.setData({
           userInfo: e.data
         })
@@ -136,12 +136,12 @@ Page({
     if (app.globalData.map.startLatitude && app.globalData.map.startLongitude) {
       var query = wx.createSelectorQuery();
       query.select('#xContent').boundingClientRect()
-      query.exec(function(e) {
+      query.exec(function (e) {
         setTimeout(() => {
           that.setData({
-            mapHeight: (wx.getSystemInfoSync().windowHeight - e[0].height - 36) || 0
+            mapHeight: (wx.getSystemInfoSync().windowHeight - e[0].height - 42) || 0
           });
-        }, 200)
+        }, 100)
       })
       that.setData({
         globalMapData: app.globalData.map
@@ -187,10 +187,10 @@ Page({
             if (this.data.curIndex == '1' || this.data.curIndex == '0') {
               var query = wx.createSelectorQuery();
               query.select('#xContent').boundingClientRect()
-              query.exec(function(e) {
+              query.exec(function (e) {
                 setTimeout(() => {
                   that.setData({
-                    mapHeight: (wx.getSystemInfoSync().windowHeight - e[0].height - 36) || 0
+                    mapHeight: (wx.getSystemInfoSync().windowHeight - e[0].height - 42) || 0
                   });
                 }, 200)
               })
@@ -198,9 +198,6 @@ Page({
           }
         })
     }
-  },
-  setHeight: function(){
-    
   },
   onReady: function() {
     //console.log('onReady',app.globalData);
@@ -254,7 +251,17 @@ Page({
   },
   tabMenu: function(e) {
     var that = this
-
+    if (e.target.dataset.id == '1'){
+      setTimeout(function () {
+        var query = wx.createSelectorQuery();
+        query.select('#xContent').boundingClientRect()
+        query.exec(function (e) {
+          that.setData({
+            mapHeight: (wx.getSystemInfoSync().windowHeight - e[0].height - 42) || 0
+          });
+        })
+      }, 100)
+    }    
     this.setData({
       curIndex: e.target.dataset.id,
       isGoBtn: false,
@@ -265,12 +272,12 @@ Page({
   cTypeTap: function(e) {
     if (e.target.dataset.id == '1' || e.target.dataset.id == '0') {
       var that = this;
-      setTimeout(function() {
+      setTimeout(function () {
         var query = wx.createSelectorQuery();
         query.select('#xContent').boundingClientRect()
-        query.exec(function(e) {
+        query.exec(function (e) {
           that.setData({
-            mapHeight: (wx.getSystemInfoSync().windowHeight - e[0].height - 36) || 0
+            mapHeight: (wx.getSystemInfoSync().windowHeight - e[0].height - 42) || 0
           });
         })
       }, 100)
@@ -281,12 +288,12 @@ Page({
   },
   goToBack: function() {
     var that = this
-    setTimeout(function() {
+    setTimeout(function () {
       var query = wx.createSelectorQuery();
       query.select('#xContent').boundingClientRect()
-      query.exec(function(e) {
+      query.exec(function (e) {
         that.setData({
-          mapHeight: (wx.getSystemInfoSync().windowHeight - e[0].height - 36) || 0
+          mapHeight: (wx.getSystemInfoSync().windowHeight - e[0].height - 42) || 0
         });
       })
     }, 100)
@@ -295,8 +302,19 @@ Page({
       isGotoBackBtn: false
     });
   },
-
-
+  // setHeight: function () {
+  //   var that = this;
+  //   var query = wx.createSelectorQuery();
+  //   query.select('#xContent').boundingClientRect()
+  //   query.exec(function (e) {
+  //     console.log(e[0].height)
+  //     setTimeout(() => {
+  //       that.setData({
+  //         mapHeight: (wx.getSystemInfoSync().windowHeight - e[0].height - 42) || 0
+  //       });
+  //     }, 100)
+  //   })
+  // },
   //--------时间----------
   pickerTap: function() {
     date = new Date();

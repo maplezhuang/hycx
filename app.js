@@ -19,6 +19,18 @@ App({
       curIndex: 1
     }
   },
+  setHeight: function () {
+    var that = this;
+    var query = wx.createSelectorQuery();
+    query.select('#xContent').boundingClientRect()
+    query.exec(function (e) {
+      setTimeout(() => {
+        that.setData({
+          mapHeight: (wx.getSystemInfoSync().windowHeight - e[0].height - 36) || 0
+        });
+      }, 100)
+    })
+  },
   // ajax封装
   request: function (params) {
     const that = this;
