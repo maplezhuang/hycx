@@ -70,9 +70,9 @@ Page({
   },
   //-----------选取时间----------
   bindTimeChange: function(e) {
-    console.log(data);
-    console.log(currentHours);
-    console.log(currentMinute);
+    // console.log(data);
+    // console.log(currentHours);
+    // console.log(currentMinute);
   },
   // -------------默认页面时间 -------------
   onLoad: function(options) {
@@ -85,7 +85,7 @@ Page({
     // console.log(CID)
 
     if (sID == '1') {
-      console.log(sLat, sLng, sAddress)
+      //console.log(sLat, sLng, sAddress)
       app.globalData.map.startLatitude = sLat;
       app.globalData.map.startLongitude = sLng;
       app.globalData.map.startAddress = sAddress;
@@ -96,7 +96,7 @@ Page({
       // console.log(globalMapData.map.startLatitude, globalMapData.map.startLongitude,)
     }
     if (sID == '2') {
-      console.log(sLat, sLng, sAddress)
+      //console.log(sLat, sLng, sAddress)
       app.globalData.map.endLatitude = sLat;
       app.globalData.map.endLongitude = sLng;
       app.globalData.map.endAddress = sAddress;

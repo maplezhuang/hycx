@@ -20,7 +20,7 @@ Page({
       sID: sIDn,
       cID: cIDn,
     })
-    console.log(cIDn)
+    //console.log(cIDn)
     this.nearby_search();
   },
   searchValueInput: function(e) {
