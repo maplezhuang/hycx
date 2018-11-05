@@ -39,7 +39,7 @@ App({
     wx.request({
       url: host + params.url,
       data: params.data || null,
-      method: params.method || 'POST',
+      method: params.method || 'GET',
       dataType: "json",
       header: that.headerPost,
       success: function (res) {
@@ -76,10 +76,10 @@ App({
     wx.setStorageSync('logs', logs)
 
     // 登录
-    wx.showLoading({
-      title: '登录中',
-      mask: true
-    })
+    // wx.showLoading({
+    //   title: '登录中',
+    //   mask: true
+    // })
     wx.login({
       success: res => {
         // 发送 res.code 到后台换取 openId, sessionKey, unionId
