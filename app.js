@@ -47,6 +47,9 @@ App({
       endBluraddress: null,
       endAddress: '目的地'
     },
-
+    // 首页数据
+    index: {
+      curIndex: 0
+    }
   }
 })

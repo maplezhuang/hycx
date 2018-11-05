@@ -7,7 +7,7 @@
     
     "pages/user/userInfo",
     "pages/logs/logs"
-    
+
   ],
   "window": {
     "backgroundTextStyle": "black",
