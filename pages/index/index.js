@@ -1,15 +1,16 @@
-var timerMoment = require('../../libs/moment.min.js'); 
+//var timerMoment = require('../../libs/moment.min.js'); 
 
 var QQMapWX = require('../../libs/qqmap-wx-jssdk.js'); 
 var qqmapsdk;
 qqmapsdk = new QQMapWX({
   key: 'Q6IBZ-QHNR2-XOGUX-C7C7F-R3JV7-OUB67' //申请自己的开发者密钥
 });
+
 const app = getApp()
+
 var date = new Date();
 var currentHours = date.getHours();
 var currentMinute = date.getMinutes();
-
 
 Page({
   data: {
@@ -227,7 +228,7 @@ Page({
   tabMenu: function(e) {
     var that = this
     
-    console.log(e.target.dataset.id)
+    //console.log(e.target.dataset.id)
     
     if (e.target.dataset.id == '0' || e.target.dataset.id == '1'){
       setTimeout(function() {
@@ -267,24 +268,23 @@ Page({
       isGotoBackBtn: false
     });
   },
-  pickerTap: function() {
+
+
+  //--------今天去除已经过去的时间----------
+  pickerTap: function () {
     date = new Date();
     var monthDay = ['今天', '明天', '后天'];
     var hours = [];
     var minute = [];
-    currentHours = date.getHours() +1;
+
+    currentHours = date.getHours();
     currentMinute = date.getMinutes();
-    // 月-日
-    for (var i = 3; i <= 2; i++) {
-      var date1 = new Date(date);
-      date1.setDate(date.getDate() + i);
-      var md = (date1.getMonth() + 1) + "-" + date1.getDate();
-      monthDay.push(md);
-    }
+
     var data = {
       multiArray: this.data.multiArray,
       multiIndex: this.data.multiIndex
     };
+
     if (data.multiIndex[0] === 0) {
       if (data.multiIndex[1] === 0) {
         this.loadData(hours, minute);
@@ -299,20 +299,24 @@ Page({
     data.multiArray[2] = minute;
     this.setData(data);
   },
-  bindMultiPickerColumnChange: function(e) {
+
+  bindMultiPickerColumnChange: function (e) {
     date = new Date();
     var that = this;
     var monthDay = ['今天', '明天', '后天'];
     var hours = [];
     var minute = [];
+
     currentHours = date.getHours();
     currentMinute = date.getMinutes();
+
     var data = {
       multiArray: this.data.multiArray,
       multiIndex: this.data.multiIndex
     };
     // 把选择的对应值赋值给 multiIndex
     data.multiIndex[e.detail.column] = e.detail.value;
+
     // 然后再判断当前改变的是哪一列,如果是第1列改变
     if (e.detail.column === 0) {
       // 如果第一列滚动到第一行
@@ -321,10 +325,13 @@ Page({
       } else {
         that.loadHoursMinute(hours, minute);
       }
+
       data.multiIndex[1] = 0;
       data.multiIndex[2] = 0;
+
       // 如果是第2列改变
     } else if (e.detail.column === 1) {
+
       // 如果第一列为今天
       if (data.multiIndex[0] === 0) {
         if (e.detail.value === 0) {
@@ -337,10 +344,12 @@ Page({
         that.loadHoursMinute(hours, minute);
       }
       data.multiIndex[2] = 0;
+
       // 如果是第3列改变
     } else {
       // 如果第一列为'今天'
       if (data.multiIndex[0] === 0) {
+
         // 如果第一列为 '今天'并且第二列为当前时间
         if (data.multiIndex[1] === 0) {
           that.loadData(hours, minute);
@@ -355,7 +364,7 @@ Page({
     data.multiArray[2] = minute;
     this.setData(data);
   },
-  loadData: function(hours, minute) {
+  loadData: function (hours, minute) {
     var minuteIndex;
     if (currentMinute > 0 && currentMinute <= 10) {
       minuteIndex = 10;
@@ -371,30 +380,42 @@ Page({
       minuteIndex = 60;
     }
     if (minuteIndex == 60) {
+      // 时
       for (var i = currentHours + 1; i < 24; i++) {
-        hours.push(i);
+        if (i > 8 && i < 21) {
+          hours.push(i);
+        }
       }
+      // 分
       for (var i = 0; i < 60; i += 10) {
         minute.push(i);
       }
     } else {
+      // 时
       for (var i = currentHours; i < 24; i++) {
-        hours.push(i);
+        if (i > 8 && i < 21) {
+          hours.push(i);
+        }
       }
+      // 分
       for (var i = minuteIndex; i < 60; i += 10) {
         minute.push(i);
       }
     }
   },
-  loadHoursMinute: function(hours, minute) {
+  loadHoursMinute: function (hours, minute) {
+    // 时
     for (var i = 0; i < 24; i++) {
-      hours.push(i) ;
+      if (i > 8 && i < 21) {
+        hours.push(i);
+      }
     }
+    // 分
     for (var i = 0; i < 60; i += 10) {
       minute.push(i);
     }
   },
-  loadMinute: function(hours, minute) {
+  loadMinute: function (hours, minute) {
     var minuteIndex;
     if (currentMinute > 0 && currentMinute <= 10) {
       minuteIndex = 10;
@@ -409,26 +430,32 @@ Page({
     } else {
       minuteIndex = 60;
     }
-
     if (minuteIndex == 60) {
+      // 时
       for (var i = currentHours + 1; i < 24; i++) {
-        hours.push(i);
+        if (i > 8 && i < 21) {
+          hours.push(i);
+        }
       }
     } else {
+      // 时
       for (var i = currentHours; i < 24; i++) {
-        hours.push(i);
+        if (i > 8 && i < 21) {
+          hours.push(i);
+        }
       }
     }
+    // 分
     for (var i = 0; i < 60; i += 10) {
       minute.push(i);
     }
   },
-  bindStartMultiPickerChange: function(e) {
+  bindStartMultiPickerChange: function (e) {
     var that = this;
     var monthDay = that.data.multiArray[0][e.detail.value[0]];
-    
-    var hours = that.data.multiArray[1][e.detail.value[1]] ;
+    var hours = that.data.multiArray[1][e.detail.value[1]];
     var minute = that.data.multiArray[2][e.detail.value[2]];
+
     if (monthDay === "今天") {
       var month = date.getMonth() + 1;
       var day = date.getDate();
@@ -437,11 +464,13 @@ Page({
       var date1 = new Date(date);
       date1.setDate(date.getDate() + 1);
       monthDay = (date1.getMonth() + 1) + "月" + date1.getDate() + "日";
+
     } else if (monthDay === "后天") {
       var date1 = new Date(date);
       date1.setDate(date.getDate() + 2);
       monthDay = (date1.getMonth() + 1) + "月" + date1.getDate() + "日";
     }
+
     var startDate = monthDay + " " + hours + ":" + minute;
     that.setData({
       startDate: startDate
