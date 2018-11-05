@@ -206,7 +206,7 @@
 }
 
 .tabs-item .tabs-item-li {
-  width: 25%;
+  width: 33.333%;
   display: table;
   text-align: center;
   font-size: 14px;

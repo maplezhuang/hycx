@@ -2,8 +2,8 @@
   <view class='tabs-item'>
     <view class='topTabSwiper'>
       <view class="tabs-item-li {{curIndex=='2'? 'active' : ''}}" data-id="2" bindtap="tabMenu">共享车</view>
-      <view class="tabs-item-li {{curIndex=='0'? 'active' : ''}}" data-id="0" bindtap="tabMenu">网约车</view>
-      <view class="tabs-item-li {{curIndex=='1'? 'active' : ''}}" data-id="1" bindtap="tabMenu">接送站</view>
+      <!-- <view class="tabs-item-li {{curIndex=='0'? 'active' : ''}}" data-id="0" bindtap="tabMenu">网约车</view> -->
+      <view class="tabs-item-li {{curIndex=='1'? 'active' : ''}}" data-id="1" bindtap="tabMenu">网约车</view>
       <view class='tabs-item-li'>
         <navigator url="/pages/order/order" hover-class="none">订单</navigator>
       </view>
@@ -84,9 +84,9 @@
       </view>
       <view class='ShuttleType' wx:if="{{curIndex==1}}">
         <view class='category' wx:if="{{isGoBtn==false}}">
-          <view class="options wyc {{cType=='0'? 'active' : ''}}" bindtap="cTypeTap" data-id="0" data-name="网约车">网约车
+          <view class="options wyc {{cType=='0'? 'active' : ''}}" bindtap="cTypeTap" data-id="0" data-name="实时">实时
           </view>
-          <view class="options jshcz {{cType=='1'? 'active' : ''}}" bindtap="cTypeTap" data-id="1" data-name="接送火车站">接送火车站
+          <view class="options jshcz {{cType=='1'? 'active' : ''}}" bindtap="cTypeTap" data-id="1" data-name="预约">预约
           </view>
         </view>
         <view class='chooseTime' wx:if="{{isGoBtn==false}}">
