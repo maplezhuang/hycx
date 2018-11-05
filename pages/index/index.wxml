@@ -89,7 +89,7 @@
           <view class="options jshcz {{cType=='1'? 'active' : ''}}" bindtap="cTypeTap" data-id="1" data-name="预约">预约
           </view>
         </view>
-        <view class='chooseTime' wx:if="{{isGoBtn==false}}">
+        <view class='chooseTime' wx:if="{{isGoBtn==false}}" wx:if="{{cType==1}}">
           <picker class='time-picker' mode="multiSelector" bindchange="bindStartMultiPickerChange" bindtap='pickerTap' bindcolumnchange="bindMultiPickerColumnChange" value="{{multiIndex}}" range="{{multiArray}}">{{startDate}}</picker>
         </view>
       </view>

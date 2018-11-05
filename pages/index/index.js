@@ -95,7 +95,7 @@ Page({
       app.globalData.map.endLongitude = sLng;
       app.globalData.map.endAddress = sAddress;
     }
-    console.log(sID, app.globalData.index.curIndex)
+    //console.log(sID, app.globalData.index.curIndex)
     if(sID == '1' || sID == '2'){
       this.setData({
         globalMapData: app.globalData.map,
@@ -112,7 +112,7 @@ Page({
           query.select('#xContent').boundingClientRect()
           query.exec(function(e) {
             that.setData({
-              mapHeight: (wx.getSystemInfoSync().windowHeight - e.height - 43) || 0
+              mapHeight: (wx.getSystemInfoSync().windowHeight - e.height - 36) || 0
             });
           })
         }, 100)
@@ -133,7 +133,6 @@ Page({
           success: (e) => {
             app.globalData.map.startLatitude = e.latitude;
             app.globalData.map.startLongitude = e.longitude;
-
             qqmapsdk.reverseGeocoder({
               location: {
                 latitude: e.latitude,
@@ -165,15 +164,13 @@ Page({
         }),
         wx.getSystemInfo({
           success: (e) => {
-            console.log(this.data.curIndex);
             if (this.data.curIndex == '1' || this.data.curIndex == '0') {
               var query = wx.createSelectorQuery();
               query.select('#xContent').boundingClientRect()
               query.exec(function (e) {
-                console.log((wx.getSystemInfoSync().windowHeight - e[0].height - 43) || 0);
                 setTimeout(() => {
                   that.setData({
-                    mapHeight: (wx.getSystemInfoSync().windowHeight - e[0].height - 43) || 0
+                    mapHeight: (wx.getSystemInfoSync().windowHeight - e[0].height - 36) || 0
                   });
                 },200)
               })
@@ -234,26 +231,27 @@ Page({
   },
   tabMenu: function(e) {
     var that = this
-    if (e.target.dataset.id == '0' || e.target.dataset.id == '1'){
-      setTimeout(function() {
-        var query = wx.createSelectorQuery();
-        query.select('#xContent').boundingClientRect()
-        query.exec(function(e) {
-          that.setData({ 
-            mapHeight: (wx.getSystemInfoSync().windowHeight - e[0].height - 43) || 0
-          });
-        })
-      }, 100)
-    }
+    
     this.setData({
       curIndex : e.target.dataset.id,
       isGoBtn: false,
       isGotoBackBtn: false,
       globalData: app.globalData
     })
-    
   },
   cTypeTap: function(e) {
+    if (e.target.dataset.id == '1' || e.target.dataset.id == '0') {
+      var that = this;
+      setTimeout(function () {
+        var query = wx.createSelectorQuery();
+        query.select('#xContent').boundingClientRect()
+        query.exec(function (e) {
+          that.setData({
+            mapHeight: (wx.getSystemInfoSync().windowHeight - e[0].height - 36) || 0
+          });
+        })
+      }, 100)
+    }
     this.setData({
       cType: e.target.dataset.id,
     });
@@ -265,7 +263,7 @@ Page({
       query.select('#xContent').boundingClientRect()
       query.exec(function(e) {
         that.setData({
-          mapHeight: (wx.getSystemInfoSync().windowHeight - e[0].height - 43) || 0
+          mapHeight: (wx.getSystemInfoSync().windowHeight - e[0].height - 36) || 0
         });
       })
     }, 100)
