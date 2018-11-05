@@ -83,7 +83,7 @@ Page({
     let sLng = options.slng;
     let sAddress = options.sbluraddress;
     let CID = options.cID;
-    console.log(CID)
+    // console.log(CID)
 
     if (sID == '1') {
       app.globalData.map.startLatitude = sLat;
@@ -103,7 +103,6 @@ Page({
       });
     }
 
-    var that = this
     //json数据临时调用
     wx.getStorage({
       key: 'userInfo',
