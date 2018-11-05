@@ -10,12 +10,30 @@ Page({
   data: {
     SearchValue: '',
     SearchAddress:[],
-    sID:''
+    sID:'',
+    cID:''
   },
   onLoad: function(options) {
     let sIDn = options.searchID;
+    let cIDn = options.curIndex;
     this.setData({
       sID: sIDn,
+      cID: cIDn,
+    })
+    console.log(cIDn)
+
+    //附近地点信息展示
+    qqmapsdk.getSuggestion({
+      keyword: '技术',
+      success: function (res) {
+        console.log(res);
+      },
+      fail: function (res) {
+        console.log(res);
+      },
+      complete: function (res) {
+        console.log(res);
+      }
     })
   },
   searchValueInput: function(e) {
@@ -41,7 +59,7 @@ Page({
         })
       },
       fail: function (e) {
-        console.log(e);
+        //console.log(e);
       }
     });
   },
@@ -51,8 +69,9 @@ Page({
     var sslng = e.currentTarget.dataset.longitude
     var ssbluraddress = e.currentTarget.dataset.title
     var ssaddress = e.currentTarget.dataset.address
+    //console.log(scid)
     wx.navigateTo({
-      url: '/pages/index/index?sID=' + ssid + '&slat=' + sslat + '&slng=' + sslng + '&sbluraddress=' + ssbluraddress + '&saddress=' + ssaddress
+      url: '/pages/index/index?sID=' + ssid + '&cID=' + this.data.cID + '&slat=' + sslat + '&slng=' + sslng + '&sbluraddress=' + ssbluraddress + '&saddress=' + ssaddress
     })
   }
 })

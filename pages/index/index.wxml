@@ -5,13 +5,13 @@
       <view class="tabs-item-li {{curIndex=='0'? 'active' : ''}}" data-id="0" bindtap="tabMenu">网约车</view>
       <view class="tabs-item-li {{curIndex=='1'? 'active' : ''}}" data-id="1" bindtap="tabMenu">接送站</view>
       <view class='tabs-item-li'>
-        <navigator url="/pages/order/order" hover-class="none">订单</navigator>
+        <navigator url="/pages/order/order" hover-class="none">订单{{curIndex}}</navigator>
       </view>
     </view>
   </view>
 
   <!-- 共享车 -->
-  <block wx:if="{{curIndex == 2}}">
+  <block wx:if="{{curIndex == '2'}}">
     <view class="share-car">
       <view class='share-box'>
         <view class="time-item">
@@ -96,11 +96,11 @@
 
       <view class='inputText nowAdd' wx:if="{{isGoBtn==false}}">
         <view class='icon'></view>
-        <view class='xx' bindtap="goToSearch" data-id="1">{{globalMapData.startAddress}}</view>
+        <view class='xx' bindtap="goToSearch" data-id="1" data-curindex="{{curIndex}}">{{globalMapData.startAddress}}</view>
       </view>
       <view class='inputText goAdd' wx:if="{{isGoBtn==false}}">
         <view class='icon '></view>
-        <view class='xx' bindtap='goToSearch' data-id="2">{{globalMapData.endAddress}}</view>
+        <view class='xx' bindtap='goToSearch' data-id="2" data-curindex="{{curIndex}}">{{globalMapData.endAddress}}</view>
       </view>
       <cover-view class='goBtn' wx:if="{{isGoBtn==true}}">
         <button bindlongtap='gogo'>{{carXx}}</button>

@@ -12,7 +12,7 @@
             <view class='addInfo'>{{itemSA.address}}</view>
           </view>
         </block>
-      </block>
+      </block> 
       <block wx:else>
         <view class='search_li R_icon' data-latitude="" data-longitude="" bindtap='toValue'>
           <view class='addName'>广州东站</view>
