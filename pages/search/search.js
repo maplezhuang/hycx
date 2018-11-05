@@ -11,7 +11,7 @@ Page({
     SearchValue: '',
     SearchAddress:[],
     sID:'',
-    cID:''
+    cID:'' 
   },
   onLoad: function(options) {
     let sIDn = options.searchID;
@@ -56,7 +56,6 @@ Page({
     var sslng = e.currentTarget.dataset.longitude
     var ssbluraddress = e.currentTarget.dataset.title
     var ssaddress = e.currentTarget.dataset.address
-    //console.log(scid)
     app.globalData.index.curIndex = 1;
     wx.navigateTo({
       url: '/pages/index/index?sID=' + ssid + '&cID=' + this.data.cID + '&slat=' + sslat + '&slng=' + sslng + '&sbluraddress=' + ssbluraddress + '&saddress=' + ssaddress

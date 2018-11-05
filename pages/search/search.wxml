@@ -13,7 +13,7 @@
           </view>
         </block>
       </block>
-      <block wx:else>
+      <block wx:else> 
         <block wx:for="{{SearchAddress}}" wx:for-item="poiAdd" wx:key="sPoi">
           <view class='search_li Z_icon' data-id="sMid" data-title="{{poiAdd.title}}" data-latitude="{{poiAdd.latitude}}" data-longitude="{{poiAdd.longitude}}" data-address="{{poiAdd.address}}" bindtap='toValue'>
             <view class='addName'>{{poiAdd.title}}</view>

@@ -11,7 +11,7 @@
   </view>
 
   <!-- 共享车 -->
-  <block wx:if="{{curIndex == '2'}}">
+  <block wx:if="{{curIndex == '2'}}"> 
     <view class="share-car">
       <view class='share-box'>
         <view class="time-item">

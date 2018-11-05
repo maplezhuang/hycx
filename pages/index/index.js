@@ -1,4 +1,4 @@
-var QQMapWX = require('../../libs/qqmap-wx-jssdk.js'); 
+var QQMapWX = require('../../libs/qqmap-wx-jssdk.js');
 var qqmapsdk;
 qqmapsdk = new QQMapWX({
   key: 'Q6IBZ-QHNR2-XOGUX-C7C7F-R3JV7-OUB67' //申请自己的开发者密钥
@@ -12,7 +12,7 @@ var currentMinute = date.getMinutes();
 Page({
   data: {
     globalMapData: app.globalData.map,
-    // 共享车
+    // 共享车 
     shareCar: {
       startIndex: null,
       startAddress: '取车点',
@@ -24,14 +24,14 @@ Page({
       name: '广汽丰田海珠店',
       label: '广汽丰田海珠店',
     }, {
-        id: 1,
-        name: '广汽丰田海珠店',
+      id: 1,
+      name: '广汽丰田海珠店',
       label: '广汽丰田海珠店',
-      }, {
-        id: 2,
-        name: '广汽丰田海珠店',
+    }, {
+      id: 2,
+      name: '广汽丰田海珠店',
       label: '广汽丰田海珠店',
-      }],
+    }],
     curIndex: 1,
     mapHeight: 0,
     currentData: 0,
@@ -42,7 +42,7 @@ Page({
     isGotoBackBtn: false,
     carXx: '呼叫司机',
     carXx2: '预约车辆',
-    
+
     startDate: "请选择日期",
     multiArray: [
       ['今天', '明天', '后天'],
@@ -69,14 +69,14 @@ Page({
     })
   },
   //-----------选取时间----------
-  bindTimeChange: function (e) {
+  bindTimeChange: function(e) {
     console.log(data);
     console.log(currentHours);
     console.log(currentMinute);
   },
   // -------------默认页面时间 -------------
   onLoad: function(options) {
-      
+
     var that = this;
     let sID = options.sID;
     let sLat = options.slat;
@@ -86,22 +86,33 @@ Page({
     // console.log(CID)
 
     if (sID == '1') {
+      console.log(sLat, sLng, sAddress)
       app.globalData.map.startLatitude = sLat;
       app.globalData.map.startLongitude = sLng;
       app.globalData.map.startAddress = sAddress;
+      this.setData({
+        globalMapData: app.globalData.map,
+        curIndex: app.globalData.index.curIndex
+      });
+      // console.log(globalMapData.map.startLatitude, globalMapData.map.startLongitude,)
     }
     if (sID == '2') {
+      console.log(sLat, sLng, sAddress)
       app.globalData.map.endLatitude = sLat;
       app.globalData.map.endLongitude = sLng;
       app.globalData.map.endAddress = sAddress;
-    }
-    //console.log(sID, app.globalData.index.curIndex)
-    if(sID == '1' || sID == '2'){
       this.setData({
         globalMapData: app.globalData.map,
         curIndex: app.globalData.index.curIndex
       });
     }
+
+    // if(sID == '1' || sID == '2'){
+    //   this.setData({
+    //     globalMapData: app.globalData.map,
+    //     curIndex: app.globalData.index.curIndex
+    //   });
+    // }
 
     //json数据临时调用
     wx.getStorage({
@@ -123,6 +134,15 @@ Page({
     })
     // 如果全局有经纬度
     if (app.globalData.map.startLatitude && app.globalData.map.startLongitude) {
+      var query = wx.createSelectorQuery();
+      query.select('#xContent').boundingClientRect()
+      query.exec(function(e) {
+        setTimeout(() => {
+          that.setData({
+            mapHeight: (wx.getSystemInfoSync().windowHeight - e[0].height - 36) || 0
+          });
+        }, 200)
+      })
       that.setData({
         globalMapData: app.globalData.map
       });
@@ -167,12 +187,12 @@ Page({
             if (this.data.curIndex == '1' || this.data.curIndex == '0') {
               var query = wx.createSelectorQuery();
               query.select('#xContent').boundingClientRect()
-              query.exec(function (e) {
+              query.exec(function(e) {
                 setTimeout(() => {
                   that.setData({
                     mapHeight: (wx.getSystemInfoSync().windowHeight - e[0].height - 36) || 0
                   });
-                },200)
+                }, 200)
               })
             }
           }
@@ -194,7 +214,7 @@ Page({
       url: '/pages/search/search?searchID=' + e.currentTarget.dataset.id + '&curIndex=' + e.currentTarget.dataset.curindex
     })
   },
-  goToUI: function (e) {
+  goToUI: function(e) {
     wx.navigateTo({
       url: '/pages/user/userInfo?uname=' + e.currentTarget.dataset.un + '&uphone=' + e.currentTarget.dataset.up
     })
@@ -231,9 +251,9 @@ Page({
   },
   tabMenu: function(e) {
     var that = this
-    
+
     this.setData({
-      curIndex : e.target.dataset.id,
+      curIndex: e.target.dataset.id,
       isGoBtn: false,
       isGotoBackBtn: false,
       globalData: app.globalData
@@ -242,10 +262,10 @@ Page({
   cTypeTap: function(e) {
     if (e.target.dataset.id == '1' || e.target.dataset.id == '0') {
       var that = this;
-      setTimeout(function () {
+      setTimeout(function() {
         var query = wx.createSelectorQuery();
         query.select('#xContent').boundingClientRect()
-        query.exec(function (e) {
+        query.exec(function(e) {
           that.setData({
             mapHeight: (wx.getSystemInfoSync().windowHeight - e[0].height - 36) || 0
           });
@@ -275,7 +295,7 @@ Page({
 
 
   //--------时间----------
-  pickerTap: function () {
+  pickerTap: function() {
     date = new Date();
     var monthDay = ['今天', '明天', '后天'];
     var hours = [];
@@ -304,7 +324,7 @@ Page({
     this.setData(data);
   },
 
-  bindMultiPickerColumnChange: function (e) {
+  bindMultiPickerColumnChange: function(e) {
     date = new Date();
     var that = this;
     var monthDay = ['今天', '明天', '后天'];
@@ -368,7 +388,7 @@ Page({
     data.multiArray[2] = minute;
     this.setData(data);
   },
-  loadData: function (hours, minute) {
+  loadData: function(hours, minute) {
     var minuteIndex;
     if (currentMinute > 0 && currentMinute <= 10) {
       minuteIndex = 10;
@@ -408,7 +428,7 @@ Page({
       }
     }
   },
-  loadHoursMinute: function (hours, minute) {
+  loadHoursMinute: function(hours, minute) {
     // 时
     for (var i = 0; i < 24; i++) {
       if (i > 8 && i < 21) {
@@ -420,7 +440,7 @@ Page({
       minute.push(i);
     }
   },
-  loadMinute: function (hours, minute) {
+  loadMinute: function(hours, minute) {
     var minuteIndex;
     if (currentMinute > 0 && currentMinute <= 10) {
       minuteIndex = 10;
@@ -455,7 +475,7 @@ Page({
       minute.push(i);
     }
   },
-  bindStartMultiPickerChange: function (e) {
+  bindStartMultiPickerChange: function(e) {
     var that = this;
     var monthDay = that.data.multiArray[0][e.detail.value[0]];
     var hours = that.data.multiArray[1][e.detail.value[1]];
