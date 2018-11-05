@@ -5,7 +5,8 @@
     "pages/order/order",
     "pages/search/search",
     "pages/logs/logs",
-    "pages/user/userInfo"
+    "pages/user/userInfo",
+    "pages/time/time"
   ],
   "window": {
     "backgroundTextStyle": "black",
