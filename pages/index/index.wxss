@@ -20,6 +20,7 @@
 }
 
 .share-car .share-box .time-item .timeSty {
+  width:148rpx;
   display: table;
   float: left;
   margin: 0 24rpx;
@@ -37,9 +38,11 @@
 }
 
 .share-car .share-box .time-item .xw {
+  width: 100%; 
+  float: left;
   font-size: 28rpx;
   line-height: 28rpx;
-  text-align: cetner;
+  text-align: center;
 }
 
 .share-car .share-box .time-item .dayNum {

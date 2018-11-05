@@ -1,13 +1,14 @@
 {
   "pages": [
-    
     "pages/index/index",
+    "pages/time/time",
     "pages/user/user",
     "pages/order/order",
     "pages/search/search",
-    "pages/logs/logs",
     "pages/user/userInfo",
-    "pages/time/time"
+    "pages/itme2/item2",
+    "pages/logs/logs"
+    
   ],
   "window": {
     "backgroundTextStyle": "black",

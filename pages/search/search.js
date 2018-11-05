@@ -20,7 +20,7 @@ Page({
   },
   searchValueInput: function(e) {
     var sValue = e.detail.value;
-    var _this = this;
+    var _this = this; 
     // 调用接口
     qqmapsdk.search({
       keyword: sValue,  //搜索关键词
