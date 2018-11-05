@@ -56,6 +56,7 @@ Page({
     var ssbluraddress = e.currentTarget.dataset.title
     var ssaddress = e.currentTarget.dataset.address
     //console.log(scid)
+    app.globalData.index.curIndex = 0;
     wx.navigateTo({
       url: '/pages/index/index?sID=' + ssid + '&cID=' + this.data.cID + '&slat=' + sslat + '&slng=' + sslng + '&sbluraddress=' + ssbluraddress + '&saddress=' + ssaddress
     })

@@ -32,7 +32,7 @@ Page({
         name: '广汽丰田海珠店',
       label: '广汽丰田海珠店',
       }],
-    curIndex: '2',
+    curIndex: '0',
     mapHeight: 0,
     currentData: 0,
     scale: 20,
@@ -89,18 +89,17 @@ Page({
       app.globalData.map.startLatitude = sLat;
       app.globalData.map.startLongitude = sLng;
       app.globalData.map.startAddress = sAddress;
-      this.data.curIndex = cID;
-      this.setData({
-        globalMapData: app.globalData.map
-      });
     }
     if (sID == '2') {
       app.globalData.map.endLatitude = sLat;
       app.globalData.map.endLongitude = sLng;
       app.globalData.map.endAddress = sAddress;
-      this.data.curIndex = cID;
+    }
+    console.log(sID, app.globalData.index.curIndex)
+    if(sID == '1' || sID == '2'){
       this.setData({
-        globalMapData: app.globalData.map
+        globalMapData: app.globalData.map,
+        curIndex: app.globalData.index.curIndex
       });
     }
 
