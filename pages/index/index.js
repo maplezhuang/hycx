@@ -79,6 +79,8 @@ Page({
       app.globalData.map.strLongitude = sLng;
       app.globalData.map.startAddress = sAddress;
       this.setData({
+        latitude: sLat,
+        longitude: sLng,
         globalMapData: app.globalData.map,
         curIndex: app.globalData.index.curIndex,
         cType: ctypeID
@@ -89,6 +91,8 @@ Page({
       app.globalData.map.endLongitude = sLng;
       app.globalData.map.endAddress = sAddress;
       this.setData({
+        latitude: sLat,
+        longitude: sLng,
         globalMapData: app.globalData.map,
         curIndex: app.globalData.index.curIndex,
         cType: ctypeID
@@ -104,6 +108,24 @@ Page({
         })
       }
     })
+    //如果全局有目的地经纬度
+    if (app.globalData.map.endLatitude && app.globalData.map.endLatitude) {
+      var that = this;
+      that.setData({
+        isGoBtn: true,
+        isGotoBackBtn: true
+      })
+      var query = wx.createSelectorQuery();
+      query.select('#xContent').boundingClientRect()
+      query.exec(function (e) {
+        console.log(this.data.mapHeight);
+        setTimeout(() => {
+          that.setData({
+            mapHeight: (wx.getSystemInfoSync().windowHeight - e[0].height - 42) || 0
+          });
+        }, 100)
+      })
+    }
     // 如果全局有经纬度
     if (app.globalData.map.strLatitude && app.globalData.map.strLongitude) {
       var query = wx.createSelectorQuery();
@@ -161,11 +183,14 @@ Page({
           }
         })
     }
+    
   },
   onReady: function() {
     this.mapCtx = wx.createMapContext("xMap");
   },
-
+  onShow:function(){
+    
+  },
   //------------- 共享汽车 -----------------
   // 取车点
   shareStartShop(item) {
@@ -286,7 +311,6 @@ Page({
             });
           },
         });
-
       }
     })
   },
@@ -326,8 +350,6 @@ Page({
     data.multiArray[2] = minute;
     this.setData(data);
   },
-
-
   bindMultiPickerColumnChange: function(e) {
     date = new Date();
     var that = this;

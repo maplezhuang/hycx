@@ -11,7 +11,7 @@
             <view class='addName'>{{itemSA.title}}</view>
             <view class='addInfo'>{{itemSA.address}}</view>
           </view>
-        </block>
+        </block> 
       </block>
       <block wx:else> 
         <block wx:for="{{SearchAddress}}" wx:for-item="poiAdd" wx:key="sPoi">

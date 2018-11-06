@@ -13,7 +13,7 @@
   <!-- 共享车 -->
   <block wx:if="{{curIndex == '2'}}">
     <view class="share-car">
-      <view class='share-box'>
+      <view class='share-box'> 
         <view class="time-item">
           <view class='strTime timeSty'>
             <picker class='time-picker' mode="multiSelector" bindchange="bindStartMultiPickerChange" bindtap='pickerTap' bindcolumnchange="bindMultiPickerColumnChange" data-name='startGXC' value="{{multiIndex}}" range="{{multiArray}}">
@@ -94,12 +94,12 @@
     </map>
 
     <view class="xContent" id='xContent'>
-      <view class='user-info' wx:if="{{isGoBtn==false}}" bindtap="goToUI" data-un="{{userInfo.userNames}}" data-up="{{userInfo.userPhone}}">
+      <view class='user-info' bindtap="goToUI" wx:if="{{isGoBtn==false}}" data-un="{{userInfo.userNames}}" data-up="{{userInfo.userPhone}}">
         <view class='names'>{{userInfo.userNames}}</view>
         <view class='phone'>{{userInfo.userPhone}}</view>
       </view>
-      <view class='ShuttleType' wx:if="{{curIndex==1}}">
-        <view class='category' wx:if="{{isGoBtn==false}}">
+      <view class='ShuttleType' wx:if="{{curIndex==1 && isGoBtn==false}}">
+        <view class='category'>
           <view class="options wyc {{cType=='0'? 'active' : ''}}" bindtap="cTypeTap" data-id="0" data-name="实时">实时
           </view>
           <view class="options jshcz {{cType=='1'? 'active' : ''}}" bindtap="cTypeTap" data-id="1" data-name="预约">预约
@@ -111,12 +111,11 @@
           </view>
         </block>
       </view>
-
-      <view class='inputText nowAdd'>
+      <view class='inputText nowAdd' wx:if="{{isGoBtn==false}}">
         <view class='icon'></view>
         <view class='xx' bindtap="goToSearch" data-id="1" data-curindex="{{curIndex}}">{{globalMapData.startAddress}}</view>
       </view>
-      <view class='inputText goAdd'>
+      <view class='inputText goAdd' wx:if="{{isGoBtn==false}}">
         <view class='icon '></view>
         <view class='xx' bindtap='goToSearch' data-id="2" data-curindex="{{curIndex}}">{{globalMapData.endAddress}}</view>
       </view>

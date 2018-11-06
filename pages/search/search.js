@@ -11,7 +11,7 @@ Page({
     SearchValue: '',
     SearchAddress:[],
     sID:'',
-    cID:'',
+    cID:'', 
     ctypeID:''
   },
   onLoad: function(options) {
