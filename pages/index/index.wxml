@@ -15,19 +15,25 @@
     <view class="share-car">
       <view class='share-box'>
         <view class="time-item">
-          <view class='strTime timeSty' bindtap="changeTime">
-          <picker class='time-picker' mode="multiSelector" bindchange="bindStartMultiPickerChange" bindtap='pickerTap' bindcolumnchange="bindMultiPickerColumnChange" value="{{multiIndex}}" range="{{multiArray}}">
-              <view class='bold'>{{startMonthDay}}</view>
-              <view class='xw'>{{startHM}}</view>
+          <view class='strTime timeSty'>
+          <picker class='time-picker' mode="multiSelector" bindchange="bindStartMultiPickerChange" bindtap='pickerTap' bindcolumnchange="bindMultiPickerColumnChange" data-name='startGXC' value="{{multiIndex}}" range="{{multiArray}}">
+              <block wx:if="{{startMonthDay == '' && startHM == ''}}">开始日期</block>
+              <block wx:if="{{startMonthDay !='' && startHM != ''}}">
+                <view class='bold'>{{startMonthDay}}</view>
+                <view class='xw'>{{startHM}}</view>
+              </block>
             </picker>
           </view>
           <view class='dayNum'>
-            <view class='constNum'>1天</view>
+            <view class='constNum'><block wx:if="{{TimeDifference !=''}}">{{TimeDifference}}</block></view>
           </view>
-          <view class='endTime timeSty' bindtap="changeTime">
-            <picker class='time-picker' mode="multiSelector" bindchange="bindStartMultiPickerChange" bindtap='pickerTap' bindcolumnchange="bindMultiPickerColumnChange" value="{{multiIndex}}" range="{{multiArray}}">
-              <view class='bold'>9-12</view>
-              <view class='xw'>{{multiArray[1][multiIndex[1]]}} {{multiArray[2][multiIndex[2]]}}</view>
+          <view class='endTime timeSty'>
+            <picker class='time-picker' mode="multiSelector" bindchange="bindStartMultiPickerChange" bindtap='pickerTap' bindcolumnchange="bindMultiPickerColumnChange" data-name='endtGXC' value="{{multiIndex}}" range="{{multiArray}}">
+            <block wx:if="{{endMonthDay == '' && endHM == ''}}">结束时间</block>
+              <block wx:if="{{endMonthDay !='' && endHM != ''}}">
+                <view class='bold'>{{endMonthDay}}</view>
+                <view class='xw'>{{endHM}}</view>
+              </block>
             </picker>
           </view>
         </view>
@@ -89,16 +95,18 @@
           <view class="options jshcz {{cType=='1'? 'active' : ''}}" bindtap="cTypeTap" data-id="1" data-name="预约">预约
           </view>
         </view>
-        <view class='chooseTime' wx:if="{{isGoBtn==false}}" wx:if="{{cType==1}}">
-          <picker class='time-picker' mode="multiSelector" bindchange="bindStartMultiPickerChange" bindtap='pickerTap' bindcolumnchange="bindMultiPickerColumnChange" value="{{multiIndex}}" range="{{multiArray}}">{{startDate}}</picker>
-        </view>
+        <block wx:if="{{cType==1}}">
+          <view class='chooseTime'>
+            <picker class='time-picker' mode="multiSelector" bindchange="bindStartMultiPickerChange" bindtap='pickerTap' bindcolumnchange="bindMultiPickerColumnChange" data-name='YYC' value="{{multiIndex}}" range="{{multiArray}}">{{startDate}}</picker>
+          </view>
+        </block>
       </view>
 
-      <view class='inputText nowAdd' wx:if="{{isGoBtn==false}}">
+      <view class='inputText nowAdd'>
         <view class='icon'></view>
         <view class='xx' bindtap="goToSearch" data-id="1" data-curindex="{{curIndex}}">{{globalMapData.startAddress}}</view>
       </view>
-      <view class='inputText goAdd' wx:if="{{isGoBtn==false}}">
+      <view class='inputText goAdd'>
         <view class='icon '></view>
         <view class='xx' bindtap='goToSearch' data-id="2" data-curindex="{{curIndex}}">{{globalMapData.endAddress}}</view>
       </view>

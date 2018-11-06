@@ -43,6 +43,7 @@ Page({
     isGotoBackBtn: false,
     carXx: '呼叫司机',
     carXx2: '预约车辆',
+    TimeDifference:'',
     startDate: "请选择日期",
     startMonthDay: '',
     startHM: '',
@@ -242,6 +243,7 @@ Page({
     }
     this.setData({
       cType: e.target.dataset.id,
+      isGoBtn: false,
     });
   },
   goToBack: function() {
@@ -323,9 +325,8 @@ Page({
     var hours = [];
     var minute = [];
 
-    var daye  = date.getDate();
+    var daye = date.getDate();
     var monthe = date.getMonth() + 1;
-    console.log(daye, monthe);
 
     currentHours = date.getHours();
     currentMinute = date.getMinutes();
@@ -408,8 +409,6 @@ Page({
     data.multiArray[2] = minute;
     this.setData(data);
   },
-
-
   loadData: function(hours, minute) {
     var minuteIndex;
     if (currentMinute > 0 && currentMinute <= 10) {
@@ -450,8 +449,6 @@ Page({
       }
     }
   },
-
-
   loadHoursMinute: function(hours, minute) {
     // 时
     for (var i = 0; i < 24; i++) {
@@ -505,46 +502,53 @@ Page({
     var hours = that.data.multiArray[1][e.detail.value[1]];
     var minute = that.data.multiArray[2][e.detail.value[2]];
 
-    var month = date.getMonth() + 1;
     var day = date.getDate();
+    var month = date.getMonth() + 1;
+    var day1 = date.getDate() + 1;
+    var day2 = date.getDate() + 2;
 
-    if (month < 10) {
-      month = '0' + month
-    }
-    if (day < 10) {
-      day = '0' + day
-    }
+    var startMonthDay = monthDay;
+    var endMonthDay = monthDay;
 
     if (monthDay === "今天") {
-      monthDay = month + "-" + day + " ";
+      monthDay = that.formattingTime(month) + "月" + that.formattingTime(day) + "日 ";
     } else if (monthDay === "明天") {
-      var date1 = new Date(date);
-      date1.setDate(date.getDate() + 1);
-      monthDay = (date1.getMonth() + 1) + "-" + date1.getDate() + " ";
-
+      monthDay = that.formattingTime(month) + "月" + that.formattingTime(day1) + "日 ";
     } else if (monthDay === "后天") {
-      var date1 = new Date(date);
-      date1.setDate(date.getDate() + 2);
-      monthDay = (date1.getMonth() + 1) + "-" + date1.getDate() + " ";
+      monthDay = that.formattingTime(month) + "月" + that.formattingTime(day2) + "日 ";
     }
 
-    if (hours < 10) {
-      hours = '0' + hours
-      
-      var startDate = monthDay + " " + hours + ":" + minute;
-      var startMonthDay = monthDay;
-      var startHM = hours + ":" + minute;
-
-      var endMonthDay = emonthDay;
-      var endHM = hours + ":" + eminute;
+    var timeSelector = e.target.dataset.name;
+    if (timeSelector == 'YYC') {
+      var startDate = monthDay + " " + that.formattingTime(hours) + ":" + that.formattingTime(minute);
+      that.setData({
+        startDate: startDate,
+      })
     }
-    
-    that.setData({
-      startDate : startDate,
-      startMonthDay: startMonthDay,
-      startHM: startHM,
-      endMonthDay: endMonthDay,
-      endHM: endHM
-    })
+    if (timeSelector == 'startGXC') {
+      var startHM = that.formattingTime(hours) + ":" + that.formattingTime(minute);
+      that.setData({
+        startMonthDay: startMonthDay,
+        startHM: startHM,
+      })
+    }
+    if (timeSelector == 'endtGXC') {
+      var endHM = that.formattingTime(hours) + ":" + that.formattingTime(minute);
+      that.setData({
+        endMonthDay: endMonthDay,
+        endHM: endHM
+      })
+    }
+
+
+
   },
+  formattingTime: function(e) {
+    if (e < 10) {
+      e = '0' + e
+      return e
+    } else {
+      return e
+    }
+  }
 })
