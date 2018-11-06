@@ -118,7 +118,7 @@ Page({
       var query = wx.createSelectorQuery();
       query.select('#xContent').boundingClientRect()
       query.exec(function (e) {
-        console.log(this.data.mapHeight);
+        //console.log(this.data.mapHeight);
         setTimeout(() => {
           that.setData({
             mapHeight: (wx.getSystemInfoSync().windowHeight - e[0].height - 42) || 0
