@@ -11,14 +11,17 @@ Page({
     SearchValue: '',
     SearchAddress:[],
     sID:'',
-    cID:'' 
+    cID:'',
+    ctypeID:''
   },
   onLoad: function(options) {
     let sIDn = options.searchID;
     let cIDn = options.curIndex;
+    let ctypeIDn = options.ctypeid
     this.setData({
       sID: sIDn,
       cID: cIDn,
+      ctypeID: ctypeIDn
     })
     //console.log(cIDn)
     this.nearby_search();
@@ -56,9 +59,10 @@ Page({
     var sslng = e.currentTarget.dataset.longitude
     var ssbluraddress = e.currentTarget.dataset.title
     var ssaddress = e.currentTarget.dataset.address
-    app.globalData.index.curIndex = 1;
+    app.globalData.index.curIndex = this.data.cID;
+    //console.log(ssid)
     wx.navigateTo({
-      url: '/pages/index/index?sID=' + ssid + '&cID=' + this.data.cID + '&slat=' + sslat + '&slng=' + sslng + '&sbluraddress=' + ssbluraddress + '&saddress=' + ssaddress
+      url: '/pages/index/index?sID=' + ssid + '&ctypeID=' + this.data.ctypeID + '&cID=' + this.data.cID + '&slat=' + sslat + '&slng=' + sslng + '&sbluraddress=' + ssbluraddress + '&saddress=' + ssaddress
     })
   },
   //附近地点信息展示
@@ -66,8 +70,7 @@ Page({
     var _this = this;
     // 调用接口
     qqmapsdk.search({
-      keyword: '车站',  //搜索关键词
-      location: '23.16,113.23',  //设置周边搜索中心点
+      keyword: '车站,机场,酒店',  //搜索关键词
       success: function (res) { //搜索成功后的回调
         //console.log(res.data)
         var mks = []

@@ -33,16 +33,21 @@ Page({
       name: '广汽丰田海珠店',
       label: '广汽丰田海珠店',
     }],
-    curIndex: 2,
+    curIndex: 1,
     mapHeight: 0,
     currentData: 0,
     scale: 20,
+    latitude: 0,
+    longitude: 0,
+    address: '',
+    bluraddress: '',
     userInfo: {},
     cType: 0,
     isGoBtn: false,
     isGotoBackBtn: false,
     carXx: '呼叫司机',
     carXx2: '预约车辆',
+    TimeDifference: '',
     startDate: "请选择日期",
     startMonthDay: '',
     startHM: '',
@@ -54,36 +59,39 @@ Page({
       [0, 10, 20]
     ],
     multiIndex: [0, 0, 0],
+    constD: '0',
+    constH: '0',
+    constM: '0',
   },
   // -------------默认页面时间 -------------
   onLoad: function(options) {
     var that = this;
     let sID = options.sID;
+    let ctypeID = options.ctypeID
     let sLat = options.slat;
     let sLng = options.slng;
     let sAddress = options.sbluraddress;
     let CID = options.cID;
-    // console.log(CID)
+    //console.log(sID)
 
     if (sID == '1') {
-      //console.log(sLat, sLng, sAddress)
-      app.globalData.map.startLatitude = sLat;
-      app.globalData.map.startLongitude = sLng;
+      app.globalData.map.strLatitude = sLat;
+      app.globalData.map.strLongitude = sLng;
       app.globalData.map.startAddress = sAddress;
       this.setData({
         globalMapData: app.globalData.map,
-        curIndex: app.globalData.index.curIndex
+        curIndex: app.globalData.index.curIndex,
+        cType: ctypeID
       });
-      // console.log(globalMapData.map.startLatitude, globalMapData.map.startLongitude,)
     }
     if (sID == '2') {
-      //console.log(sLat, sLng, sAddress)
       app.globalData.map.endLatitude = sLat;
       app.globalData.map.endLongitude = sLng;
       app.globalData.map.endAddress = sAddress;
       this.setData({
         globalMapData: app.globalData.map,
-        curIndex: app.globalData.index.curIndex
+        curIndex: app.globalData.index.curIndex,
+        cType: ctypeID
       });
     }
 
@@ -97,7 +105,7 @@ Page({
       }
     })
     // 如果全局有经纬度
-    if (app.globalData.map.startLatitude && app.globalData.map.startLongitude) {
+    if (app.globalData.map.strLatitude && app.globalData.map.strLongitude) {
       var query = wx.createSelectorQuery();
       query.select('#xContent').boundingClientRect()
       query.exec(function(e) {
@@ -113,42 +121,33 @@ Page({
     } else {
       //获取位置信息
       wx.getLocation({
-          type: 'gcj02',
-          success: (e) => {
-            app.globalData.map.startLatitude = e.latitude;
-            app.globalData.map.startLongitude = e.longitude;
+          type: "gcj02",
+          success: (res) => {
+            this.setData({
+              longitude: res.longitude,
+              latitude: res.latitude
+            })
+            var that = this;
             qqmapsdk.reverseGeocoder({
               location: {
-                latitude: e.latitude,
-                longitude: e.longitude
+                latitude: res.latitude,
+                longitude: res.longitude,
               },
               success: function(res) {
-                //console.log(res);
-                app.globalData.map.startAddress = res.result.address;
+                app.globalData.location = location
+                app.globalData.map.startAddress = res.result.formatted_addresses.recommend;
                 that.setData({
-                  markers: [{
-                    iconPath: "/pages/image/markerStart.png",
-                    id: 0,
-                    latitude: e.latitude,
-                    longitude: e.longitude,
-                    width: 30,
-                    height: 44
-                  }],
-                  globalMapData: app.globalData.map,
+                  address: res.result.address,
+                  bluraddress: res.result.formatted_addresses.recommend,
+                  globalMapData: app.globalData.map
                 });
               },
-              fail: function(e) {
-                //console.log(e);
-              },
-              complete: function(e) {
-                //console.log(e);
-              }
             });
           }
         }),
         wx.getSystemInfo({
           success: (e) => {
-            if (this.data.curIndex == '1' || this.data.curIndex == '0') {
+            if (this.data.curIndex == '1' || this.data.curIndex == '2') {
               var query = wx.createSelectorQuery();
               query.select('#xContent').boundingClientRect()
               query.exec(function(e) {
@@ -194,9 +193,9 @@ Page({
   },
   goToSearch: function(e) {
     //跳转地址搜索页面
-    //console.log(e.currentTarget.dataset.curindex)
+    //console.log(e.currentTarget.dataset.id)
     wx.navigateTo({
-      url: '/pages/search/search?searchID=' + e.currentTarget.dataset.id + '&curIndex=' + e.currentTarget.dataset.curindex
+      url: '/pages/search/search?searchID=' + e.currentTarget.dataset.id + '&curIndex=' + e.currentTarget.dataset.curindex + '&ctypeid=' + this.data.cType
     })
   },
   goToUI: function(e) {
@@ -242,6 +241,7 @@ Page({
     }
     this.setData({
       cType: e.target.dataset.id,
+      isGoBtn: false,
     });
   },
   goToBack: function() {
@@ -264,57 +264,36 @@ Page({
   gogo: function(e) {
 
   },
-
-
   //-----------map设置----------
-  //设置地图中心点
-  getLngLat: function() {
-    var that = this;
-    this.mapCtx = wx.createMapContext("xMap");
+  //移动选点
+  bindregionchange: function(e) {
+    var that = this
     this.mapCtx.getCenterLocation({
-      success: function(e) {
-        app.globalData.latitude = e.latitude
-        app.globalData.longitude = e.longitude
+      success: function(res) {
+        app.globalData.strLatitude = res.latitude
+        app.globalData.strLongitude = res.longitude
         qqmapsdk.reverseGeocoder({
           location: {
-            latitude: e.latitude,
-            longitude: e.longitude,
+            latitude: res.latitude,
+            longitude: res.longitude,
           },
-          success: function(e) {
-            app.globalData.map.startAddress = e.result.formatted_addresses.recommend
-            app.globalData.map.startLatitude = e.result.location.lat
-            app.globalData.map.startLongitude = e.result.location.lng
+          success: function(res) {
+            app.globalData.map.startAddress = res.result.formatted_addresses.recommend;
             that.setData({
+              address: res.result.address,
+              bluraddress: res.result.formatted_addresses.recommend,
               globalMapData: app.globalData.map
             });
-          }
-        })
-        that.setData({
-          longitude: e.longitude,
-          latitude: e.latitude,
-          markers: [{
-            id: 0,
-            iconPath: "../../image/markerStart.png",
-            longitude: e.longitude,
-            latitude: e.latitude,
-            width: 30,
-            height: 30
-          }]
-        })
+          },
+        });
+
       }
     })
-  },
-  // 地图发生变化的时候，获取中间点，也就是用户选择的位置
-  regionchange(e) {
-    if (e.type == 'end') {
-      this.getLngLat()
-    }
   },
   //左下点击回到当前定位
   moveToLocation: function() {
     this.mapCtx.moveToLocation()
   },
-
 
   //--------时间选择器----------
   pickerTap: function() {
@@ -323,9 +302,8 @@ Page({
     var hours = [];
     var minute = [];
 
-    var daye  = date.getDate();
+    var daye = date.getDate();
     var monthe = date.getMonth() + 1;
-    console.log(daye, monthe);
 
     currentHours = date.getHours();
     currentMinute = date.getMinutes();
@@ -334,7 +312,6 @@ Page({
       multiArray: this.data.multiArray,
       multiIndex: this.data.multiIndex
     };
-
     if (data.multiIndex[0] === 0) {
       if (data.multiIndex[1] === 0) {
         this.loadData(hours, minute);
@@ -349,6 +326,7 @@ Page({
     data.multiArray[2] = minute;
     this.setData(data);
   },
+
 
   bindMultiPickerColumnChange: function(e) {
     date = new Date();
@@ -408,8 +386,6 @@ Page({
     data.multiArray[2] = minute;
     this.setData(data);
   },
-
-
   loadData: function(hours, minute) {
     var minuteIndex;
     if (currentMinute > 0 && currentMinute <= 10) {
@@ -450,8 +426,6 @@ Page({
       }
     }
   },
-
-
   loadHoursMinute: function(hours, minute) {
     // 时
     for (var i = 0; i < 24; i++) {
@@ -505,46 +479,91 @@ Page({
     var hours = that.data.multiArray[1][e.detail.value[1]];
     var minute = that.data.multiArray[2][e.detail.value[2]];
 
-    var month = date.getMonth() + 1;
     var day = date.getDate();
-
-    if (month < 10) {
-      month = '0' + month
-    }
-    if (day < 10) {
-      day = '0' + day
-    }
+    var month = date.getMonth() + 1;
+    var day1 = date.getDate() + 1;
+    var day2 = date.getDate() + 2;
 
     if (monthDay === "今天") {
-      monthDay = month + "-" + day + " ";
+      monthDay = that.formattingTime(month) + "月" + that.formattingTime(day) + "日";
     } else if (monthDay === "明天") {
-      var date1 = new Date(date);
-      date1.setDate(date.getDate() + 1);
-      monthDay = (date1.getMonth() + 1) + "-" + date1.getDate() + " ";
-
+      monthDay = that.formattingTime(month) + "月" + that.formattingTime(day1) + "日";
     } else if (monthDay === "后天") {
-      var date1 = new Date(date);
-      date1.setDate(date.getDate() + 2);
-      monthDay = (date1.getMonth() + 1) + "-" + date1.getDate() + " ";
+      monthDay = that.formattingTime(month) + "月" + that.formattingTime(day2) + "日";
     }
 
-    if (hours < 10) {
-      hours = '0' + hours
-      
-      var startDate = monthDay + " " + hours + ":" + minute;
+    var timeSelector = e.target.dataset.name;
+    if (timeSelector == 'YYC') {
+      var startDate = monthDay + " " + that.formattingTime(hours) + ":" + that.formattingTime(minute);
+      that.setData({
+        startDate: startDate,
+      })
+    }
+    if (timeSelector == 'startGXC') {
       var startMonthDay = monthDay;
-      var startHM = hours + ":" + minute;
-
-      var endMonthDay = emonthDay;
-      var endHM = hours + ":" + eminute;
+      var startHM = that.formattingTime(hours) + ":" + that.formattingTime(minute);
+      that.setData({
+        startMonthDay: startMonthDay,
+        startHM: startHM,
+      })
     }
-    
-    that.setData({
-      startDate : startDate,
-      startMonthDay: startMonthDay,
-      startHM: startHM,
-      endMonthDay: endMonthDay,
-      endHM: endHM
-    })
+    if (timeSelector == 'endtGXC') {
+      var endMonthDay = monthDay;
+      var endHM = that.formattingTime(hours) + ":" + that.formattingTime(minute);
+      that.setData({
+        endMonthDay: endMonthDay,
+        endHM: endHM,
+      })
+      that.sjc();
+    }
+
   },
+  formattingTime: function(e) {
+    if (e < 10) {
+      e = '0' + e
+      return e
+    } else {
+      return e
+    }
+  },
+  isToast: function() {
+    if (this.data.startMonthDay == '' && this.data.startHM == '') {
+      wx.showToast({
+        title: '请先选择开始时间',
+        icon: 'none',
+        duration: 1500
+      })
+    }
+  },
+  // 计算时间差
+  sjc: function() {
+    //获取开始时间
+    var str = date.getFullYear() + ' ' + this.data.startMonthDay + this.data.startHM;
+    var sdata = str.replace(/[\u4e00-\u9fa5]|\s+|\:+/g, ",");
+    var arr = [];
+    for (var i = 0; i < 5; i++) {
+      arr.push((sdata.split(","))[i])
+    }
+    var arrS = arr[0] + '/' + arr[1] + '/' + arr[2] + ' ' + arr[3] + ':' + arr[4];
+
+    //获取结束时间
+    var str2 = date.getFullYear() + ' ' + this.data.endMonthDay + this.data.endHM;
+    var sdata2 = str2.replace(/[\u4e00-\u9fa5]|\s+|\:+/g, ",");
+    var arr2 = [];
+    for (var i = 0; i < 5; i++) {
+      arr2.push((sdata2.split(","))[i])
+    }
+
+    var arrS2 = arr2[0] + '/' + arr2[1] + '/' + arr2[2] + ' ' + arr2[3] + ':' + arr2[4];
+    var that = this
+    var t1 = new Date(arrS)
+    var t2 = new Date(arrS2)
+    var t = new Date(t2 - t1 + 16 * 3600 * 1000)
+
+    that.setData({
+      constD: parseInt(t.getTime() / 1000 / 3600 / 24),
+      constH: t.getHours(),
+      constM: t.getMinutes(),
+    })
+  }
 })

@@ -6,31 +6,17 @@ App({
     // 预约车
     map: {
       // 我的位置
-      startLatitude: null,
-      startLongitude: null,
-      startBluraddress: null,
       startAddress: '我的位置',
-      endLatitude: null,
-      endLongitude: null,
-      endBluraddress: null,
-      endAddress: '目的地'
+      endAddress: '目的地',
+      strLatitude: 0,
+      strLongitude: 0,
+      endLatitude: 0,
+      endLongitude: 0,
     },
     // 首页数据
     index: {
       curIndex: 1
     }
-  },
-  setHeight: function () {
-    var that = this;
-    var query = wx.createSelectorQuery();
-    query.select('#xContent').boundingClientRect()
-    query.exec(function (e) {
-      setTimeout(() => {
-        that.setData({
-          mapHeight: (wx.getSystemInfoSync().windowHeight - e[0].height - 36) || 0
-        });
-      }, 100)
-    })
   },
   // ajax封装
   request: function (params) {
@@ -56,13 +42,13 @@ App({
         }
       },
       fail: function () {
-        console.warn('---请求失败（fail）---:' + host + params.url);
+        //console.warn('---请求失败（fail）---:' + host + params.url);
         if (typeof params.fail == "function") {
           params.fail();
         }
       },
       complete: function (res) {
-        // console.log("请求完成：" + host + params.url, params, res);
+        //console.log("请求完成：" + host + params.url, params, res);
         if (typeof params.complete == "function") {
           params.complete();
         }
@@ -84,9 +70,9 @@ App({
     wx.login({
       success: res => {
         // 发送 res.code 到后台换取 openId, sessionKey, unionId
-        console.log("--登录中--", res);
+        //console.log("--登录中--", res);
         if (res.code) {
-          
+
           const params = {
             code: res.code
           };

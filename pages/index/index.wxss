@@ -28,11 +28,17 @@
   text-align: cetner;
 }
 
+.share-car .share-box .time-item .time-picker{
+  font-size:30rpx;
+  line-height: 80rpx;
+  text-align: center;
+}
+
 .share-car .share-box .time-item .bold {
   width: 100%;
   height: 50rpx;
   float: left;
-  font-size: 34rpx;
+  font-size: 32rpx;
   line-height: 50rpx;
   font-weight: bold;
   text-align: center;
@@ -48,26 +54,31 @@
 }
 
 .share-car .share-box .time-item .dayNum {
+  width:238rpx;
+  height:40rpx;
   float: left;
   font-size: 28rpx;
-  margin: 0 116rpx;
+  line-height: 40rpx;
+  margin: 0 20rpx;
   position: relative;
 }
 
 .share-car .share-box .time-item .dayNum::before {
   content: '';
-  width: 100rpx;
+  width: 100%;
   height: 2rpx;
   background-color: #e1e1e1;
   display: block;
   position: absolute;
   left: 50%;
   top: 50rpx;
-  margin-left: -50rpx;
+  transform: translateX(-50%);
+  -webkit-transform: translateX(-50%);
 }
 
 .share-car .share-box .time-item .constNum {
   position: relative;
+  text-align: center;
 }
 
 .share-car .share-box .time-item .constNum::before,
@@ -83,11 +94,11 @@
 }
 
 .share-car .share-box .time-item .constNum::before {
-  left: -40rpx;
+  left: -6px;
 }
 
 .share-car .share-box .time-item .constNum::after {
-  right: -40rpx;
+  right: -6px;
   background-color: #e9e6e9;
 }
 
@@ -248,7 +259,7 @@
   float: left;
 }
 
-.xContent .user-info .names,.xContent .user-info .phone {
+.xContent .user-info .names, .xContent .user-info .phone {
   float: left;
   margin-right: 15rpx;
 }
@@ -286,16 +297,16 @@
 }
 
 .xContent .chooseTime {
-  display: table;
-  margin: 5px auto 0;
-  font-size: 12px;
-  line-height: 30px;
-  text-align: center;
-}
-
-.xContent .chooseTime picker {
+  width: 100%;
+  height: 60rpx;
   float: left;
-  margin: 0 20rpx;
+  display: table;
+  margin-top: 10rpx;
+  font-size: 28rpx;
+  line-height: 60rpx;
+  text-align: center;
+  
+  
 }
 
 .xContent .time-picker {
@@ -304,7 +315,7 @@
 }
 
 .xContent .inputText {
-  width:100%;
+  width: 100%;
   float: left;
   height: 80rpx;
   padding: 0 40rpx;
