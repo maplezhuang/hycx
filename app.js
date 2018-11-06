@@ -2,6 +2,7 @@
 App({
   clientUrl: 'http://120.76.101.253:8080/gzlx/f/wxApp',  // 链接地址
   globalData: {
+    openId: null,
     // 预约车
     map: {
       // 我的位置
@@ -43,14 +44,14 @@ App({
       // dataType: "json",
       // header: that.headerPost,
       success: function (res) {
-        if (res.data.result != 1) {
-          console.log('---请求失败（success）---:', res.data.msg);
+        console.log(res)
+        if (res.data && res.statusCode != 200 || res.data.code == 0) {
+          console.log('---请求失败（success）---:', res.data);
           wx.showToast({
             icon: 'none',
             title: res.data.msg,
           })
-        }
-        if (typeof params.success == "function") {
+        }else if (typeof params.success == "function") {
           params.success(res);
         }
       },
@@ -61,7 +62,7 @@ App({
         }
       },
       complete: function (res) {
-        console.log("请求完成：" + host + params.url, params, res);
+        // console.log("请求完成：" + host + params.url, params, res);
         if (typeof params.complete == "function") {
           params.complete();
         }
@@ -85,7 +86,7 @@ App({
         // 发送 res.code 到后台换取 openId, sessionKey, unionId
         console.log("--登录中--", res);
         if (res.code) {
-
+          
           const params = {
             code: res.code
           };
@@ -94,8 +95,8 @@ App({
             url: "/code2OpenId",
             data: params,
             success: function (res) {
-              console.log('code2OpenId')
-              wx.hideLoading()
+              console.log('code2OpenId', res.openId)
+              // wx.hideLoading()
             }
           })
         }
