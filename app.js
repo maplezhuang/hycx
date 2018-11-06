@@ -44,7 +44,7 @@ App({
       // header: that.headerPost,
       success: function (res) {
         if (res.data.result != 1) {
-          console.log('---请求失败（success）---:', res.data.msg);
+          //console.log('---请求失败（success）---:', res.data.msg);
           wx.showToast({
             icon: 'none',
             title: res.data.msg,
@@ -55,13 +55,13 @@ App({
         }
       },
       fail: function () {
-        console.warn('---请求失败（fail）---:' + host + params.url);
+        //console.warn('---请求失败（fail）---:' + host + params.url);
         if (typeof params.fail == "function") {
           params.fail();
         }
       },
       complete: function (res) {
-        console.log("请求完成：" + host + params.url, params, res);
+        //console.log("请求完成：" + host + params.url, params, res);
         if (typeof params.complete == "function") {
           params.complete();
         }
@@ -83,7 +83,7 @@ App({
     wx.login({
       success: res => {
         // 发送 res.code 到后台换取 openId, sessionKey, unionId
-        console.log("--登录中--", res);
+        //console.log("--登录中--", res);
         if (res.code) {
 
           const params = {
@@ -94,7 +94,7 @@ App({
             url: "/code2OpenId",
             data: params,
             success: function (res) {
-              console.log('code2OpenId')
+              //console.log('code2OpenId')
               wx.hideLoading()
             }
           })

@@ -33,7 +33,7 @@ Page({
       name: '广汽丰田海珠店',
       label: '广汽丰田海珠店',
     }],
-    curIndex: 2,
+    curIndex: 1,
     mapHeight: 0,
     currentData: 0,
     scale: 20,
@@ -63,31 +63,31 @@ Page({
   onLoad: function(options) {
     var that = this;
     let sID = options.sID;
+    let ctypeID = options.ctypeID
     let sLat = options.slat;
     let sLng = options.slng;
     let sAddress = options.sbluraddress;
     let CID = options.cID;
-    // console.log(CID)
+    //console.log(sID)
 
     if (sID == '1') {
-      //console.log(sLat, sLng, sAddress)
       app.globalData.map.startLatitude = sLat;
       app.globalData.map.startLongitude = sLng;
       app.globalData.map.startAddress = sAddress;
       this.setData({
         globalMapData: app.globalData.map,
-        curIndex: app.globalData.index.curIndex
+        curIndex: app.globalData.index.curIndex,
+        cType: ctypeID
       });
-      // console.log(globalMapData.map.startLatitude, globalMapData.map.startLongitude,)
     }
     if (sID == '2') {
-      //console.log(sLat, sLng, sAddress)
       app.globalData.map.endLatitude = sLat;
       app.globalData.map.endLongitude = sLng;
       app.globalData.map.endAddress = sAddress;
       this.setData({
         globalMapData: app.globalData.map,
-        curIndex: app.globalData.index.curIndex
+        curIndex: app.globalData.index.curIndex,
+        cType: ctypeID
       });
     }
 
@@ -118,7 +118,7 @@ Page({
       //获取位置信息
       wx.getLocation({
           type: 'gcj02',
-          success: (e) => {
+          success: function(e) {
             app.globalData.map.startLatitude = e.latitude;
             app.globalData.map.startLongitude = e.longitude;
             qqmapsdk.reverseGeocoder({
@@ -127,32 +127,17 @@ Page({
                 longitude: e.longitude
               },
               success: function(res) {
-                //console.log(res);
                 app.globalData.map.startAddress = res.result.address;
                 that.setData({
-                  markers: [{
-                    iconPath: "/pages/image/markerStart.png",
-                    id: 0,
-                    latitude: e.latitude,
-                    longitude: e.longitude,
-                    width: 30,
-                    height: 44
-                  }],
                   globalMapData: app.globalData.map,
-                });
-              },
-              fail: function(e) {
-                //console.log(e);
-              },
-              complete: function(e) {
-                //console.log(e);
+                })
               }
-            });
+            })
           }
         }),
         wx.getSystemInfo({
           success: (e) => {
-            if (this.data.curIndex == '1' || this.data.curIndex == '0') {
+            if (this.data.curIndex == '1' || this.data.curIndex == '2') {
               var query = wx.createSelectorQuery();
               query.select('#xContent').boundingClientRect()
               query.exec(function(e) {
@@ -198,9 +183,9 @@ Page({
   },
   goToSearch: function(e) {
     //跳转地址搜索页面
-    //console.log(e.currentTarget.dataset.curindex)
+    //console.log(e.currentTarget.dataset.id)
     wx.navigateTo({
-      url: '/pages/search/search?searchID=' + e.currentTarget.dataset.id + '&curIndex=' + e.currentTarget.dataset.curindex
+      url: '/pages/search/search?searchID=' + e.currentTarget.dataset.id + '&curIndex=' + e.currentTarget.dataset.curindex + '&ctypeid=' + this.data.cType
     })
   },
   goToUI: function(e) {
@@ -269,56 +254,83 @@ Page({
   gogo: function(e) {
 
   },
-
-
   //-----------map设置----------
-  //设置地图中心点
-  getLngLat: function() {
-    var that = this;
-    this.mapCtx = wx.createMapContext("xMap");
-    this.mapCtx.getCenterLocation({
-      success: function(e) {
-        app.globalData.latitude = e.latitude
-        app.globalData.longitude = e.longitude
-        qqmapsdk.reverseGeocoder({
-          location: {
-            latitude: e.latitude,
-            longitude: e.longitude,
-          },
-          success: function(e) {
-            app.globalData.map.startAddress = e.result.formatted_addresses.recommend
-            app.globalData.map.startLatitude = e.result.location.lat
-            app.globalData.map.startLongitude = e.result.location.lng
-            that.setData({
-              globalMapData: app.globalData.map
-            });
-          }
-        })
-        that.setData({
-          longitude: e.longitude,
-          latitude: e.latitude,
-          markers: [{
-            id: 0,
-            iconPath: "../../image/markerStart.png",
-            longitude: e.longitude,
-            latitude: e.latitude,
-            width: 30,
-            height: 30
-          }]
-        })
+  //移动选点
+  bindregionchange: function(e) {
+    wx.getLocation({
+      type: 'wgs84', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
+      success: function(res) {
+        console.log('1' + res)
+        // console.log(res);
+        // app.globalData.latitude = res.latitude
+        // app.globalData.longitude = res.longitude
+        // qqmapsdk.reverseGeocoder({
+
+        //   location: {
+        //     latitude: res.latitude,
+        //     longitude: res.longitude,
+        //   },
+        //   success: function(e) {
+        //     // app.globalData.map.startAddress = e.result.formatted_addresses.recommend
+        //     // app.globalData.map.startLatitude = e.result.location.lat
+        //     // app.globalData.map.startLongitude = e.result.location.lng
+        //     // that.setData({
+        //     //   globalMapData: app.globalData.map
+        //     // });
+        //   }
+        // })
       }
-    })
-  },
-  // 地图发生变化的时候，获取中间点，也就是用户选择的位置
-  regionchange(e) {
-    if (e.type == 'end') {
-      this.getLngLat()
-    }
+    });
   },
   //左下点击回到当前定位
   moveToLocation: function() {
     this.mapCtx.moveToLocation()
   },
+
+  //设置地图中心点
+  // getLngLat: function() {
+  //   var that = this;
+  //   this.mapCtx = wx.createMapContext("xMap");
+  //   this.mapCtx.getCenterLocation({
+  //     success: function(e) {
+  //       app.globalData.latitude = e.latitude
+  //       app.globalData.longitude = e.longitude
+  //       qqmapsdk.reverseGeocoder({
+  //         location: {
+  //           latitude: e.latitude,
+  //           longitude: e.longitude,
+  //         },
+  //         success: function(e) {
+  //           app.globalData.map.startAddress = e.result.formatted_addresses.recommend
+  //           app.globalData.map.startLatitude = e.result.location.lat
+  //           app.globalData.map.startLongitude = e.result.location.lng
+  //           that.setData({
+  //             globalMapData: app.globalData.map
+  //           });
+  //         }
+  //       })
+  //       that.setData({
+  //         longitude: e.longitude,
+  //         latitude: e.latitude,
+  //         markers: [{
+  //           id: 0,
+  //           iconPath: "../../image/markerStart.png",
+  //           longitude: e.longitude,
+  //           latitude: e.latitude,
+  //           width: 30,
+  //           height: 30
+  //         }]
+  //       })
+  //     }
+  //   })
+  // },
+  // // 地图发生变化的时候，获取中间点，也就是用户选择的位置
+  // regionchange(e) {
+  //   if (e.type == 'end') {
+  //     this.getLngLat()
+  //   }
+  // },
+
 
 
   //--------时间选择器----------
@@ -543,7 +555,6 @@ Page({
       that.sjc();
     }
 
-    
   },
   formattingTime: function(e) {
     if (e < 10) {

@@ -27,8 +27,8 @@
           <view class='dayNum'>
             <view class='constNum'>
               <block wx:if="{{constD !='0' || constH !='0' || constM !='0'}}">
-                <block wx:if="{{constD !='0' || constD < 1 }}">{{constD}}天 </block> 
-                <block wx:if="{{constH !='0'}}">{{constH}}小时 </block> 
+                <block wx:if="{{constD !='0' || constD < 1 }}">{{constD}}天 </block>
+                <block wx:if="{{constH !='0'}}">{{constH}}小时 </block>
                 <block wx:if="{{constM !='0' || constM < 30 }}">{{constM}}分钟</block>
               </block>
             </view>
@@ -78,7 +78,8 @@
   </block>
   <!-- 约车,接送 -->
   <block wx:else>
-    <map class="xMap" id='xMap' latitude="{{globalMapData.startLatitude}}" longitude="{{globalMapData.startLongitude}}" scale="{{scale}}" bindregionchange="regionchange" bindtap="moveToLocation" polyline="{{polyline}}" style="height:{{mapHeight}}px" show-location>
+    <!-- bindregionchange="regionchange" bindtap="moveToLocation" -->
+    <map class="xMap" id='xMap' latitude="{{globalMapData.startLatitude}}" longitude="{{globalMapData.startLongitude}}" scale="{{scale}}" bindregionchange="bindregionchange" bindtap="moveToLocation" style="height:{{mapHeight}}px" show-location>
       <cover-view class="markerStart">
         <cover-image src='../../pages/image/markerStart.png' />
       </cover-view>
@@ -92,6 +93,7 @@
         <cover-image src='../../pages/image/goToBack.png' />
       </cover-view>
     </map>
+
     <view class="xContent" id='xContent'>
       <view class='user-info' wx:if="{{isGoBtn==false}}" bindtap="goToUI" data-un="{{userInfo.userNames}}" data-up="{{userInfo.userPhone}}">
         <view class='names'>{{userInfo.userNames}}</view>
