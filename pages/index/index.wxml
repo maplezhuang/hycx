@@ -26,10 +26,10 @@
           </view>
           <view class='dayNum'>
             <view class='constNum'>
-              <block wx:if="{{constD !='' || constH !='' || constM !=''}}">
-                <block wx:if="{{constD}} !='' && {{constD}} !='0'">{{constD}}天</block> 
-                <block wx:if="{{constH}} !='' && {{constH}} !='0'">{{constH}}小时</block> 
-                <block wx:if="{{constM}} !='' && {{constM}} !='0' ">{{constM}}分钟</block>
+              <block wx:if="{{constD !='0' || constH !='0' || constM !='0'}}">
+                <block wx:if="{{constD !='0'}}">{{constD}}天 </block> 
+                <block wx:if="{{constH !='0'}}">{{constH}}小时 </block> 
+                <block wx:if="{{constM !='0'}}">{{constM}}分钟</block>
               </block>
             </view>
           </view>

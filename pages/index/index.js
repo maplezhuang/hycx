@@ -55,9 +55,9 @@ Page({
       [0, 10, 20]
     ],
     multiIndex: [0, 0, 0],
-    constD:'',
-    constH:'',
-    constM:'',
+    constD:'0',
+    constH:'0',
+    constM:'0',
   },
   // -------------默认页面时间 -------------
   onLoad: function(options) {
