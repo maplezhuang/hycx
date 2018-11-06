@@ -58,6 +58,7 @@
   height:40rpx;
   float: left;
   font-size: 28rpx;
+  line-height: 40rpx;
   margin: 0 20rpx;
   position: relative;
 }

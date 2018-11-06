@@ -55,9 +55,9 @@ Page({
       [0, 10, 20]
     ],
     multiIndex: [0, 0, 0],
-    constD:'0',
-    constH:'0',
-    constM:'0',
+    constD: '0',
+    constH: '0',
+    constM: '0',
   },
   // -------------默认页面时间 -------------
   onLoad: function(options) {
@@ -540,40 +540,10 @@ Page({
         endMonthDay: endMonthDay,
         endHM: endHM,
       })
-
-      //获取开始时间
-      var str = date.getFullYear() + ' ' + this.data.startMonthDay + this.data.startHM;
-      var sdata = str.replace(/[\u4e00-\u9fa5]|\s+|\:+/g, ",");
-      var arr = [];
-      for (var i = 0; i < 5; i++) {
-        arr.push((sdata.split(","))[i])
-      }
-      var arrS = arr[0] + '/' + arr[1] + '/' + arr[2] + ' ' + arr[3] + ':' + arr[4];
-      //console.log(arrS)
-
-      //获取结束时间
-      var str2 = date.getFullYear() + ' ' + this.data.endMonthDay + this.data.endHM;
-      var sdata2 = str2.replace(/[\u4e00-\u9fa5]|\s+|\:+/g, ",");
-      var arr2 = [];
-      for (var i = 0; i < 5; i++) {
-        arr2.push((sdata2.split(","))[i])
-      }
-      var arrS2 = arr2[0] + '/' + arr2[1] + '/' + arr2[2] + ' ' + arr2[3] + ':' + arr2[4];
-      //console.log(arrS2)
-
-      // 计算时间差
-      var that = this
-      setInterval(function() {
-        var t1 = new Date(arrS)
-        var t2 = new Date(arrS2)
-        var t = new Date(t2 - t1 + 16 * 3600 * 1000)
-        that.setData({
-          constD: parseInt(t.getTime() / 1000 / 3600 / 24),
-          constH: t.getHours(),
-          constM: t.getMinutes(),
-        })
-      }, 200)
+      that.sjc();
     }
+
+    
   },
   formattingTime: function(e) {
     if (e < 10) {
@@ -591,5 +561,36 @@ Page({
         duration: 1500
       })
     }
+  },
+  // 计算时间差
+  sjc: function() {
+    //获取开始时间
+    var str = date.getFullYear() + ' ' + this.data.startMonthDay + this.data.startHM;
+    var sdata = str.replace(/[\u4e00-\u9fa5]|\s+|\:+/g, ",");
+    var arr = [];
+    for (var i = 0; i < 5; i++) {
+      arr.push((sdata.split(","))[i])
+    }
+    var arrS = arr[0] + '/' + arr[1] + '/' + arr[2] + ' ' + arr[3] + ':' + arr[4];
+
+    //获取结束时间
+    var str2 = date.getFullYear() + ' ' + this.data.endMonthDay + this.data.endHM;
+    var sdata2 = str2.replace(/[\u4e00-\u9fa5]|\s+|\:+/g, ",");
+    var arr2 = [];
+    for (var i = 0; i < 5; i++) {
+      arr2.push((sdata2.split(","))[i])
+    }
+
+    var arrS2 = arr2[0] + '/' + arr2[1] + '/' + arr2[2] + ' ' + arr2[3] + ':' + arr2[4];
+    var that = this
+    var t1 = new Date(arrS)
+    var t2 = new Date(arrS2)
+    var t = new Date(t2 - t1 + 16 * 3600 * 1000)
+
+    that.setData({
+      constD: parseInt(t.getTime() / 1000 / 3600 / 24),
+      constH: t.getHours(),
+      constM: t.getMinutes(),
+    })
   }
 })
