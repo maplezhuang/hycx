@@ -78,8 +78,7 @@
   </block>
   <!-- 约车,接送 -->
   <block wx:else>
-    <!-- bindregionchange="regionchange" bindtap="moveToLocation" -->
-    <map class="xMap" id='xMap' latitude="{{globalMapData.startLatitude}}" longitude="{{globalMapData.startLongitude}}" scale="{{scale}}" bindregionchange="bindregionchange" bindtap="moveToLocation" style="height:{{mapHeight}}px" show-location>
+    <map class="xMap" id='xMap' latitude="{{latitude}}" longitude="{{longitude}}" scale="{{scale}}" bindregionchange="bindregionchange" bindcontroltap="controltap" style="height:{{mapHeight}}px" show-location>
       <cover-view class="markerStart">
         <cover-image src='../../pages/image/markerStart.png' />
       </cover-view>

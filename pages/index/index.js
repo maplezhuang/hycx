@@ -37,6 +37,10 @@ Page({
     mapHeight: 0,
     currentData: 0,
     scale: 20,
+    latitude: 0,
+    longitude: 0,
+    address: '',
+    bluraddress: '',
     userInfo: {},
     cType: 0,
     isGoBtn: false,
@@ -71,8 +75,8 @@ Page({
     //console.log(sID)
 
     if (sID == '1') {
-      app.globalData.map.startLatitude = sLat;
-      app.globalData.map.startLongitude = sLng;
+      app.globalData.map.strLatitude = sLat;
+      app.globalData.map.strLongitude = sLng;
       app.globalData.map.startAddress = sAddress;
       this.setData({
         globalMapData: app.globalData.map,
@@ -101,7 +105,7 @@ Page({
       }
     })
     // 如果全局有经纬度
-    if (app.globalData.map.startLatitude && app.globalData.map.startLongitude) {
+    if (app.globalData.map.strLatitude && app.globalData.map.strLongitude) {
       var query = wx.createSelectorQuery();
       query.select('#xContent').boundingClientRect()
       query.exec(function(e) {
@@ -117,22 +121,28 @@ Page({
     } else {
       //获取位置信息
       wx.getLocation({
-          type: 'gcj02',
-          success: function(e) {
-            app.globalData.map.startLatitude = e.latitude;
-            app.globalData.map.startLongitude = e.longitude;
+          type: "gcj02",
+          success: (res) => {
+            this.setData({
+              longitude: res.longitude,
+              latitude: res.latitude
+            })
+            var that = this;
             qqmapsdk.reverseGeocoder({
               location: {
-                latitude: e.latitude,
-                longitude: e.longitude
+                latitude: res.latitude,
+                longitude: res.longitude,
               },
               success: function(res) {
-                app.globalData.map.startAddress = res.result.address;
+                app.globalData.location = location
+                app.globalData.map.startAddress = res.result.formatted_addresses.recommend;
                 that.setData({
-                  globalMapData: app.globalData.map,
-                })
-              }
-            })
+                  address: res.result.address,
+                  bluraddress: res.result.formatted_addresses.recommend,
+                  globalMapData: app.globalData.map
+                });
+              },
+            });
           }
         }),
         wx.getSystemInfo({
@@ -257,81 +267,33 @@ Page({
   //-----------map设置----------
   //移动选点
   bindregionchange: function(e) {
-    wx.getLocation({
-      type: 'wgs84', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
+    var that = this
+    this.mapCtx.getCenterLocation({
       success: function(res) {
-        console.log('1' + res)
-        // console.log(res);
-        // app.globalData.latitude = res.latitude
-        // app.globalData.longitude = res.longitude
-        // qqmapsdk.reverseGeocoder({
+        app.globalData.strLatitude = res.latitude
+        app.globalData.strLongitude = res.longitude
+        qqmapsdk.reverseGeocoder({
+          location: {
+            latitude: res.latitude,
+            longitude: res.longitude,
+          },
+          success: function(res) {
+            app.globalData.map.startAddress = res.result.formatted_addresses.recommend;
+            that.setData({
+              address: res.result.address,
+              bluraddress: res.result.formatted_addresses.recommend,
+              globalMapData: app.globalData.map
+            });
+          },
+        });
 
-        //   location: {
-        //     latitude: res.latitude,
-        //     longitude: res.longitude,
-        //   },
-        //   success: function(e) {
-        //     // app.globalData.map.startAddress = e.result.formatted_addresses.recommend
-        //     // app.globalData.map.startLatitude = e.result.location.lat
-        //     // app.globalData.map.startLongitude = e.result.location.lng
-        //     // that.setData({
-        //     //   globalMapData: app.globalData.map
-        //     // });
-        //   }
-        // })
       }
-    });
+    })
   },
   //左下点击回到当前定位
   moveToLocation: function() {
     this.mapCtx.moveToLocation()
   },
-
-  //设置地图中心点
-  // getLngLat: function() {
-  //   var that = this;
-  //   this.mapCtx = wx.createMapContext("xMap");
-  //   this.mapCtx.getCenterLocation({
-  //     success: function(e) {
-  //       app.globalData.latitude = e.latitude
-  //       app.globalData.longitude = e.longitude
-  //       qqmapsdk.reverseGeocoder({
-  //         location: {
-  //           latitude: e.latitude,
-  //           longitude: e.longitude,
-  //         },
-  //         success: function(e) {
-  //           app.globalData.map.startAddress = e.result.formatted_addresses.recommend
-  //           app.globalData.map.startLatitude = e.result.location.lat
-  //           app.globalData.map.startLongitude = e.result.location.lng
-  //           that.setData({
-  //             globalMapData: app.globalData.map
-  //           });
-  //         }
-  //       })
-  //       that.setData({
-  //         longitude: e.longitude,
-  //         latitude: e.latitude,
-  //         markers: [{
-  //           id: 0,
-  //           iconPath: "../../image/markerStart.png",
-  //           longitude: e.longitude,
-  //           latitude: e.latitude,
-  //           width: 30,
-  //           height: 30
-  //         }]
-  //       })
-  //     }
-  //   })
-  // },
-  // // 地图发生变化的时候，获取中间点，也就是用户选择的位置
-  // regionchange(e) {
-  //   if (e.type == 'end') {
-  //     this.getLngLat()
-  //   }
-  // },
-
-
 
   //--------时间选择器----------
   pickerTap: function() {

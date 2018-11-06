@@ -5,31 +5,17 @@ App({
     // 预约车
     map: {
       // 我的位置
-      startLatitude: null,
-      startLongitude: null,
-      startBluraddress: null,
       startAddress: '我的位置',
-      endLatitude: null,
-      endLongitude: null,
-      endBluraddress: null,
-      endAddress: '目的地'
+      endAddress: '目的地',
+      strLatitude: 0,
+      strLongitude: 0,
+      endLatitude: 0,
+      endLongitude: 0,
     },
     // 首页数据
     index: {
       curIndex: 1
     }
-  },
-  setHeight: function () {
-    var that = this;
-    var query = wx.createSelectorQuery();
-    query.select('#xContent').boundingClientRect()
-    query.exec(function (e) {
-      setTimeout(() => {
-        that.setData({
-          mapHeight: (wx.getSystemInfoSync().windowHeight - e[0].height - 36) || 0
-        });
-      }, 100)
-    })
   },
   // ajax封装
   request: function (params) {
