@@ -43,7 +43,7 @@ Page({
     isGotoBackBtn: false,
     carXx: '呼叫司机',
     carXx2: '预约车辆',
-    TimeDifference:'',
+    TimeDifference: '',
     startDate: "请选择日期",
     startMonthDay: '',
     startHM: '',
@@ -320,6 +320,7 @@ Page({
 
   //--------时间选择器----------
   pickerTap: function() {
+
     date = new Date();
     var monthDay = ['今天', '明天', '后天'];
     var hours = [];
@@ -507,15 +508,12 @@ Page({
     var day1 = date.getDate() + 1;
     var day2 = date.getDate() + 2;
 
-    var startMonthDay = monthDay;
-    var endMonthDay = monthDay;
-
     if (monthDay === "今天") {
-      monthDay = that.formattingTime(month) + "月" + that.formattingTime(day) + "日 ";
+      monthDay = that.formattingTime(month) + "月" + that.formattingTime(day) + "日";
     } else if (monthDay === "明天") {
-      monthDay = that.formattingTime(month) + "月" + that.formattingTime(day1) + "日 ";
+      monthDay = that.formattingTime(month) + "月" + that.formattingTime(day1) + "日";
     } else if (monthDay === "后天") {
-      monthDay = that.formattingTime(month) + "月" + that.formattingTime(day2) + "日 ";
+      monthDay = that.formattingTime(month) + "月" + that.formattingTime(day2) + "日";
     }
 
     var timeSelector = e.target.dataset.name;
@@ -526,6 +524,7 @@ Page({
       })
     }
     if (timeSelector == 'startGXC') {
+      var startMonthDay = monthDay;
       var startHM = that.formattingTime(hours) + ":" + that.formattingTime(minute);
       that.setData({
         startMonthDay: startMonthDay,
@@ -533,15 +532,35 @@ Page({
       })
     }
     if (timeSelector == 'endtGXC') {
+      var endMonthDay = monthDay;
       var endHM = that.formattingTime(hours) + ":" + that.formattingTime(minute);
+      
+      //获取开始时间
+      var str = this.data.startMonthDay + this.data.startHM;
+      var sdata = str.replace(/[\u4e00-\u9fa5]|\s+|\:+/g, ",");
+      var arr = [];
+      for (var i = 0; i < 4; i++) {
+        arr.push((sdata.split(","))[i])
+      }
+      //获取结束时间
+      var str2 = this.data.endMonthDay + this.data.endtHM;
+      var sdata2 = str.replace(/[\u4e00-\u9fa5]|\s+|\:+/g, ",");
+      var arr2 = [];
+      for (var i = 0; i < 4; i++) {
+        arr2.push((sdata2.split(","))[i])
+      }
+
+      // 计算时间差
+      
+
+
+
+
       that.setData({
         endMonthDay: endMonthDay,
-        endHM: endHM
+        endHM: endHM,
       })
     }
-
-
-
   },
   formattingTime: function(e) {
     if (e < 10) {
@@ -549,6 +568,15 @@ Page({
       return e
     } else {
       return e
+    }
+  },
+  isToast: function() {
+    if (this.data.startMonthDay == '' && this.data.startHM == '') {
+      wx.showToast({
+        title: '请先选择开始时间',
+        icon: 'none',
+        duration: 1500
+      })
     }
   }
 })

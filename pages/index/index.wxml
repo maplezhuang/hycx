@@ -11,12 +11,12 @@
   </view>
 
   <!-- 共享车 -->
-  <block wx:if="{{curIndex == '2'}}"> 
+  <block wx:if="{{curIndex == '2'}}">
     <view class="share-car">
       <view class='share-box'>
         <view class="time-item">
           <view class='strTime timeSty'>
-          <picker class='time-picker' mode="multiSelector" bindchange="bindStartMultiPickerChange" bindtap='pickerTap' bindcolumnchange="bindMultiPickerColumnChange" data-name='startGXC' value="{{multiIndex}}" range="{{multiArray}}">
+            <picker class='time-picker' mode="multiSelector" bindchange="bindStartMultiPickerChange" bindtap='pickerTap' bindcolumnchange="bindMultiPickerColumnChange" data-name='startGXC' value="{{multiIndex}}" range="{{multiArray}}">
               <block wx:if="{{startMonthDay == '' && startHM == ''}}">开始日期</block>
               <block wx:if="{{startMonthDay !='' && startHM != ''}}">
                 <view class='bold'>{{startMonthDay}}</view>
@@ -25,16 +25,21 @@
             </picker>
           </view>
           <view class='dayNum'>
-            <view class='constNum'><block wx:if="{{TimeDifference !=''}}">{{TimeDifference}}</block></view>
+            <view class='constNum'>
+              <block wx:if="{{TimeDifference !=''}}">{{TimeDifference}}</block>
+            </view>
           </view>
           <view class='endTime timeSty'>
-            <picker class='time-picker' mode="multiSelector" bindchange="bindStartMultiPickerChange" bindtap='pickerTap' bindcolumnchange="bindMultiPickerColumnChange" data-name='endtGXC' value="{{multiIndex}}" range="{{multiArray}}">
-            <block wx:if="{{endMonthDay == '' && endHM == ''}}">结束时间</block>
-              <block wx:if="{{endMonthDay !='' && endHM != ''}}">
+            <block wx:if="{{startMonthDay == '' && startHM == ''}}">
+              <view class='time-picker' wx:if="{{startMonthDay == '' && startHM == ''}}" bindtap='isToast'>结束时间</view>
+            </block>
+            <block wx:if="{{startMonthDay != '' && startHM !=''}}">
+              <picker class='time-picker' mode="multiSelector" bindchange="bindStartMultiPickerChange" bindtap='pickerTap' bindcolumnchange="bindMultiPickerColumnChange" data-name='endtGXC' value="{{multiIndex}}" range="{{multiArray}}">
+                <view class='time-picker' wx:if="{{endMonthDay == '' && endHM == ''}}" bindtap='isToast'>结束时间</view>
                 <view class='bold'>{{endMonthDay}}</view>
                 <view class='xw'>{{endHM}}</view>
-              </block>
-            </picker>
+              </picker>
+            </block>
           </view>
         </view>
         <view class='item'>
@@ -69,7 +74,7 @@
   </block>
   <!-- 约车,接送 -->
   <block wx:else>
-    <map class="xMap" id='xMap' latitude="{{globalMapData.startLatitude}}" longitude="{{globalMapData.startLongitude}}" scale="{{scale}}" bindregionchange="regionchange"  bindtap="moveToLocation" polyline="{{polyline}}" style="height:{{mapHeight}}px" show-location>
+    <map class="xMap" id='xMap' latitude="{{globalMapData.startLatitude}}" longitude="{{globalMapData.startLongitude}}" scale="{{scale}}" bindregionchange="regionchange" bindtap="moveToLocation" polyline="{{polyline}}" style="height:{{mapHeight}}px" show-location>
       <cover-view class="markerStart">
         <cover-image src='../../pages/image/markerStart.png' />
       </cover-view>
